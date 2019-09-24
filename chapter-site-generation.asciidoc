@@ -63,6 +63,7 @@ by simply running +mvn site+. To build the site and preview the result
 in a browser, you can run +mvn site:run+, this will build the site and
 start an embedded instance of Jetty.
 
+[source,shell script]
 ----
 $ cd sample-project
 $ mvn site:run
@@ -127,6 +128,7 @@ under the heading "Sample Project". This menu contains a single link
 to an overview page.
 
 .An Initial Site Descriptor
+[source,xml]
 ----
 <project name="Sample Project">
     <bannerLeft>
@@ -190,9 +192,9 @@ right-hand corners of the page, you can use the +bannerLeft+ and
 +bannerRight+ elements in a site descriptor.
 
 .Adding a Banner Left and Banner Right to Site Descriptor
+[source,xml]
 ----
 <project name="Sample Project">
-
     <bannerLeft>
         <name>Left Banner</name>
         <src>images/banner-left.png</src>
@@ -224,6 +226,7 @@ to the left-hand navigation menu. Each item is rendered as a link in
 that menu.
 
 .Creating Menu Items in a Site Descriptor
+[source,xml]
 ----
 <project name="Sample Project">
     ...
@@ -250,6 +253,7 @@ Resources page, the menu items below the Developer Resources menu item
 will be expanded.
 
 .Adding a Link to the Site Menu
+[source,xml]
 ----
 <project name="Sample Project">
     ...
@@ -411,6 +415,7 @@ page. <<ex-fml>> shows an example of an FML document.
 
 [[ex-fml]]
 .FAQ Markup Language Document
+[source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <faqs title="Frequently Asked Questions">
@@ -459,6 +464,7 @@ configure the site entry of the +distributionManagement+ section in
 the POM, like this:
 
 .Configuring Site Deployment
+[source,xml]
 ----
 <project>
     ...
@@ -497,6 +503,7 @@ To configure a username/password combination for use during the site
 deployment, we'll include the following in '$HOME/.m2/settings.xml':
 
 .Storing Server Authentication in User-specific Settings
+[source,xml]
 ----
 <settings>
     ...
@@ -529,6 +536,7 @@ configure specific file and directory modes for use during the site
 deployment, include the following in '$HOME/.m2/settings.xml':
 
 .Configuring File and Directory Modes on Remote Servers
+[source,xml]
 ----
 <settings>
     ...
@@ -579,6 +587,7 @@ background images and custom bullet graphics. For example, if we
 decided that to make the menu heading stand out a little more, we
 might try the following style in 'src/site/resources/css/site.css':
 
+[source,css]
 ----
 #navcolumn h5 {
 font-size: smaller;
@@ -653,6 +662,7 @@ below, you will injects Javascript references into each menu item
 which will allow the reader to expand or collapse the menu tree
 without suffering through a full page reload:
 
+[source]
 ----
 #macro ( menuItem $item $listCount )
 #set ( $collapse = "none" )
@@ -727,6 +737,7 @@ looking for something similar to the following template snippet:
 
 Replace the mainMenu macro with the following implementation:
 
+[source]
 ----
 #macro ( mainMenu $menus )
 #set ( $counter = 0 )
@@ -757,6 +768,7 @@ function. This method needs to be added to the main XHTML template at
 the bottom of this template file. Find the section that looks similar
 to the following:
 
+[source,xml]
 ----
 <head>
     ...
@@ -768,6 +780,7 @@ to the following:
 
 and replace it with this:
 
+[source,html]
 ----
 <head>
     ...
@@ -803,6 +816,7 @@ the site template, you'll need to use the +templateDirectory+ and
 template configuration properties of the Maven Site plugin.
 
 .Customizing the Page Template in a Project's POM
+[source,xml]
 ----
 <project>
     ...
@@ -829,6 +843,7 @@ CSS. To seed your project's resources, you may want to copy the
 resources from the default Doxia site renderer project to your own
 project's resources directory by executing the following commands:
 
+[source,shell script]
 ----
 $ svn co \
       http://svn.apache.org/repos/asf/maven/doxia/doxia-sitetools/\
@@ -852,6 +867,7 @@ between the site's CSS and our new custom page template. It can be
 fixed by modifying our 'site.css' to restore the proper link color for
 these menus. Simply add this:
 
+[source,css]
 ----
 li.collapsed, li.expanded, a:link {
     color:#36a;
@@ -869,6 +885,7 @@ dynamically-folding sub-menu, you have lost the ability to reach the
 Overview link to the sub-menu which references the same page:
 
 .Adding a Menu Item to a Site Descriptor
+[source,xml]
 ----
 <project name="Hello World">
     ...
@@ -925,6 +942,7 @@ to reference it. First, use Maven's archetype plugin to create a basic
 project. Issue the following command from the directory above the
 +sample-project+ project's root directory:
 
+[source,shell script]
 ----
 $ mvn archetype:create -DartifactId=sample-site-skin 
       -DgroupId=org.sonatype.mavenbook
@@ -935,6 +953,7 @@ This will create a project (and a directory) called
 directory, remove all of the source code and tests, and create a
 directory to store your skin's resources:
 
+[source,shell script]
 ----
 $ cd sample-site-skin
 $ rm -rf src/main/java src/test
@@ -966,6 +985,7 @@ Now that we have the base theme file in place, customize it using the
 CSS from our old site.css file. Replace the +#navcolumn h5+ CSS block
 with the following:
 
+[source,css]
 ----
 #navcolumn h5 {
 font-size: smaller;
@@ -983,6 +1003,7 @@ Once you've customized the 'maven-theme.css', build and install the
 +sample-site-skin+ JAR artifact to your local Maven repository by
 running:
 
+[source,shell script]
 ----
 $ mvn clean install
 
@@ -993,6 +1014,7 @@ project directory, if you already customized the 'site.css' earlier in
 this chapter, move 'site.css' to 'site.css.bak' so it no longer
 affects the output of the Maven Site plugin:
 
+[source,shell script]
 ----
 $ mv src/site/resources/css/site.css src/site/resources/css/site.css.bak
 ----
@@ -1003,6 +1025,7 @@ need to add a reference to the +sample-site-skin+ artifact in the
 site descriptor using the skin element:
 
 .Configuring a Custom Site Skin in Site Descriptor
+[source,xml]
 ----
 <project name="Sample Project">
     ...
@@ -1034,6 +1057,7 @@ element in your project's Site descriptor. The following example adds
 a feed link to every page in the +sample-project+ web site.
 
 .Injecting HTML into the HEAD element
+[source,xml]
 ----
 <project name="Hello World">
     ...
@@ -1066,6 +1090,7 @@ example would add a link to the Apache Software Foundation followed by
 a link to the Apache Maven project.
 
 .Adding Links Under Your Site Logo
+[source,xml]
 ----
 <project name="Hello World">
     ...
@@ -1095,6 +1120,7 @@ following site descriptor, the Codehaus item would be seen to contain
 the Mojo item.
 
 .Configuring the Site's Breadcrumbs
+[source,xml]
 ----
 <project name="Sample Project">
     ...
@@ -1118,6 +1144,7 @@ page. To display your project's version on the website, simply add the
 +version+ element to your site descriptor:
 
 .Positioning the Version Information
+[source,xml]
 ----
 <project name="Sample Project">
     ...
@@ -1180,6 +1207,7 @@ none::
    Suppress the publication entirely   
 
 .Positioning the Publish Date
+[source,xml]
 ----
 <project name="Sample Project">
     ...
@@ -1197,6 +1225,7 @@ for more information). To reformat the date using +yyyy-MM-dd+, use
 the following +publishDate+ element.
 
 .Configuring the Publish Date Format
+[source,xml]
 ----
 <project name="Sample Project">
     ...
@@ -1226,9 +1255,9 @@ mdo/archetype.mdo}
 ----
 
 .Output of the Snippet Macro in XHTML
+[source,html]
 ----
 <div class="source"><pre>
-
         <model>
             <id>archetype</id>
             <name>Archetype</name>

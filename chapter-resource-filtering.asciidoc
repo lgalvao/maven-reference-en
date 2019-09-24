@@ -231,8 +231,8 @@ retrieve from +System.getProperty()+ you can reference in a Maven
 property. The following table lists available properties:
 
 .Java System Properties
-|=========================
-| System Property | Description 
+|=======
+| System Property | Description
 | +java.version+ | Java Runtime Environment version
 | +java.vendor+ | Java Runtime Environment vendor
 | +java.vendor.url+ | Java vendor URL
@@ -257,8 +257,8 @@ property. The following table lists available properties:
 | +line.separator+ | Line separator ("\n" on UNIX and Windows)
 | +user.name+ | User's account name
 | +user.home+ | User's home directory
-| +user.dir+ | User's current working 
-|=========================
+| +user.dir+ | User's current working
+|=======
 
 [[resource-filtering-sect-user-defined]]
 ==== User-defined Properties
@@ -274,6 +274,7 @@ Resource plugin. Here's an example of defining some arbitrary
 properties in a Maven POM.
 
 .User-defined Properties in a POM
+[source,xml]
 ----
 <project>
     ...
@@ -301,6 +302,7 @@ Profiles. The next example shows you how to define a property in a
 profile from a Maven POM.
 
 .User-defined Properties in a Profile in a POM
+[source,xml]
 ----
 <project>
     ...
@@ -357,6 +359,7 @@ which contains the XML listed in <<ex-filter-spring>>.
 
 [[ex-filter-spring]]
 .Referencing Maven Properties from a Resource
+[source,xml]
 ----
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -389,6 +392,7 @@ filtering for every resource under 'src/main/resources'.
 
 [[ex-filter-pom]]
 .Defining Variables and Activating Resource Filtering
+[source,xml]
 ----
 <project>
     ...
@@ -434,6 +438,7 @@ build. If you build a project with the resource from
 list the contents of the resource in target/classes, you should see
 that it contains the filtered resource:
 
+[source]
 ----
 $ mvn install
 ...
@@ -463,6 +468,7 @@ password. If you build a project with the resource from
 resource in target/classes, you should see that it contains the
 filtered resource with production values:
 
+[source]
 ----
 $ mvn -Pproduction install
 ...

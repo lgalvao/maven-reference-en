@@ -23,6 +23,7 @@ Plugin to describe a particular plugin or a particular plugin goal.
 To describe a particular plugin, use the +help:describe+ goal from the
 command line as follows:
 
+[source,shell script]
 ----
 $ mvn help:describe -Dcmd=compiler:compile
 [INFO] [help:describe {execution: default-cli}]
@@ -36,6 +37,7 @@ Deprecated. No reason given
 For more information about the available configuration parameters, run
 the same command with the +-Ddetail+ argument:
 
+[source,shell script]
 ----
 $ mvn help:describe -Dcmd=compiler:compile -Ddetail
 [INFO] [help:describe {execution: default-cli}]
@@ -149,7 +151,6 @@ Deprecated. No reason given
 verbose (Default: false)
 Set to true to show messages about what the compiler is doing.
 Deprecated. No reason given
-
 ----
 
 If you need to get a list of plugin goals which are contained in a
@@ -157,6 +158,7 @@ plugin, you can run the help:describe goal and pass in the plugin
 parameter. The plugin parameter accepts a plugin prefix or a +groupId+
 and an +artifactId+ for a plugin as shown in the following examples:
 
+[source,shell script]
 ----
 $ mvn help:describe -Dplugin=compiler
 [INFO] [help:describe {execution: default-cli}]
@@ -183,6 +185,7 @@ Deprecated. No reason given
 You can use the +groupId+ and the +artifactId+ of the plugin and get
 the same list of plugin goals.
 
+[source,shell script]
 ----
 $ mvn help:describe -Dplugin=org.apache.maven.plugins:maven-compiler-plugin
 ----
@@ -203,6 +206,7 @@ execution.
 
 [[ex-plugin-dependencies]]
 .Adding Dependencies to a Plugin
+[source,xml]
 ----
 <plugin>
     <groupId>com.agilejava.docbkx</groupId>
@@ -246,6 +250,7 @@ all goals which are executed in this plugin.
 
 [[ex-config-global-plugin-param]]
 .Configuring a Maven Plugin
+[source,xml]
 ----
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
@@ -270,6 +275,7 @@ particular execution.
 
 [[ex-config-plugin-exec-params]]
 .Setting Configuration Parameters in an Execution
+[source,xml]
 ----
 <plugin>
     <artifactId>maven-antrun-plugin</artifactId>
@@ -306,6 +312,7 @@ used when you execute +mvn assembly:assembly+ from the command line.
 
 [[ex-configure-plugin-default-cli]]
 .Configuring Plugin Parameters for Command Line Execution
+[source,xml]
 ----
 <plugin>
     <artifactId>maven-assembly-plugin</artifactId>
@@ -349,6 +356,7 @@ of a separate goal execution if you follow the example shown in
 
 [[ex-configure-default-param]]
 .Setting a Parameter for a Default Goal Execution
+[source,xml]
 ----
 <plugin>
     <artifactId>maven-jar-plugin</artifactId>
@@ -393,6 +401,7 @@ to include empty directories.
 
 [[ex-configure-two-default-param]]
 .Setting Two Default Goal Plugin Configuration Parameters
+[source,xml]
 ----
 <plugin>
     <artifactId>maven-resources-plugin</artifactId>

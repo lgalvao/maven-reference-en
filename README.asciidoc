@@ -2,24 +2,22 @@
 
 === About the Book
 
-A detailed reference for Apache Maven as formerly published as part of the
-book Maven: The Definitive Guide. 
+A detailed reference for Apache Maven as formerly published as part of the book Maven: The Definitive Guide.
 
 The book is available in HTML and PDF format at http://www.sonatype.com/resources/books/maven-the-complete-reference[http://www.sonatype.com/resources/books/maven-the-complete-reference].
 
-
 === About this Project
 
-This is the source code and build setup for the book. The content is
-written in asciidoc format.  To edit asciidoc, use Emacs, vi, TextMate
-or whatever other text editor you prefer.  You can even just preview
-the files right in github and edit them on the web interface directly.
+This is the source code and build setup for the book.
+The content is written in asciidoc format.
+To edit asciidoc, use Emacs, vi, TextMate or whatever other text editor you prefer.
+You can even just preview the files right in github and edit them on the web interface directly.
 
 The main file for the book is
 
 * book-mvnref.asciidoc
 
-which in turn includes a whole bunch of files named 
+which in turn includes a whole bunch of files named
 
 * chapter-*.asciidoc
 
@@ -33,13 +31,21 @@ The rest is taken care of by the build.
 
 ==== Anything else? 
 
-You'll see a lot of distracting files in that directory.  For now,
-you should just ignore them.  Actually, in general, you'll notice a
-number of distracting files in this project.  Really, just ignore
-them or contact us directly if you need something.
+You'll see a lot of distracting files in that directory.
+For now, you should just ignore them.
+Actually, in general, you'll notice a number of distracting files in this project.
+Really, just ignore them or contact us directly if you need something.
+
+==== How to Build the Book with Asciidoctor
+
+1. Install asciidoctor
+2. Install asciidoctor-pdf
+3. Run:
+```bash
+asciidoctor-pdf book-mvnref.asciidoc
+```
 
 ==== How to Build the Book
-
 I knew you'd ask that, and here's the simple answer:
 
 * Install asciidoc
@@ -47,14 +53,14 @@ I knew you'd ask that, and here's the simple answer:
 * Install python
 * run ./build.sh
 
-Build is known to work on Mac OS X and Ubuntu. If you use something
-else you might or might not end up in trouble.
+Build is known to work on Mac OS X and Ubuntu.
+If you use something else you might or might not end up in trouble.
 
 === Issues, Contributions and More
 
-This book is CC licensed and we welcome your contributions. Please
-file issues and send pull requests on the github project. For further
-questions please contact us at book@sonatype.com.
+This book is CC licensed and we welcome your contributions.
+Please file issues and send pull requests on the github project.
+For further questions please contact us at book@sonatype.com.
 
 Thanks
 

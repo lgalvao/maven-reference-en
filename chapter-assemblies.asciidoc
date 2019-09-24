@@ -160,6 +160,7 @@ build, you wanted to include the source as well. You won’t need to do
 this often, so it doesn’t make sense to add the configuration to your
 +POM+. Instead, you can use the following command:
 
+[source,shell script]
 ----
 $ mvn -DdescriptorId=project assembly:single 
 ...
@@ -187,6 +188,7 @@ Assuming the main class for the project is
 create an executable JAR:
 
 .Assembly Descriptor for Executable JAR
+[source,xml]
 ----
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -255,6 +257,7 @@ directory, just to verify that the executable JAR was
 generated. Finally, just to prove that we actually do have an
 executable JAR, we’ll try executing it:
 
+[source,shell script]
 ----
 $ mvn package
 ... (output omitted) ...
@@ -326,6 +329,7 @@ archive, we also need to declare its type.
 
 [[ex-top-pom-assembly]]
 .Configuring the project assembly in top-level POM
+[source,xml]
 ----
 <project>
     ...
@@ -377,6 +381,7 @@ To produce the set of project assemblies, run +mvn install+ from the
 top-level directory. You should see Maven installing artifacts with
 classifiers in your local repository.
 
+[source,shell script]
 ----
 $ mvn install
 ...
@@ -410,6 +415,7 @@ bundling project would resemble the XML document listed in
 
 [[ex-bundling-pom]]
 .POM for the Assembly Bundling Project
+[source,xml]
 ----
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -490,6 +496,7 @@ format, so we don’t need to specify a +Main-Class+ manifest
 attribute. To build the bundle, we just build the +project-bundle+
 project normally:
 
+[source,shell script]
 ----
 $ mvn package
 ...
@@ -630,6 +637,7 @@ one +format+:
 
 [[ex-required-assembly]]
 .Required Assembly Descriptor Elements
+[source,xml]
 ----
 <assembly>
     <id>bundle</id> 
@@ -698,6 +706,7 @@ the archive.
 
 [[ex-assembly-files]]
 .Including a JAR file in an Assembly using +files+
+[source,xml]
 ----
 <assembly>
     ...
@@ -749,6 +758,7 @@ match), and the general directory structure in which they are
 located. The simplest +fileSet+ just specifies the directory where the
 files are located:
 
+[source,xml]
 ----
 <assembly>
     ...
@@ -785,6 +795,7 @@ of the default elements specified.
 
 [[ex-explicit-fileSet]]
 .Including Files with +fileSet+
+[source,xml]
 ----
 <assembly>
     ...
@@ -1000,6 +1011,7 @@ artifact's +groupId+. In this case, you would use the
 +outputDirectory+ element of the +dependencySet+, and you would supply
 something like:
 
+[source,xml]
 ----
 <assembly>
     ...
@@ -1150,6 +1162,7 @@ sets must be processed separately. These dependency sets might look
 similar to the following XML.
 
 .Defining Dependency Sets Using Scope
+[source,xml]
 ----
 <assembly>
     ...
@@ -1272,6 +1285,7 @@ modify our dependency sets to handle resource archives differently:
 
 [[ex-complex-dependencySet]]
 .Using Dependency Excludes and Includes in +dependencySets+
+[source,xml]
 ----
 <assembly>
     ...
@@ -1449,6 +1463,7 @@ unpack options inside the dependency set that handles resource
 artifacts:
 
 .Excluding Files from a Dependency Unpack
+[source,xml]
 ----
 <asembly>
     ...
@@ -1605,6 +1620,7 @@ and which excludes the +secret-sauce+ module from the assembly.
 
 [[ex-include-exclude-moduleSet]]
 .Includes and Excluding Modules with a +moduleSet+
+[source,xml]
 ----
 <assembly>
     ...
@@ -1734,6 +1750,7 @@ set might look similar to <<ex-include-javadoc-moduleset>>.
 
 [[ex-include-javadoc-moduleset]]
 .Including JavaDoc from Modules in an Assembly
+[source,xml]
 ----
 <assembly>
     ...
@@ -1782,6 +1799,7 @@ listing in <<ex-the-big-include>>:
 
 [[ex-the-big-include]]
 .Including Module Artifacts and Dependencies in an Assembly
+[source,xml]
 ----
 <assembly>
     ...
@@ -2021,6 +2039,7 @@ plugin’s classpath. At that point, you can use the assembly descriptor
 via the +descriptorRefs+ configuration section in the Assembly plugin
 declaration. To illustrate, consider this example assembly descriptor:
 
+[source,xml]
 ----
 <assembly>
     <id>war-fragment</id>
@@ -2084,6 +2103,7 @@ this new project using Maven, you’ll be able to reference it in your
 +web-fragment+ projects. For clarity, the build process should look
 something like this:
 
+[source,shell script]
 ----
 $ mvn install
 (...)
@@ -2104,6 +2124,7 @@ Since there are no sources for the +web-fragment-descriptor+ project,
 the resulting jar artifact will include nothing but our +web-fragment+
 assembly descriptor. Now, let’s use this new descriptor artifact:
 
+[source,xml]
 ----
 <project>
     (...)
@@ -2175,6 +2196,7 @@ simply add the configuration listed above to the +pluginManagement+
 section of your parent POM, then reference the managed plugin
 configuration from your module POM like this:
 
+[source,xml]
 ----
 (...)
 <build>
@@ -2219,6 +2241,7 @@ parent project which in turn depends on the child project.
 As an example, consider the assembly descriptor below, designed to be
 used from the top-level project of a multi-module hierarchy:
 
+[source,xml]
 ----
 <assembly>
     <id>distribution</id>
@@ -2264,6 +2287,7 @@ Given a parent project - called app-parent - with three modules called
 +app-core+, +app-web+, and +app-addons+, notice what happens when we
 try to execute this multi-module build:
 
+[source,shell script]
 ----
 $ mvn package
 [INFO] Reactor build order: 
@@ -2340,6 +2364,7 @@ total: +app-parent+, +app-core+, +app-web+, +app-addons+, and
 +app-distribution+. The new +app-distribution+ POM looks similar to
 the following:
 
+[source,xml]
 ----
 <project>
     <parent>
@@ -2384,6 +2409,7 @@ Next, when we move the 'distro.xml' assembly descriptor into the
 +app-distribution+ project, we must also change it to use a
 +dependencySets+ section, like this:
 
+[source,xml]
 ----
 <assembly>
     ...
@@ -2411,6 +2437,7 @@ Next, when we move the 'distro.xml' assembly descriptor into the
 This time, if we run the build from the top-level project directory,
 we get better news:
 
+[source,shell script]
 ----
 $ mvn package
 (...)

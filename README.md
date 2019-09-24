@@ -46,3 +46,5 @@ A: I came to the realization that we needed a more nimble approach to
 all of our documentation.  From books to training to blogging, it was
 a pretty quick transition, but from this point forward - it's asciidoc
 or bust.
+
+

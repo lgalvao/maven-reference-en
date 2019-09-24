@@ -23,11 +23,12 @@ higher. While older Maven versions can run on older Java versions, this book
 assumes that you are running at least Java 7. Go with the most recent
 stable Java Development Kit (JDK) available for your operating system.
 
+[source,shell script]
 ----
 % java -version
-java version "1.7.0_71"
-Java(TM) SE Runtime Environment (build 1.7.0_71-b14)
-Java HotSpot(TM) 64-Bit Server VM (build 24.71-b01, mixed mode)
+openjdk version "11.0.2" 2019-01-15
+OpenJDK Runtime Environment 18.9 (build 11.0.2+9)
+OpenJDK 64-Bit Server VM 18.9 (build 11.0.2+9, mixed mode)
 ----
 
 TIP: More details about Java version required for different Maven
@@ -47,19 +48,15 @@ http://maven.apache.org/download.html[http://maven.apache.org/download.html].
 When downloading Maven, you can download the latest available version
 the latest available version of Maven 3 in various branches. The
 latest version of Maven 3 when this book was last updated was Maven
-3.3.3. If you are not familiar with the Apache Software License, you
+3.6.2. If you are not familiar with the Apache Software License, you
 should familiarize yourself with the terms of the license before you
 start using the product. More information on the Apache Software
 License can be found in <<installation-sect-license>>.
-
-TIP: We recommend to avoid Maven 2 as it is no longer maintained and use the latest version of Maven
-3 available and listed as the 'current stable version'.
 
 To download Maven , go to
 http://maven.apache.org/download.html[http://maven.apache.org/download.html]
 and select the appropriate binary archive format for your platform. The
 contents of the +zip+ or +tar.gz+ are the same.
-
 
 [[installation-sect-maven-install]]
 === Installing Maven
@@ -79,14 +76,14 @@ http://maven.apache.org/download.html[http://maven.apache.org/download.html].
 Download the current release of Maven in a format that is convenient
 for you to work with. Pick an appropriate place for it to live, and
 expand the archive there. If you expanded the archive into the
-directory '/opt/apache-maven-3.2.5', you may want to create a
+directory '/opt/apache-maven-3.6.2', you may want to create a
 symbolic link to make it easier to work with and to avoid the need to
 change any environment configuration when you upgrade to a newer
 version:
 
 ----
 $ cd /opt
-$ ln -s apache-maven-3.2.5 maven
+$ ln -s apache-maven-3.6.2 maven
 $ export PATH=/opt/maven/bin:${PATH}
 ----
 
@@ -99,6 +96,7 @@ You'll need to add +PATH+ to a script that will run
 every time you login. To do this, add the following lines to
 +.bash_login+ or +.profile+
 
+[source,shell script]
 ----
 export PATH=/opt/maven/bin:${PATH}
 ----
@@ -121,16 +119,17 @@ as long as you configure the proper environment variables. Once you've
 unpacked Maven to the installation directory, you will need to set the +PATH+
 environment variable. You can use the following commands:
 
+[source,shell script]
 ----
-C:\Users\tobrien >  set PATH=%PATH%;"c:\Program Files\apache-maven-3.2.5\bin"
+C:\Users\tobrien >  set PATH=%PATH%;"c:\Program Files\apache-maven-3.6.2\bin"
 ----
 
 Setting these environment variables on the command-line will allow you
 to run Maven in your current session, but unless you add them to the
 System environment variables through the control panel, you'll have to
 execute these two lines every time you log into your system. You
-should modify both of these variables through the Control Panel in
-Microsoft Windows.
+should modify both of these variables through the Control Panel
+(or the console/shell) in Microsoft Windows.
 
 [[installation-sect-test-install]]
 === Testing a Maven Installation
@@ -139,25 +138,26 @@ Once Maven is installed, you can check the version by running +mvn -v+
 from the command-line. If Maven has been installed, you should see
 something resembling the following output.
 
+[source,shell script]
 ----
 $ mvn -v
-Apache Maven 3.2.5 (12a6b3acb947671f09b81f49094c53f426d8cea1; 2014-12-14T09:29:23-08:00)
-Maven home: /opt/apache-maven-3.2.5
-Java version: 1.7.0_71, vendor: Oracle Corporation
-Java home: /Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk/Contents/Home/jre
+
+Apache Maven 3.6.2 (40f52333136460af0dc0d7232c0dc0bcf0d9e117; 2019-08-27T12:06:16-03:00)
+Maven home: D:\apache-maven-3.6.2\bin\..
+Java version: 11.0.2, vendor: Oracle Corporation, runtime: D:\jdk-11.0.2
 Default locale: en_US, platform encoding: UTF-8
-OS name: "mac os x", version: "10.8.5", arch: "x86_64", family: "mac"
+OS name: "windows 7", version: "6.1", arch: "amd64", family: "windows"
 ----
 
 If you see this output, you know that Maven is available and ready to
-be used. If you do not see this output, and your operating system
-cannot find the +mvn+ command, make sure that your +PATH+ environment
-variable and +M2_HOME+ environment variable have been properly set.
+be used. If your operating system cannot find the +mvn+ command,
+make sure that your +PATH+ environment variable and +M2_HOME+ environment
+variable have been properly set.
 
 [[installation-sect-details]]
 === Maven Installation Details
 
-Maven's download measures in at roughly 1.5 MiB, it has attained such
+Maven's download measures in at roughly 9 MB. It has attained such
 a slim download size because the core of Maven has been designed to
 retrieve plugins and dependencies from a remote repository
 on-demand. When you start using Maven, it will start to download
@@ -167,8 +167,8 @@ quick look at what is in Maven's installation directory.
 
 ----
 $ ls /opt/maven -p1
-LICENSE.txt
-NOTICE.txt
+LICENSE
+NOTICE
 README.txt
 bin/
 boot/
@@ -176,19 +176,18 @@ conf/
 lib/
 ----
 
-'LICENSE.txt' contains the software license for Apache Maven. This
+The 'LICENSE' file contains the software license for Apache Maven. This
 license is described in some detail later in the section
-<<installation-sect-license>>. 'NOTICE.txt' contains some notices and
+<<installation-sect-license>>. 'NOTICE' contains some notices and
 attributions required by libraries that Maven depends on. 'README.txt'
 contains some installation instructions. 'bin/' contains the 'mvn'
 script that executes Maven. 'boot/' contains a JAR file
-('classwords-1.1.jar') that is responsible for creating the Class
+('plexus-classworlds-2.6.0.jar') that is responsible for creating the Class
 Loader in which Maven executes. 'conf/' contains a global
 'settings.xml' that can be used to customize the behavior of your
 Maven installation. If you need to customize Maven, it is customary to
 override any settings in a 'settings.xml' file stored in
-'~/.m2'. 'lib/' contains a single JAR file
-('maven-core-3.0.3-uber.jar') that contains the core of Maven.
+'~/.m2'. 'lib/' contains a set of JAR files that comprise the core of Maven.
 
 NOTE: Unless you are working in a shared Unix environment, you should
 avoid customizing the 'settings.xml' in 'M2_HOME/conf'. Altering the
@@ -219,10 +218,10 @@ repository in your home directory. In '~/.m2' there will be:
   copy of the dependency in your local repository.
 
 NOTE: In Unix (and OSX), your home directory will be referred to using
-a tilde (i.e. '~/bin' refers to '/home/tobrien/bin'). In Windows, we
+a tilde (i.e. '~/bin' refers to '/home/<username>/bin'). In Windows, we
 will also be using '~' to refer to your home directory. In Windows XP,
-your home directory is 'C:\Documents and Settings\tobrien', and in
-Windows Vista, your home directory is 'C:\Users\tobrien'. From this
+your home directory is 'C:\Documents and Settings\<username>', and in
+Windows Vista and Windows 7+, your home directory is 'C:\Users\<username>'. From this
 point forward, you should translate paths such as '~/m2' to your
 operating system's equivalent.
 
@@ -233,8 +232,8 @@ If you've installed Maven on a Mac OSX or Unix machine according to
 the details in <<installation-sect-maven-nix>>, it should be easy to upgrade to
 newer versions of Maven when they become available. Simply install the
 newer version of Maven ('/opt/maven-3.future') next to the
-existing version of Maven ('/opt/maven-3.2.5'). Then switch the
-symbolic link '/opt/maven' from '/opt/maven-3.2.5' to
+existing version of Maven ('/opt/maven-3.6.2'). Then switch the
+symbolic link '/opt/maven' from '/opt/maven-3.6.2' to
 '/opt/maven-3.future'. Since, you've already set your +M2_HOME+
 variable to point to '/opt/maven', you won't need to change any
 environment variables.
@@ -327,8 +326,7 @@ all mean?"
 
 It forbids you to:
 
-* redistribute any piece of Apache-originated software without proper
-  attribution;
+* redistribute any piece of Apache-originated software without proper attribution;
 
 * use any marks owned by The Apache Software Foundation in any way
   that might state or imply that the Foundation endorses your

@@ -15,8 +15,8 @@ NOTE: All artifacts in <<table-spec-alternatives>>, have a groupId of
 
 [[table-spec-alternatives]]
 .Alternate Spec Implementations Artifacts
-|========================================
-| Specification | Spec Version | Artifact Id | Artifact Version 
+|=======
+| Specification | Spec Version | Artifact Id | Artifact Version
 | Activation | 1.0.2 | geronimo-activation_1.0.2_spec | 1.2 
 | Activation | 1.1 | geronimo-activation_1.1_spec | 1.0.1 
 | Activation | 1.0 | geronimo-activation_1.0_spec | 1.1 
@@ -50,8 +50,8 @@ NOTE: All artifacts in <<table-spec-alternatives>>, have a groupId of
 | Servlet | 2.4 | geronimo-servlet_2.4_spec | 1.1.1 
 | Servlet | 2.5 | geronimo-servlet_2.5_spec | 1.1.1 
 | STaX API | 1.0 | geronimo-stax-api_1.0_spec | 1.0.1 
-| WS Metadata | 2.0 | geronimo-ws-metadata_2.0_spec | 1.1.1 
-|=======================================
+| WS Metadata | 2.0 | geronimo-ws-metadata_2.0_spec | 1.1.1
+|=======
 
 NOTE: The version numbers in the Artifact Version column may be out of
 date by the time you read this book. To check on the version number,

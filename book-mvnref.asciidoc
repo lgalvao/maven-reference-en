@@ -2,8 +2,13 @@
 :data-uri:
 :icons:
 :docinfo:
-:quotes.~:
+:doctype: book
+:encoding: utf-8
+:lang: en
+:source-highlighter: rouge
+:pdf-page-size: A4
 
+:quotes.~:
 include::preface.asciidoc[]
 include::chapter-introduction.asciidoc[]
 include::chapter-installation.asciidoc[]

@@ -236,6 +236,7 @@ plugin descriptor to get an idea of the content it contains.
 
 [[ex-plugin-desc]]
 .Plugin Descriptor
+[source,xml]
 ----
 <plugin>
     <description></description>
@@ -546,6 +547,7 @@ plugin. The following command-line will create a plugin with a
 +groupId+ of +org.sonatype.mavenbook.plugins+ and the +artifactId+ of
 +first-maven-plugin+:
 
+[source,shell script]
 ----
 $ mvn archetype:create \
       -DgroupId=org.sonatype.mavenbook.plugins \
@@ -558,6 +560,7 @@ The Archetype plugin is going to create a directory named
 my-first-plugin which contains the following POM.
 
 .A Plugin Project's POM
+[source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?><project>
     <modelVersion>4.0.0</modelVersion>
@@ -642,6 +645,7 @@ simply prints out a message to the console.
 
 [[ex-simple-echomojo]]
 .A Simple EchoMojo
+[source,java]
 ----
 package org.sonatype.mavenbook.plugins;
 
@@ -675,6 +679,7 @@ If you create this Mojo in '+++${basedir}+++' under 'src/main/java' in
 the previous section and run +mvn install+, you should be able to
 invoke this goal directly from the command-line with:
 
+[source,shell script]
 ----
 $ mvn org.sonatype.mavenbook.plugins:first-maven-plugin:1.0-SNAPSHOT:echo
 ----
@@ -686,6 +691,7 @@ default message: "Hello Maven World...". If you want to customize the
 message, you can pass the value of the message parameter with the
 following command-line:
 
+[source,shell script]
 ----
 $ mvn org.sonatype.mavenbook.plugins:first-maven-plugin:1.0-SNAPSHOT:echo \
       -Decho.message="The Eagle has Landed"
@@ -701,6 +707,7 @@ Specifying the +groupId+, +artifactId+, +version+, and +goal+ on the
 command-line is cumbersome. To address this, Maven assigns a plugin a
 prefix. Instead of typing:
 
+[source,shell script]
 ----
 $ mvn org.apache.maven.plugins:maven-jar-plugin:2.2:jar
 ----
@@ -731,6 +738,7 @@ shows a snippet of the 'maven-metadata-central.xml' file from the
 
 [[ex-maven-metadata]]
 .Maven Metadata for the Maven Plugin Group
+[source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
@@ -777,6 +785,7 @@ scans for Maven plugins.
 
 [[ex-plugin-groups]]
 .Customizing the Plugin Groups in Maven Settings
+[source,xml]
 ----
 <settings>
     ...
@@ -813,6 +822,7 @@ following build element to the +first-maven-plugin+ project's
 
 [[ex-plugin-prefix]]
 .Configuring a Plugin Prefix
+[source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?><project>
     <modelVersion>4.0.0</modelVersion>
@@ -1064,6 +1074,7 @@ configuration and topics surrounding Mojo parameters.
 In EchoMojo we declared the message parameter with the following
 annotations:
 
+[source,java]
 ----
 /**
 * Any Object to print out.
@@ -1095,6 +1106,7 @@ $ mvn first:echo -Decho.message="Hello Everybody"
 We could also specify the value of this message parameter, by setting
 a property in our POM or in our 'settings.xml'.
 
+[source,xml]
 ----
 <project>
     ...
@@ -1110,6 +1122,7 @@ directly, we could use the following build configuration. The
 following configuration bypasses the echo.message property and
 populates the Mojo parameter in plugin configuration.
 
+[source,xml]
 ----
 <project>
     ...
@@ -1133,6 +1146,7 @@ lifecycle, and we wanted to customize the message parameter for each
 execution separately, we could configure the parameter value at the
 execution level in a POM like this:
 
+[source,xml]
 ----
 <build>
     <plugins>
@@ -1189,6 +1203,7 @@ that creates a ZIP file.
 
 [[ex-plugin-multivalue]]
 .A Plugin with Multi-valued Parameters
+[source,java]
 ----
 package org.sonatype.mavenbook.plugins
 
@@ -1197,56 +1212,53 @@ package org.sonatype.mavenbook.plugins
 * @goal zip
 * @phase package
 */
-public class ZipMojo extends AbstractMojo
-{
-/**
-* The Zip archiver.
-* @parameter \
-expression="${component.org.codehaus.plexus.archiver.Archiver#zip}"
-*/
-private ZipArchiver zipArchiver;
+public class ZipMojo extends AbstractMojo {
+    /**
+    * The Zip archiver.
+    * @parameter \
+    expression="${component.org.codehaus.plexus.archiver.Archiver#zip}"
+    */
+    private ZipArchiver zipArchiver;
 
-/**
-* Directory containing the build files.
-* @parameter expression="${project.build.directory}"
-*/
-private File buildDirectory;
+    /**
+    * Directory containing the build files.
+    * @parameter expression="${project.build.directory}"
+    */
+    private File buildDirectory;
 
-/**
-* Base directory of the project.
-* @parameter expression="${basedir}"
-*/
-private File baseDirectory;
+    /**
+    * Base directory of the project.
+    * @parameter expression="${basedir}"
+    */
+    private File baseDirectory;
 
-/**
-* A set of file patterns to include in the zip.
-* @parameter alias="includes"
-*/
-private String[] mIncludes;
+    /**
+    * A set of file patterns to include in the zip.
+    * @parameter alias="includes"
+    */
+    private String[] mIncludes;
 
-/**
-* A set of file patterns to exclude from the zip.
-* @parameter alias="excludes"
-*/
-private String[] mExcludes;
+    /**
+    * A set of file patterns to exclude from the zip.
+    * @parameter alias="excludes"
+    */
+    private String[] mExcludes;
 
-public void setExcludes( String[] excludes ) { mExcludes = excludes; }
+    public void setExcludes( String[] excludes ) { mExcludes = excludes; }
 
-public void setIncludes( String[] includes ) { mIncludes = includes; }
+    public void setIncludes( String[] includes ) { mIncludes = includes; }
 
-public void execute()
-throws MojoExecutionException
-{
-try {
-zipArchiver.addDirectory( buildDirectory, includes, excludes );
-zipArchiver.setDestFile( new File( baseDirectory, "output.zip" ) );
-zipArchiver.createArchive();
-} catch( Exception e ) {
-throw new MojoExecutionException( "Could not zip", e );
+    public void execute() throws MojoExecutionException {
+        try {
+            zipArchiver.addDirectory( buildDirectory, includes, excludes );
+            zipArchiver.setDestFile( new File( baseDirectory, "output.zip" ) );
+            zipArchiver.createArchive();
+        }
+        catch( Exception e ) {
+           throw new MojoExecutionException( "Could not zip", e );
+        }
+    }
 }
-}
-}
-
 ----
 
 To configure a multi-valued Mojo parameter, you use a series of
@@ -1257,6 +1269,7 @@ an element +excludes+ with child elements +exclude+. To configure the
 +ZipMojo+ to ignore all files ending in +.txt+ and all files ending in
 a tilde, you would use the following plugin configuration.
 
+[source,xml]
 ----
 <project>
     ...
@@ -1288,6 +1301,7 @@ on a Plexus component using the +@parameter+ annotation, this
 dependency could be declared using the +@component+ annotation.
 
 .Depending on a Plexus Component
+[source,java]
 ----
 /**
 * The Zip archiver.
@@ -1418,6 +1432,7 @@ following 'lifecycle.xml' declares a lifecycle named +zipcycle+ that
 contains only the +zip+ goal in a +package+ phase.
 
 .Define a Custom Lifecycle in lifecycle.xml
+[source,xml]
 ----
 <lifecycles>
     <lifecycle>
@@ -1444,19 +1459,17 @@ annotation to tell Maven to step through the +zipcycle+ lifecycle when
 the +ZipForkMojo+ is executed.
 
 .Forking a Custom Lifecycle from a Mojo
+[source,java]
 ----
 /**
 * Forks a zip lifecycle.
 * @goal zip-fork
 * @execute lifecycle="zipcycle" phase="package"
 */
-public class ZipForkMojo extends AbstractMojo
-{
-public void execute()
-throws MojoExecutionException
-{
-getLog().info( "doing nothing here" );
-}
+public class ZipForkMojo extends AbstractMojo {
+    public void execute() throws MojoExecutionException {
+        getLog().info( "doing nothing here" );
+    }
 }
 ----
 
@@ -1464,6 +1477,7 @@ Running the +ZipForkMojo+ will fork the lifecycle. If you've
 configured your plugin to execute with the goal prefix +zip+, running
 +zip-fork+ should produce something similar to the following output.
 
+[source,shell script]
 ----
 $ mvn zip:zip-fork
 [INFO] Scanning for projects...
@@ -1516,6 +1530,7 @@ with a phase using a comma delimited list.
 
 [[ex-override-lifecycle]]
 .Overriding the Default Lifecycle
+[source,xml]
 ----
 <component-set>
     <components>
@@ -1550,6 +1565,7 @@ Mojos to execute, it will look for the 'components.xml' under
 your project.
 
 .Configuring a Plugin as an Extension
+[source,xml]
 ----
 <project>
     ...

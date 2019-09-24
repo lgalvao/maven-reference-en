@@ -19,8 +19,9 @@ If you redistribute this work on a web page, you must include the
 following link with the URL in the about attribute listed on a single
 line (remove the backslashes and join all URL parameters):
 
+[source,xhtml]
 ----
-<div xmlns:cc="http://creativecommons.org/ns#" 
+<div xmlns:cc="http://creativecommons.org/ns#"
      about="http://creativecommons.org/license/results-one?q_1=2&q_1=1\
             &field_commercial=n&field_derivatives=n&field_jurisdiction=us\
             &field_format=StillImage&field_worktitle=Repository%3A+\Management\

@@ -33,6 +33,7 @@ Archetype plugin via the command-line or with m2eclipse.
 The following command line can be used to generate a project from the
 quickstart archetype.
 
+[source,bash]
 ----
 mvn archetype:generate \
 -DgroupId=org.sonatype.mavenbook \
@@ -105,6 +106,7 @@ the default value of the parameter +interactiveMode+ is +true+, all
 you have to do to generate a new Maven project is run +mvn
 archetype:generate+.
 
+[source,bash]
 ----
 $ mvn archetype:generate
 [INFO] ------------------------------------------------------------------------
@@ -178,7 +180,7 @@ new project:
 * version
 * package
 
-----
+[source]
 Define value for groupId: : +org.sonatype.mavenbook+   
 Define value for artifactId: : +quickstart+
 Define value for version:  1.0-SNAPSHOT: : +1.0-SNAPSHOT+ 
@@ -195,7 +197,7 @@ Once this interactive portion of the +archetype:generate+ goal
 execution is finished, the Maven Archetype plugin will generate the
 project in a directory named after the +artifactId+ you supplied.
 
-----
+[source,bash]
 [INFO] Parameter: groupId, Value: org.sonatype.mavenbook
 [INFO] Parameter: packageName, Value: org.sonatype.mavenbook
 [INFO] Parameter: basedir, Value: /Users/tobrien/tmp
@@ -348,6 +350,7 @@ and persistence logic from the web front-end. Here's an example from
 generating a project to running a web application for the modular
 Spring MVC application:
 
+[source,log]
 ----
 $ mvn archetype:generate \
 -DarchetypeArtifactId=appfuse-modular-spring \
@@ -430,10 +433,10 @@ of Java", Wicket is a contrarian approach to the design and assembly
 of web applications. To generate a Wicket project with the Maven
 Archetype plugin:
 
+[source,bash]
 ----
 $ mvn archetype:generate
-... (select the "wicket-archetype-quickstart" artifact from the interactive \
-menu) ...
+... (select the "wicket-archetype-quickstart" artifact from the interactive menu) ...
 ... (supply a groupId, artifactId, version, package) ...
 ... (assuming the artifactId is "ex-wicket") ...
 $ cd ex-wicket
@@ -478,6 +481,7 @@ http://cocoon.apache.org/archetype-catalog.xml[http://cocoon.apache.org/archetyp
 
 [[archetypes-cocoon-catalog]]
 .Archetype Catalog for the Apache Cocoon Project
+[source.xml]
 ----
 <archetype-catalog>
     <archetypes>
@@ -517,6 +521,7 @@ from the command line with no arguments, the Archetype plugin will
 crawl your local repository searching for Archetypes and it will
 create an archetype-catalog.xml in ~/.m2/repository.
 
+[source,bash]
 ----
 [tobrien@MACBOOK repository]$ mvn archetype:crawl
 [INFO] Scanning for projects...
@@ -558,6 +563,7 @@ The following command line assumes that you are trying to generate a
 catalog file in /var/www/html/archetype-catalog.xml for a repository
 hosted in /var/www/html/maven2.
 
+[source,bash]
 ----
 $ mvn archetype:crawl -Dcatalog=/var/www/html/archetype-catalog.xml \
 [INFO] Scanning for projects...

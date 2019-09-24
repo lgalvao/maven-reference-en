@@ -197,6 +197,7 @@ To enable a Maven based build of an Android project a pom.xml has to
 be added in the root folder of the project:
 
 .The HelloFlashlight pom.xml file
+[source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
@@ -340,6 +341,7 @@ an add on you just have to add the respective dependency to your pom
 file.
 
 .The dependency to the Google Maps API
+[source,xml]
 ----
 <dependency>
     <groupId>com.google.android.maps</groupId>
@@ -353,6 +355,7 @@ Another common add-on is the compatibility library. It needs to be
 included in the produced apk and there does not have provided scope.
 
 .The dependency to the compatibility library for API v4 and up
+[source,xml]
 ----
 <dependency>
   <groupId>android.support</groupId>
@@ -406,6 +409,7 @@ Regular dependencies to other Java libraries::
   Android package. All other files are included as contained in the
   source library. An example would look like this
 
+[source,xml]
 ----
 <dependency>
     <groupId>com.simpligility</groupId>
@@ -420,6 +424,7 @@ Dependencies to other Android projects::
    dependencies are deployed to the emulator prior to running the
    instrumentation tests in the integration test phase.
 
+[source,xml]
 ----
 <dependency>
     <groupId>com.simpligility.android</groupId>
@@ -436,6 +441,7 @@ Dependencies to other Android projects' sources::
    with assets and resources and used to build an application
    combining all artifacts including resources.
 
+[source,xml]
 ----
 <dependency>
     <groupId>com.simpligility.android</groupId>
@@ -501,6 +507,7 @@ configuration, as properties defined in the pom or settings file or as
 command line parameters.
 
 .An example of a plugin configuration
+[source,xml]
 ----
 <configuration>
     <sdk>
@@ -514,6 +521,7 @@ command line parameters.
 ----
 
 .Configuration as properties in pom.xml
+[source,xml]
 ----
 <properties>
     <android.emulator.avd>21</android.emulator.avd>
@@ -521,6 +529,7 @@ command line parameters.
 ----
 
 .Configuration on command line invocation
+[source,bash]
 ----
 mvn android:emulator-start -Dandroid.emulator.avd=21
 ----

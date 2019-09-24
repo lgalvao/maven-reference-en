@@ -1,5 +1,5 @@
 [[appendix-settings]]
-== Appendix: Settings Details
+pip install asciidoc3== Appendix: Settings Details
 
 [[appendix-settings-sect-quick-overview]]
 === Quick Overview

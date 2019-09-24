@@ -49,20 +49,18 @@ command line option:
 
 Executing Maven with this option produces the following output:
 
+[source,shell script]
 ----
 $ mvn --help
 
 usage: mvn [options] [<goal(s)>] [<phase(s)>]
 
 Options:
--am,--also-makeIf project list is specified, also
-build projects required by the
-list
--amd,--also-make-dependentsIf project list is specified, also
-build projects that depend on
-projects on the list
--B,--batch-modeRun in non-interactive (batch)
-mode
+-am,--also-make
+    If project list is specified, also build projects required by the list
+-amd,--also-make-dependents
+    If project list is specified, also build projects that depend on projects on the list
+-B,--batch-modeRun in non-interactive (batch) mode
 ...
 ----
 
@@ -105,6 +103,7 @@ continuous build environment and you need to know what version of
 Maven was used for a particular build.
 
 .Maven Version Information
+[source,shell script]
 ----
 $ mvn -v
 Apache Maven 2.2.1 (r801777; 2009-08-06 14:16:01-0500)
@@ -413,6 +412,7 @@ projects. If you only wanted Maven to build the +sample-rest+ and
 +sample-client-connector+ project, you would use the following syntax
 from the 'sample-parent/' directory:
 
+[source,shell script]
 ----
 $ mvn --projects sample-client-connector,sample-rest install
 [INFO] Scanning for projects...
@@ -437,6 +437,7 @@ shown in <<ex-running-aro-order>> and you were only interested in
 working on the +sample-services+ project, you would run +mvn -pl
 simple-services -am+ to build only those projects
 
+[source,shell script]
 ----
 $ mvn --projects sample-services --also-make install
 [INFO] Scanning for projects...
@@ -463,6 +464,7 @@ your changes to +sample-services+ did not introduce any errors into
 the projects that directly or indirectly depend on +sample-services+,
 you would run the following command:
 
+[source,shell script]
 ----
 $ mvn --projects sample-services --also-make-dependents install
 [INFO] Scanning for projects...
@@ -482,6 +484,7 @@ build as shown in <<running-sect-make-subset>>. Combining +--project+,
 refine your build even further. The +-rf+ or +--resume-from+ resumes
 the build from a specific point in the Reactor build order.
 
+[source,shell script]
 ----
 $ mvn --projects sample-webapp --also-make \
       --resume-from sample-services install
@@ -556,6 +559,7 @@ a plugin you wish to investigate, passing in either the plugin prefix
 the following command uses the Help plugin's +describe+ goal to print
 out information about the Maven Help plugin.
 
+[source,shell script]
 ----
 $ mvn help:describe -Dplugin=help
 ...
@@ -580,6 +584,7 @@ usually be looking for more detail than this. If you want the Help
 plugin to print a full list of goals with parameters, execute the
 +help:describe+ goal with the parameter +full+ as follows:
 
+[source,shell script]
 ----
 $ mvn help:describe -Dplugin=help -Dfull
 ...
@@ -640,5 +645,6 @@ lists all of the information about the Compiler plugin's +compile+
 goal.
 
 ----
+[source,shell script]
 $ mvn help:describe -Dplugin=compiler -Dmojo=compile -Dfull
 ----
