@@ -4,42 +4,29 @@
 [[resource-filtering-sect-intro]]
 === Introduction
 
-Throughout this book, you will notice references to properties which
-can be used in a POM file. Sibling dependencies in a multi-project
-build can be referenced using the '+++${project.groupId}+++' and
-'+++${project.version}+++' properties and any part of the POM can be
-referenced by prefixing the variable name with "project.". Environment
-variables and Java System properties can be referenced, as well as
-values from your '~/.m2/settings.xml' file. What you haven't seen yet
-is an enumeration of the possible property values and some discussion
-about how they can be used to help you create portable builds. This
-chapter provides such an enumeration.
+Throughout this book, you will notice references to properties which can be used in a POM file.
+Sibling dependencies in a multi-project build can be referenced using the '+++${project.groupId}+++' and '+++${project.version}+++' properties and any part of the POM can be referenced by prefixing the variable name with "project.".
+Environment variables and Java System properties can be referenced, as well as values from your '~/.m2/settings.xml' file.
+What you haven't seen yet is an enumeration of the possible property values and some discussion about how they can be used to help you create portable builds.
+This chapter provides such an enumeration.
 
-If you've been using property references in your POM, you should also
-know that Maven has a feature called Resource Filtering which allows
-you to replace property references in any resource files stored under
-'src/main/resources'. By default this feature is disabled to prevent
-accidental replacement of property references. This feature can be
-used to target builds toward a specific platform and to externalize
-important build variables to properties files, POMs, or profiles. This
-chapter introduces the resource filtering feature and provides a brief
-discussion of how it can be used to create portable enterprise builds.
+If you've been using property references in your POM, you should also know that Maven has a feature called Resource Filtering which allows you to replace property references in any resource files stored under 'src/main/resources'.
+By default this feature is disabled to prevent accidental replacement of property references.
+This feature can be used to target builds toward a specific platform and to externalize important build variables to properties files, POMs, or profiles.
+This chapter introduces the resource filtering feature and provides a brief discussion of how it can be used to create portable enterprise builds.
 
 [[resource-filtering-sect-properties]]
 === Maven Properties
 
-You can use Maven properties in a 'pom.xml' file or in any resource
-that is being processed by the Maven Resource plugin's filtering
-features. A property is always surrounded by '+++${+++' and
-'+++}+++'. For example, to reference the +project.version+ property,
-one would write:
+You can use Maven properties in a 'pom.xml' file or in any resource that is being processed by the Maven Resource plugin's filtering features.
+A property is always surrounded by '+++${+++' and '+++}+++'.
+For example, to reference the +project.version+ property, one would write:
 
 ----
 1.0 
 ----
 
-There are some implicit properties available in any Maven project,
-these implicit properties are:
+There are some implicit properties available in any Maven project, these implicit properties are:
 
 +project.*+::
 
@@ -61,30 +48,22 @@ System Properties::
    Any property which can be retrieved from the +System.getProperty()+
    method can be referenced as a Maven property.
 
-In addition to the implicit properties listed above, a Maven POM,
-Maven Settings, or a Maven Profile can define a set of arbitrary,
-user-defined properties. The following sections provide some detail on
-the various properties available in a Maven project.
+In addition to the implicit properties listed above, a Maven POM, Maven Settings, or a Maven Profile can define a set of arbitrary, user-defined properties.
+The following sections provide some detail on the various properties available in a Maven project.
 
 [[resource-filtering-sect-project-properties]]
 ==== Maven Project Properties
 
-When a Maven Project Property is referenced, the property name is
-referencing a property of the Maven Project Object Model
-(POM). Specifically, you are referencing a property of the
-+org.apache.maven.model.Model+ class which is being exposed as the
-implicit variable +project+. When you reference a property using this
-implicit variable, you are using simple dot notation to reference a
-bean property of the +Model+ object. For example, when you reference
-'+++${project.version}+++', you are really invoking the +getVersion()+
-method on the instance of +Model+ that is being exposed as +project+.
+When a Maven Project Property is referenced, the property name is referencing a property of the Maven Project Object Model (POM).
+Specifically, you are referencing a property of the +org.apache.maven.model.Model+ class which is being exposed as the implicit variable +project+.
+When you reference a property using this implicit variable, you are using simple dot notation to reference a bean property of the +Model+ object.
+For example, when you reference '+++${project.version}+++', you are really invoking the +getVersion()+ method on the instance of +Model+ that is being exposed as +project+.
 
-The POM is also represented in the 'pom.xml' document present in all
-Maven projects. Anything in a Maven POM can be referenced with a
-property. A complete reference for the POM structure is available at
+The POM is also represented in the 'pom.xml' document present in all Maven projects.
+Anything in a Maven POM can be referenced with a property.
+A complete reference for the POM structure is available at
 http://maven.apache.org/ref/3.0.3/maven-model/maven.html[http://maven.apache.org/ref/3.0.3/maven-model/maven.html].
-The following list shows some common property references from the
-Maven project.
+The following list shows some common property references from the Maven project.
 
 +project.groupId+ and +project.version+::
 
@@ -138,12 +117,7 @@ Maven project.
 * project.build.testOutputDirectory
 * project.build.directory
 
-+sourceDirectory+, +scriptSourceDirectory+, and +testSourceDirectory+
-provide access to the source directories for the
-project. +outputDirectory+ and +testOutputDirectory+ provide access to
-the directories where Maven is going to put bytecode or other build
-output. +directory+ refers to the directory which contains all of
-these output directories.
++sourceDirectory+, +scriptSourceDirectory+, and +testSourceDirectory+ provide access to the source directories for the project. +outputDirectory+ and +testOutputDirectory+ provide access to the directories where Maven is going to put bytecode or other build output. +directory+ refers to the directory which contains all of these output directories.
 
 +project.baseUri+::
 
@@ -158,40 +132,29 @@ Other Project Property references::
    reference for the POM structure is available at
    http://maven.apache.org/ref/3.0.3/maven-model/maven.html[http://maven.apache.org/ref/3.0.3/maven-model/maven.html].
 
-For a full list of properties available on the Maven +Model+ object,
-take a look at the JavaDoc for the +maven-model+ project here
-http://maven.apache.org/ref/3.0.3/maven-model/apidocs/index.html[http://maven.apache.org/ref/3.0.3/maven-model/apidocs/index.html]. Once
-you load this JavaDoc, take a look at the +Model+ class. From this
-+Model+ class JavaDoc, you should be able to navigate to the POM
-property you wish to reference. If you needed to reference the output
-directory of the build, you can use the Maven Model JavaDoc to see
-that the output directory is referenced via
-+model.getBuild().getOutputDirectory()+; this method call would be
-translated to the Maven property reference
-'+++${project.build.outputDirectory}+++'.
+For a full list of properties available on the Maven +Model+ object, take a look at the JavaDoc for the +maven-model+ project here
+http://maven.apache.org/ref/3.0.3/maven-model/apidocs/index.html[http://maven.apache.org/ref/3.0.3/maven-model/apidocs/index.html].
+Once you load this JavaDoc, take a look at the +Model+ class.
+From this +Model+ class JavaDoc, you should be able to navigate to the POM property you wish to reference.
+If you needed to reference the output directory of the build, you can use the Maven Model JavaDoc to see that the output directory is referenced via +model.getBuild().getOutputDirectory()+; this method call would be translated to the Maven property reference '+++${project.build.outputDirectory}+++'.
 
-For more information about the Maven Model module, the module which
-defines the structure of the POM, see the Maven Model project page at
+For more information about the Maven Model module, the module which defines the structure of the POM, see the Maven Model project page at
 http://maven.apache.org/ref/3.0.3/maven-model[http://maven.apache.org/ref/3.0.3/maven-model].
 
 [[resource-filtering-sect-settings-properties]]
 ==== Maven Settings Properties
 
-You can also reference any properties in the Maven Local Settings file
-which is usually stored in '~/.m2/settings.xml'. This file contains
-user-specific configuration such as the location of the local
-repository and any servers, profiles, and mirrors configured by a
-specific user.
+You can also reference any properties in the Maven Local Settings file which is usually stored in '~/.m2/settings.xml'.
+This file contains user-specific configuration such as the location of the local repository and any servers, profiles, and mirrors configured by a specific user.
 
-A full reference for the Local Settings file and corresponding
-properties is available here
+A full reference for the Local Settings file and corresponding properties is available here
 http://maven.apache.org/ref/3.0.3/maven-settings/settings.html[http://maven.apache.org/ref/3.0.3/maven-settings/settings.html].
 
 [[resource-filtering-sect-enviroment-variable]]
 ==== Environment Variable Properties
 
-Environment variables can be referenced with the env.* prefix. Some
-interesting environment variables are listed in the following list:
+Environment variables can be referenced with the env.* prefix.
+Some interesting environment variables are listed in the following list:
 
 +env.PATH+::
 
@@ -216,19 +179,16 @@ interesting environment variables are listed in the following list:
 
    Contains the Maven 2 installation directory.
 
-While they are available, you should always use the Java System
-properties if you have the choice. If you need a user's home directory
-use '+++${user.home}+++' instead of '+++${env.HOME}+++'. If you do
-this, you'll end up with a more portable build that is more likely to
-adhere to the Write-Once-Run-Anywhere (WORA) promise of the Java
-platform.
+While they are available, you should always use the Java System properties if you have the choice.
+If you need a user's home directory use '+++${user.home}+++' instead of '+++${env.HOME}+++'.
+If you do this, you'll end up with a more portable build that is more likely to adhere to the Write-Once-Run-Anywhere (WORA) promise of the Java platform.
 
 [[resource-filtering-sect-system-properties]]
 ==== Java System Properties
 
-Maven exposes all properties from +java.lang.System+. Anything you can
-retrieve from +System.getProperty()+ you can reference in a Maven
-property. The following table lists available properties:
+Maven exposes all properties from +java.lang.System+.
+Anything you can retrieve from +System.getProperty()+ you can reference in a Maven property.
+The following table lists available properties:
 
 .Java System Properties
 |=======
@@ -263,15 +223,11 @@ property. The following table lists available properties:
 [[resource-filtering-sect-user-defined]]
 ==== User-defined Properties
 
-In addition to the implicit properties provided by the POM, Maven
-Settings, environment variables, and the Java System properties, you
-have the ability to define your own arbitrary properties. Properties
-can be defined in a POM or in a Profile. The properties set in a POM
-or in a Maven Profile can be referenced just like any other property
-available throughout Maven. User-defined properties can be referenced
-in a POM, or they can be used to filter resources via the Maven
-Resource plugin. Here's an example of defining some arbitrary
-properties in a Maven POM.
+In addition to the implicit properties provided by the POM, Maven Settings, environment variables, and the Java System properties, you have the ability to define your own arbitrary properties.
+Properties can be defined in a POM or in a Profile.
+The properties set in a POM or in a Maven Profile can be referenced just like any other property available throughout Maven.
+User-defined properties can be referenced in a POM, or they can be used to filter resources via the Maven Resource plugin.
+Here's an example of defining some arbitrary properties in a Maven POM.
 
 .User-defined Properties in a POM
 [source,xml]
@@ -294,12 +250,10 @@ properties in a Maven POM.
 </project>
 ----
 
-The previous example defines two properties: +arbitrary.property.a+
-and +hibernate.version+. The +hibernate.version+ is referenced in a
-dependency declaration. Using the period character as a separator in
-property names is a standard practice throughout Maven POMs and
-Profiles. The next example shows you how to define a property in a
-profile from a Maven POM.
+The previous example defines two properties: +arbitrary.property.a+ and +hibernate.version+.
+The +hibernate.version+ is referenced in a dependency declaration.
+Using the period character as a separator in property names is a standard practice throughout Maven POMs and Profiles.
+The next example shows you how to define a property in a profile from a Maven POM.
 
 .User-defined Properties in a Profile in a POM
 [source,xml]
@@ -318,44 +272,25 @@ profile from a Maven POM.
 </project>
 ----
 
-The previous example demonstrates the process of defining a
-user-defined property in a profile from a Maven POM. For more
-information about user-defined properties and profiles, see
+The previous example demonstrates the process of defining a user-defined property in a profile from a Maven POM. For more information about user-defined properties and profiles, see
 <<profiles>>.
 
 [[resource-filtering-sect-description]]
 === Resource Filtering
 
-You can use Maven to perform variable replacement on project
-resources. When resource filtering is activated, Maven will scan
-resources for property references surrounded by '+++${+++' and
-'+++}+++'. When it finds these references it will replace them with
-the appropriate value in much the same way the properties defined in
-the previous section can be referenced from a POM. This feature is
-especially helpful when you need to parameterize a build with
-different configuration values depending on the target deployment
-platform.
+You can use Maven to perform variable replacement on project resources.
+When resource filtering is activated, Maven will scan resources for property references surrounded by '+++${+++' and '+++}+++'.
+When it finds these references it will replace them with the appropriate value in much the same way the properties defined in the previous section can be referenced from a POM. This feature is especially helpful when you need to parameterize a build with different configuration values depending on the target deployment platform.
 
-Often a '.properties' file or an XML document in 'src/main/resources'
-will contain a reference to an external resource such as a database or
-a network location which needs to be configured differently depending
-on the target deployment environment. For example, a system which
-reads data from a database has an XML document which contains the JDBC
-URL along with credentials for the database. If you need to use a
-different database in development and a different database in
-production. You can either use a technology like JNDI to externalize
-the configuration from the application in an application server, or
-you can create a build which knows how to replace variables with
-different values depending on the target platform.
+Often a '.properties' file or an XML document in 'src/main/resources' will contain a reference to an external resource such as a database or a network location which needs to be configured differently depending on the target deployment environment.
+For example, a system which reads data from a database has an XML document which contains the JDBC URL along with credentials for the database.
+If you need to use a different database in development and a different database in production.
+You can either use a technology like JNDI to externalize the configuration from the application in an application server, or you can create a build which knows how to replace variables with different values depending on the target platform.
 
-Using Maven resource filtering you can reference Maven properties and
-then use Maven profiles to define different configuration values for
-different target deployment environments. To illustrate this feature,
-assume that you have a project which uses the Spring Framework to
-configure a +BasicDataSource+ from the
-http://commons.apache.org/dbcp[Commons DBCP] project. Your project may
-contain a file in 'src/main/resources' named 'applicationContext.xml'
-which contains the XML listed in <<ex-filter-spring>>.
+Using Maven resource filtering you can reference Maven properties and then use Maven profiles to define different configuration values for different target deployment environments.
+To illustrate this feature, assume that you have a project which uses the Spring Framework to configure a +BasicDataSource+ from the
+http://commons.apache.org/dbcp[Commons DBCP] project.
+Your project may contain a file in 'src/main/resources' named 'applicationContext.xml' which contains the XML listed in <<ex-filter-spring>>.
 
 [[ex-filter-spring]]
 .Referencing Maven Properties from a Resource
@@ -380,15 +315,9 @@ which contains the XML listed in <<ex-filter-spring>>.
 </beans>
 ----
 
-Your program would read this file at runtime, and your build is going
-to replace the references to properties like +jdbc.url+ and
-+jdbc.username+ with the values you defined in your pom.xml. Resource
-filtering is disabled by default to prevent any unintentional resource
-filtering. To turn on resource filtering, you need to use the
-+resources+ child element of the build element in a
-POM. <<ex-filter-pom>> shows a POM which defines the variables
-referenced in <<ex-filter-spring>> and which activates resource
-filtering for every resource under 'src/main/resources'.
+Your program would read this file at runtime, and your build is going to replace the references to properties like +jdbc.url+ and +jdbc.username+ with the values you defined in your pom.xml.
+Resource filtering is disabled by default to prevent any unintentional resource filtering.
+To turn on resource filtering, you need to use the +resources+ child element of the build element in a POM. <<ex-filter-pom>> shows a POM which defines the variables referenced in <<ex-filter-spring>> and which activates resource filtering for every resource under 'src/main/resources'.
 
 [[ex-filter-pom]]
 .Defining Variables and Activating Resource Filtering
@@ -427,16 +356,11 @@ filtering for every resource under 'src/main/resources'.
 </project>
 ----
 
-The four variables are defined in the +properties+ element, and
-resource filtering is activated for resources under
-'src/main/resources'. Resource filtering is deactivated by default,
-and to activate it you must explicitly set +filtering+ to +true+ for
-the resources stored in your project. Filtering is deactivated by
-default to prevent accidental, unintentional filtering during your
-build. If you build a project with the resource from
-<<ex-filter-spring>> and the POM from <<ex-filter-pom>> and if you
-list the contents of the resource in target/classes, you should see
-that it contains the filtered resource:
+The four variables are defined in the +properties+ element, and resource filtering is activated for resources under 'src/main/resources'.
+Resource filtering is deactivated by default, and to activate it you must explicitly set +filtering+ to +true+ for the resources stored in your project.
+Filtering is deactivated by default to prevent accidental, unintentional filtering during your build.
+If you build a project with the resource from
+<<ex-filter-spring>> and the POM from <<ex-filter-pom>> and if you list the contents of the resource in target/classes, you should see that it contains the filtered resource:
 
 [source]
 ----
@@ -454,19 +378,11 @@ $ cat target/classes/applicationContext.xml
 ...
 ----
 
-The POM in <<ex-filter-pom>> also defines a +production+ profile under
-the +profiles/profile+ element which overrides the default properties
-with values that would be appropriate for a production environment. In
-this particular POM, the default values for the database connection
-are for a local MySQL database installed on a developer's
-machine. When the project is built with the production profile
-activated, Maven will configure the system to connect to a production
-Oracle database using a different driver class, URL, username, and
-password. If you build a project with the resource from
-<<ex-filter-spring>> and the POM from <<ex-filter-pom>> with the
-+production+ profile activated and if you list the contents of the
-resource in target/classes, you should see that it contains the
-filtered resource with production values:
+The POM in <<ex-filter-pom>> also defines a +production+ profile under the +profiles/profile+ element which overrides the default properties with values that would be appropriate for a production environment.
+In this particular POM, the default values for the database connection are for a local MySQL database installed on a developer's machine.
+When the project is built with the production profile activated, Maven will configure the system to connect to a production Oracle database using a different driver class, URL, username, and password.
+If you build a project with the resource from
+<<ex-filter-spring>> and the POM from <<ex-filter-pom>> with the +production+ profile activated and if you list the contents of the resource in target/classes, you should see that it contains the filtered resource with production values:
 
 [source]
 ----

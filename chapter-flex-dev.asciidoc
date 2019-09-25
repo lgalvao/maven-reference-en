@@ -459,7 +459,6 @@ Next, let's take a quick look at
 
 [[ex-flex-dev-lib-as]]
 .Flex Library Archetype's Sample App Class
-
 [source]
 ----
 package org.sonatype.test {
@@ -783,7 +782,7 @@ image::figs/web/flex-dev-arche-multimodule-fs.png[]
 The simple top-level POM in this multimodule project is shown in . It consists of module references to the swc, swf, and war modules.
 
 .Top-level POM Created by Modular Web Application Archetype
-[source, xml]
+[source,xml]
 ----
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -808,7 +807,7 @@ The swc project has a simple POM that resembles the POM shown in
 Note that the +artifactId+ in this POM differs from the name of the module directory and is +swc-swc+.
 
 .swc Module POM
-[source, xml]
+[source,xml]
 ----
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -914,7 +913,7 @@ Note that the following POM defines an +artifactId+ that differs from the direct
 
 [[ex-flex-swf-module-pom]]
 .swf module POM
-[source, xml]
+[source,xml]
 ----
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -1029,7 +1028,7 @@ Next, take a look at the simple POM in the war module.
 
 [[ex-flex-war-module-pom]]
 .war module POM
-[source, xml]
+[source,xml]
 ----
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -1100,7 +1099,7 @@ If your project has a +packaging+ of type +swc+ or +swf,+ the FlexMojos plugin w
 
 [[ex-flex-dev-extensions-true]]
 .Setting Plugin Extensions to True for Custom Flex Lifecycle
-[source, xml]
+[source,xml]
 ----
 <build>
     <sourceDirectory>src/main/flex</sourceDirectory>
@@ -1263,7 +1262,7 @@ For example, if you wanted the application with the POM shown in <<ex-flex-dev-a
 
 [[ex-flex-dev-customizing-compiler]]
 .Customizing the Compiler Plugin
-[source, xml]
+[source,xml]
 ----
 <build>
     <sourceDirectory>src/main/flex</sourceDirectory>
@@ -1329,7 +1328,7 @@ flexmojos:asdoc-report::
 To generate the +asdoc-report+ as part of your Maven site build, add the following XML to your POM:
 
 .Configuring the Actionscript Documentation Report
-[source, xml]
+[source,xml]
 ----
 <reporting>
     <plugins>
@@ -1361,7 +1360,7 @@ If you need to pass in any configuration options to the asdoc-report, you will n
 
 [[ex-flex-dev-config-asdoc-report]]
 .Configuring the asdoc-report
-[source, xml]
+[source,xml]
 ----
 <reporting>
     <plugins>

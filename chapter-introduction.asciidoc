@@ -30,14 +30,14 @@ Convention over configuration is a simple concept.
 Systems, libraries, and frameworks should assume reasonable defaults.
 Without requiring unnecessary configuration, systems should "just work".
 Popular frameworks such as http://www.rubyonrails.org/[Ruby on Rails] and EJB3 have started to adhere to these principles in reaction to the configuration complexity of frameworks such as the initial EJB 2.1 specifications.
-An illustration of convention over configuration is something like EJB3 persistence: all you need to do to make a particular bean persistent is to annotate that class with +@Entity+.
+An illustration of convention over configuration is something like EJB3 persistence: all you need to do to make a particular bean persistent is to annotate that class with `@Entity`.
 The framework assumes table and column names based on the name of the class and the names of the properties.
 Hooks are provided for you to override these default, assumed names if the need arises, but, in most cases, you will find that using the framework-supplied defaults results in faster project execution.
 
 Maven incorporates this concept by providing sensible default behavior for projects.
-Without customization, source code is assumed to be in '+++${basedir}/src/main/java+++' and resources are assumed to be in '+++${basedir}/src/main/resources+++'.
-Tests are assumed to be in '+++${basedir}/src/test+++', and a project is assumed to produce a JAR file.
-Maven assumes that you want the compile byte code to '+++${basedir}/target/classes+++' and then create a distributable JAR file in '+++${basedir}/target+++'.
+Without customization, source code is assumed to be in `+++${basedir}/src/main/java+++` and resources are assumed to be in `+++${basedir}/src/main/resources+++`.
+Tests are assumed to be in `+++${basedir}/src/test+++`, and a project is assumed to produce a JAR file.
+Maven assumes that you want the compile byte code to `+++${basedir}/target/classes+++` and then create a distributable JAR file in `+++${basedir}/target+++`.
 
 While this might seem trivial, consider the fact that most Ant-based builds have to define the locations of these directories.
 Ant doesn't ship with any built-in idea of where source code or resources might be in a project; you have to supply this information.
@@ -55,8 +55,7 @@ If you don't care to follow convention, Maven will allow you to customize defaul
 
 Before Maven provided a common interface for building software, every single project had someone dedicated to managing a fully customized build system.
 Developers had to take time away from developing software to learn about the idiosyncrasies of each new project they wanted to contribute to.
-In 2001, you'd have a completely different approach to building a project like
-http://turbine.apache.org/[Turbine] than you would to building a project like http://tomcat.apache.org[Tomcat].
+In 2001, you'd have a completely different approach to building a project like http://turbine.apache.org/[Turbine] than you would to building a project like http://tomcat.apache.org[Tomcat].
 If a new source code analysis tool came out that would perform static analysis on source code, or if someone developed a new unit testing framework, everybody would have to drop what they were doing and figure out how to fit it into each project's custom build environment.
 How do you run unit tests?
 There were a thousand different answers.
@@ -75,11 +74,11 @@ What libraries do I need to download?
 Where do I put them?
 What goals can I execute in the build?
 In the best case, it took a few minutes to figure out a new project's build, and in the worst cases (like the old Servlet API implementation in the Jakarta Project), a project's build was so difficult it would take multiple hours just to get to the point where a new contributor could edit source and compile the project.
-These days, you check it out from source, and you run +mvn install+.
+These days, you check it out from source, and you run `mvn install`.
 
 While Maven provides an array of benefits including dependency management and reuse of common build logic through plugins, the core reason why it has succeeded is that it has defined a common interface for building software.
 When you see that a project like
-http://wicket.apache.org[Apache ActiveMQ] uses Maven, you can assume that you'll be able to check it out from source and build it with +mvn install+ without much hassle.
+http://wicket.apache.org[Apache Wicket] uses Maven, you can assume that you'll be able to check it out from source and build it with `mvn install` without much hassle.
 You know where the ignition keys goes, you know that the gas pedal is on the right-side, and the brake is on the left.
 
 [[installation-sect-universal-reuse]]
@@ -89,7 +88,7 @@ The core of Maven is pretty dumb, it doesn't know how to do much beyond parsing 
 Maven has been designed to delegate most responsibility to a set of Maven Plugins which can affect the Maven Lifecycle and offer access to goals.
 Most of the action in Maven happens in plugin goals which take care of things like compiling source, packaging bytecode, publishing sites, and any other task which need to happen in a build.
 The Maven you download from Apache doesn't know much about packaging a WAR file or running JUnit tests; most of the intelligence of Maven is implemented in the plugins and the plugins are retrieved from the Maven Repository.
-In fact, the first time you ran something like +mvn install+ with a brand-new Maven installation it retrieved most of the core Maven plugins from the Central Maven Repository.
+In fact, the first time you ran something like `mvn install` with a brand-new Maven installation it retrieved most of the core Maven plugins from the Central Maven Repository.
 This is more than just a trick to minimize the download size of the Maven distribution, this is behavior which allows you to upgrade a plugin to add capability to your project's build.
 The fact that Maven retrieves both dependencies and plugins from the remote repository allows for universal reuse of build logic.
 
@@ -122,33 +121,21 @@ Maven is more than just a "build tool", it is more than just an improvement on t
 This definition of a model for every project enables such features as:
 
 Dependency Management::
-
-  Because a project is defined by a unique set of coordinates consisting of a group identifier, an artifact identifier, and a version, projects can now use these coordinates to declare dependencies.
+Because a project is defined by a unique set of coordinates consisting of a group identifier, an artifact identifier, and a version, projects can now use these coordinates to declare dependencies.
 
 Remote Repositories::
-
-  Related to dependency management, we can use the coordinates defined
-  in the Maven Project Object Model (POM) to create repositories of
-  Maven artifacts.
+Related to dependency management, we can use the coordinates defined in the Maven Project Object Model (POM) to create repositories of Maven artifacts.
 
 Universal Reuse of Build Logic::
-
-  Plugins contain logic that works with the descriptive data and
-  configuration parameters defined in Project Object Model (POM); they
-  are not designed to operate upon specific files in known locations.
+Plugins contain logic that works with the descriptive data and configuration parameters defined in Project Object Model (POM); they are not designed to operate upon specific files in known locations.
 
 Tool Portability / Integration::
-
-  Tools like Eclipse, NetBeans, and IntelliJ now have a common place
-  to find information about a project. Before the advent of Maven,
-  every IDE had a different way to store what was essentially a custom
-  Project Object Model (POM). Maven has standardized this description,
-  and while each IDE continues to maintain custom project files, they
-  can be easily generated from the model.
+Tools like Eclipse, NetBeans, and IntelliJ now have a common place to find information about a project.
+Before the advent of Maven, every IDE had a different way to store what was essentially a custom Project Object Model (POM).
+Maven has standardized this description, and while each IDE continues to maintain custom project files, they can be easily generated from the model.
 
 Easy Searching and Filtering of Project Artifacts::
-
-  Tools like Nexus allow you to index and search the contents of a repository using the information stored in the POM.
+Tools like Nexus allow you to index and search the contents of a repository using the information stored in the POM.
 
 [[installation-sect-mavenAlternativeAnt]]
 === Is Maven an alternative to XYZ?
@@ -162,10 +149,7 @@ Maven is more of a platform than a tool.
 While you could consider Maven an alternative to Ant, you are comparing apples to oranges.
 "Maven" includes more than just a build tool.
 
-This is the central point that makes all of the Maven vs.
-Ant, Maven vs.
-Buildr, Maven vs.
-Gradle arguments perhaps irrelevant.
+This is the central point that makes all of the Maven vs Ant, Maven vs Buildr, Maven vs Gradle arguments perhaps irrelevant.
 Maven isn't totally defined by the mechanics of your build system.
 It isn't about scripting the various tasks in your build as much as it is about encouraging a set of standards, a common interface, a life-cycle, a standard repository format, a standard directory layout, etc.
 It certainly isn't about what format the POM happens to be in (XML vs YAML vs Ruby).
@@ -183,8 +167,8 @@ The core tenets of Maven are declarative builds, dependency management, reposito
 The authors of this book have no interest in creating a feud between Apache Ant and Apache Maven, but we are also cognizant of the fact that most organizations have to make a decision between the two standard solutions: Apache Ant and Apache Maven.
 In this section, we compare and contrast the tools.
 
-Ant excels at build process, it is a build system modeled after +make+ with targets and dependencies.
-Each target consists of a set of instructions which are coded in XML. There is a +copy+ task and a +javac+ task as well as a +jar+ task.
+Ant excels at build process, it is a build system modeled after `make` with targets and dependencies.
+Each target consists of a set of instructions which are coded in XML. There is a `copy` task and a `javac` task as well as a `jar` task.
 When you use Ant, you supply Ant with specific instructions for compiling and packaging your output.
 Look at the following example of a simple 'build.xml' file:
 
@@ -232,37 +216,34 @@ Look at the following example of a simple 'build.xml' file:
 ----
 
 In this simple Ant example, you can see how you have to tell Ant exactly what to do.
-There is a compile goal which includes the +javac+ task that compiles the source in the 'src/main/java' directory to the 'target/classes' directory.
+There is a compile goal which includes the `javac` task that compiles the source in the 'src/main/java' directory to the 'target/classes' directory.
 You have to tell Ant exactly where your source is, where you want the resulting bytecode to be stored, and how to package this all into a JAR file.
 While there are some recent developments that help make Ant less procedural, a developer's experience with Ant is in coding a procedural language written in XML.
 
 Contrast the previous Ant example with a Maven example.
-In Maven, to create a JAR file from some Java source, all you need to do is create a simple 'pom.xml', place your source code in '+++${basedir}/src/main/java+++' and then run +mvn install+ from the command line.
-The example Maven 'pom.xml' that achieves the same results as the simple Ant file listed in <<ex-ant-sample>> is shown in
-<<ex-maven-sample>>.
+In Maven, to create a JAR file from some Java source, all you need to do is create a simple `pom.xml`, place your source code in `+++${basedir}/src/main/java+++` and then run `mvn install` from the command line.
+The example Maven `pom.xml` that achieves the same results as the simple Ant file listed in <<ex-ant-sample>>.
 
 [[ex-maven-sample]]
 .A Sample Maven pom.xml
 [source,xml]
-----
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.sonatype.mavenbook</groupId>
     <artifactId>my-project</artifactId>
     <version>1.0</version>
 </project>
-----
 
 That's all you need in your 'pom.xml'.
-Running +mvn install+ from the command line will process resources, compile source, execute unit tests, create a JAR, and install the JAR in a local repository for reuse in other projects.
-Without modification, you can run +mvn site+ and then find an 'index.html' file in 'target/site' that contains links to JavaDoc and a few reports about your source code.
+Running `mvn install` from the command line will process resources, compile source, execute unit tests, create a JAR, and install the JAR in a local repository for reuse in other projects.
+Without modification, you can run `mvn site` and then find an `index.html` file in `target/site` that contains links to JavaDoc and a few reports about your source code.
 
 Admittedly, this is the simplest possible example project containing nothing more than some source code and producing a simple JAR. It is a project which closely follows Maven conventions and doesn't require any dependencies or customization.
 If we wanted to start customizing the behavior, our 'pom.xml' is going to grow in size, and in the largest of projects you can see collections of very complex Maven POMs which contain a great deal of plugin customization and dependency declarations.
 But, even when your project's POM files become more substantial, they hold an entirely different kind of information from the build file of a similarly sized project using Ant.
-Maven POMs contain declarations: "This is a JAR project", and "The source code is in 'src/main/java'".
+Maven POMs contain declarations: "This is a JAR project", and "The source code is in `src/main/java` ".
 Ant build files contain explicit instructions:
-"This is project", "The source is in 'src/main/java'", "Run +javac+ against this directory", "Put the results in 'target/classes'", "Create a JAR from the ....", etc.
+"This is project", "The source is in `src/main/java` ", "Run `javac` against this directory", "Put the results in `target/classes` ", "Create a JAR from the ....", etc.
 Where Ant had to be explicit about the process, there was something "built-in" to Maven that just knew where the source code was and how it should be processed.
 
 The differences between Ant and Maven in this example are:
@@ -285,20 +266,19 @@ You have to attach a sequence of tasks to each goal manually.
 
 ** Maven has conventions.
 It knows where your source code is because you followed the convention.
-Maven's Compiler plugin puts the bytecode in 'target/classes', and it produces a JAR file in 'target'.
+Maven's Compiler plugin puts the bytecode in 'target/classes', and it produces a JAR file in `target`.
 
 ** Maven is declarative.
 All you had to do was create a 'pom.xml' file and put your source in the default directory.
 Maven took care of the rest.
 
-** Maven has a lifecycle which was invoked when you executed +mvn install+.
+** Maven has a lifecycle which was invoked when you executed `mvn install`.
 This command told Maven to execute a series of sequential lifecycle phases until it reached the install lifecycle phase.
 As a side-effect of this journey through the lifecycle, Maven executed a number of default plugin goals which did things like compile and create a JAR.
 
 Maven has built-in intelligence about common project tasks in the form of Maven plugins.
-If you wanted to write and execute unit tests, all you would need to do is write the tests, place them in '+++${basedir}/src/test/java+++', add a test-scoped dependency on either TestNG or JUnit, and run +mvn test+.
-If you wanted to deploy a web application and not a JAR, all you would need to do is change your project type to +war+ and put your docroot in '+++${basedir}/src/main/webapp+++'.
-
+If you wanted to write and execute unit tests, all you would need to do is write the tests, place them in `+++${basedir}/src/test/java+++`, add a test-scoped dependency on either TestNG or JUnit, and run `mvn test`.
+If you wanted to deploy a web application and not a JAR, all you would need to do is change your project type to `war` and put your docroot in `+++${basedir}/src/main/webapp+++`.
 
 Sure, you can do all of this with Ant, but you will be writing the instructions from scratch.
 In Ant, you would first have to figure out where the JUnit JAR file should be.

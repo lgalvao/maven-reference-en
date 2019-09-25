@@ -6,11 +6,11 @@ really just a single file you need to worry about:
 
 * book-mvnref.asciidoc
 
-Figures?  You want to add figures, look in the figs/web directory.
+Figures? You want to add figures, look in the figs/web directory.
 You'll see a lot of distracting files in that directory.  For now, you
 should just ignore them.  Actually, in general, you'll notice a number
 of distracting files in this project.  Really, just ignore them.  Once
-I figure out this new reality, I'd like for this project to simple
+I figure out this new reality, I'd like for this project to simply
 contain content.
 
 Q: Right, so how do you build the book?

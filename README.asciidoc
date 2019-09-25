@@ -41,11 +41,13 @@ Really, just ignore them or contact us directly if you need something.
 1. Install asciidoctor
 2. Install asciidoctor-pdf
 3. Run:
+
 ```bash
 asciidoctor-pdf book-mvnref.asciidoc
 ```
 
 ==== How to Build the Book
+
 I knew you'd ask that, and here's the simple answer:
 
 * Install asciidoc

@@ -3,25 +3,16 @@
 
 === Configuring Maven Plugins
 
-To customize the behavior of a Maven Plugin, you will need to
-configure the plugin in a project's POM. The following sections
-outline the various methods available for customizing a Maven plugin's
-configuration.
+To customize the behavior of a Maven Plugin, you will need to configure the plugin in a project's POM. The following sections outline the various methods available for customizing a Maven plugin's configuration.
 
 ==== Plugin Configuration Parameters
 
-Maven plugins are configured using properties that are defined by
-goals within a plugin. If you look at a goal like the +compile+ goal
-in the Maven Compiler Plugin you will see a list of configuration
-parameters like +source+, +target+, +compilerArgument+, +fork+,
-+optimize+, and many others. If you look at the +testCompile+ goal you
-will see a different list of configuration parameters for the
-+testCompile+ goal. If you are looking for details on the available
-plugin goal configuration parameters, you can use the Maven Help
-Plugin to describe a particular plugin or a particular plugin goal.
+Maven plugins are configured using properties that are defined by goals within a plugin.
+If you look at a goal like the +compile+ goal in the Maven Compiler Plugin you will see a list of configuration parameters like +source+, +target+, +compilerArgument+, +fork+, +optimize+, and many others.
+If you look at the +testCompile+ goal you will see a different list of configuration parameters for the +testCompile+ goal.
+If you are looking for details on the available plugin goal configuration parameters, you can use the Maven Help Plugin to describe a particular plugin or a particular plugin goal.
 
-To describe a particular plugin, use the +help:describe+ goal from the
-command line as follows:
+To describe a particular plugin, use the +help:describe+ goal from the command line as follows:
 
 [source,shell script]
 ----
@@ -34,8 +25,7 @@ Description: Compiles application sources
 Deprecated. No reason given
 ----
 
-For more information about the available configuration parameters, run
-the same command with the +-Ddetail+ argument:
+For more information about the available configuration parameters, run the same command with the +-Ddetail+ argument:
 
 [source,shell script]
 ----
@@ -153,10 +143,8 @@ Set to true to show messages about what the compiler is doing.
 Deprecated. No reason given
 ----
 
-If you need to get a list of plugin goals which are contained in a
-plugin, you can run the help:describe goal and pass in the plugin
-parameter. The plugin parameter accepts a plugin prefix or a +groupId+
-and an +artifactId+ for a plugin as shown in the following examples:
+If you need to get a list of plugin goals which are contained in a plugin, you can run the help:describe goal and pass in the plugin parameter.
+The plugin parameter accepts a plugin prefix or a +groupId+ and an +artifactId+ for a plugin as shown in the following examples:
 
 [source,shell script]
 ----
@@ -182,27 +170,20 @@ Description: Compiles application test sources
 Deprecated. No reason given
 ----
 
-You can use the +groupId+ and the +artifactId+ of the plugin and get
-the same list of plugin goals.
+You can use the +groupId+ and the +artifactId+ of the plugin and get the same list of plugin goals.
 
 [source,shell script]
 ----
 $ mvn help:describe -Dplugin=org.apache.maven.plugins:maven-compiler-plugin
 ----
 
-Passing the +-Ddetail+ argument to the +help:describe+ goal with the
-plugin parameter will cause Maven to print out all of the goals and
-all of the goal parameters for the entire plugin.
+Passing the +-Ddetail+ argument to the +help:describe+ goal with the plugin parameter will cause Maven to print out all of the goals and all of the goal parameters for the entire plugin.
 
 ==== Adding Plugin Dependencies
 
-If you need to configure a plugin to use specific versions of
-dependencies, you can define these dependencies under a dependencies
-element under plugin. When the plugin executes, it will execute with a
-classpath that contains these dependencies. <<ex-plugin-dependencies>>
-is an example of a plugin configuration that overrides default
-dependency versions and adds new dependencies to facilitate goal
-execution.
+If you need to configure a plugin to use specific versions of dependencies, you can define these dependencies under a dependencies element under plugin.
+When the plugin executes, it will execute with a classpath that contains these dependencies. <<ex-plugin-dependencies>>
+is an example of a plugin configuration that overrides default dependency versions and adds new dependencies to facilitate goal execution.
 
 [[ex-plugin-dependencies]]
 .Adding Dependencies to a Plugin
@@ -241,12 +222,9 @@ execution.
 
 ==== Setting Global Plugin Parameters
 
-To set a value for a plugin configuration parameter in a particular
-project, use the XML shown in
-<<ex-config-global-plugin-param>>. Unless this configuration is
-overridden by a more specific plugin parameter configuration, Maven
-will use the values defined directly under the +plugin+ element for
-all goals which are executed in this plugin.
+To set a value for a plugin configuration parameter in a particular project, use the XML shown in
+<<ex-config-global-plugin-param>>.
+Unless this configuration is overridden by a more specific plugin parameter configuration, Maven will use the values defined directly under the +plugin+ element for all goals which are executed in this plugin.
 
 [[ex-config-global-plugin-param]]
 .Configuring a Maven Plugin
@@ -265,13 +243,8 @@ all goals which are executed in this plugin.
 [[configuring-sect-exec-param]]
 ==== Setting Execution Specific Parameters
 
-You can configure plugin parameters for specific executions of a
-plugin goal. <<ex-config-plugin-exec-params>> shows an example of
-configuration parameters being passed to the execution of the run goal
-of the AntRun plugin during the validate phase. This specific
-execution will inherit the configuration parameters from the plugin's
-configuration element and merge them with the values defined for this
-particular execution.
+You can configure plugin parameters for specific executions of a plugin goal. <<ex-config-plugin-exec-params>> shows an example of configuration parameters being passed to the execution of the run goal of the AntRun plugin during the validate phase.
+This specific execution will inherit the configuration parameters from the plugin's configuration element and merge them with the values defined for this particular execution.
 
 [[ex-config-plugin-exec-params]]
 .Setting Configuration Parameters in an Execution
@@ -299,16 +272,10 @@ particular execution.
 
 ==== Setting Default Command Line Execution Parameters
 
-Starting with Maven 2.2.0, you can now supply configuration parameters
-for goals which are executed from the command-line. To do this, use
-the special execution id value of
-"default-cli". <<ex-configure-plugin-default-cli>> shows an example
-that binds the single goal to the package phase of the lifecycle which
-produces a binary distribution. This example also configures the
-+default-cli+ execution for the assembly plugin to use the
-+jar-with-dependencies+ assembly descriptor. The 'bin.xml' descriptor
-will be used during the lifecycle, and +jar-with-dependencies+ will be
-used when you execute +mvn assembly:assembly+ from the command line.
+Starting with Maven 2.2.0, you can now supply configuration parameters for goals which are executed from the command-line.
+To do this, use the special execution id value of "default-cli". <<ex-configure-plugin-default-cli>> shows an example that binds the single goal to the package phase of the lifecycle which produces a binary distribution.
+This example also configures the +default-cli+ execution for the assembly plugin to use the +jar-with-dependencies+ assembly descriptor.
+The 'bin.xml' descriptor will be used during the lifecycle, and +jar-with-dependencies+ will be used when you execute +mvn assembly:assembly+ from the command line.
 
 [[ex-configure-plugin-default-cli]]
 .Configuring Plugin Parameters for Command Line Execution
@@ -346,12 +313,8 @@ used when you execute +mvn assembly:assembly+ from the command line.
 
 ==== Setting Parameters for Goals Bound to Default Lifecycle
 
-Starting with Maven 2.2.0, if you need to customize the behavior of a
-goal which is already bound to the default lifecycle, you can use the
-execution id "default-<goal>". You can customize the behavior of the
-Jar plugin's jar goal which is bound to the package phase in the
-default lifecycle, and you can customize the configuration parameters
-of a separate goal execution if you follow the example shown in
+Starting with Maven 2.2.0, if you need to customize the behavior of a goal which is already bound to the default lifecycle, you can use the execution id "default-<goal>".
+You can customize the behavior of the Jar plugin's jar goal which is bound to the package phase in the default lifecycle, and you can customize the configuration parameters of a separate goal execution if you follow the example shown in
 <<ex-configure-default-param>>.
 
 [[ex-configure-default-param]]
@@ -386,18 +349,10 @@ of a separate goal execution if you follow the example shown in
 </plugin>
 ----
 
-In this example, the default jar goal is customized to exclude
-contents in a specific package. Another jar goal is bound to the
-package phase to create a JAR file which contains only the contents of
-a particular package in a classified JAR file.
+In this example, the default jar goal is customized to exclude contents in a specific package.
+Another jar goal is bound to the package phase to create a JAR file which contains only the contents of a particular package in a classified JAR file.
 
-Configuring the default goal execution parameters can also come in
-handy if you need to configure two goals bound to the default
-lifecycle with separate settings for the same configuration
-parameter. <<ex-configure-two-default-param>> shows an example that
-configures the default resources:resources goal to exclude empty
-directories while configuring the default resources:testResources goal
-to include empty directories.
+Configuring the default goal execution parameters can also come in handy if you need to configure two goals bound to the default lifecycle with separate settings for the same configuration parameter. <<ex-configure-two-default-param>> shows an example that configures the default resources:resources goal to exclude empty directories while configuring the default resources:testResources goal to include empty directories.
 
 [[ex-configure-two-default-param]]
 .Setting Two Default Goal Plugin Configuration Parameters

@@ -4,17 +4,14 @@ pip install asciidoc3== Appendix: Settings Details
 [[appendix-settings-sect-quick-overview]]
 === Quick Overview
 
-The settings element in the 'settings.xml' file contains elements used
-to define values which configure Maven execution. Settings in this
-file are settings which apply to many projects and which should not be
-bundled to any specific project, or distributed to an audience. These
-include values such as the local repository location, alternate remote
-repository servers, and authentication information. There are two
-locations where a 'settings.xml' file may live:
+The settings element in the 'settings.xml' file contains elements used to define values which configure Maven execution.
+Settings in this file are settings which apply to many projects and which should not be bundled to any specific project, or distributed to an audience.
+These include values such as the local repository location, alternate remote repository servers, and authentication information.
+There are two locations where a 'settings.xml' file may live:
 
 * Maven Installation Directory: '$M2_HOME/conf/settings.xml'
 
-*  User-specific Settings File: '~/.m2/settings.xml'  
+* User-specific Settings File: '~/.m2/settings.xml'
 
 Here is an overview of the top elements under settings:
 
@@ -44,9 +41,7 @@ Here is an overview of the top elements under settings:
 [[appendix-settings-sect-simpleval]]
 ==== Simple Values
 
-Half of the top-level settings elements are simple values,
-representing a range of values which configure the core behavior of
-Maven:
+Half of the top-level settings elements are simple values, representing a range of values which configure the core behavior of Maven:
 
 .Simple top-level elements in settings.xml
 ----
@@ -100,11 +95,9 @@ pluginGroups::
 [[appendix-settings-sect-servers]]
 ==== Servers
 
-The +distributionManagement+ element of the POM defines the
-repositories for deployment. However, certain settings such as
-security credentials should not be distributed along with the
-'pom.xml'. This type of information should exist on the build server
-in the 'settings.xml'.
+The +distributionManagement+ element of the POM defines the repositories for deployment.
+However, certain settings such as security credentials should not be distributed along with the 'pom.xml'.
+This type of information should exist on the build server in the 'settings.xml'.
 
 .Server configuration in settings.xml
 ----
@@ -250,25 +243,17 @@ nonProxyHosts::
 [[appendix-settings-sect-profiles]]
 ==== Profiles
 
-The +profile+ element in the 'settings.xml' is a truncated version of
-the 'pom.xml' profile element. It consists of the +activation+,
-+repositories+, +pluginRepositories+ and +properties+ elements. The
-profile elements only include these four elements because they concern
-themselves with the build system as a whole (which is the role of the
-'settings.xml' file), not about individual project object model
-settings.
+The +profile+ element in the 'settings.xml' is a truncated version of the 'pom.xml' profile element.
+It consists of the +activation+, +repositories+, +pluginRepositories+ and +properties+ elements.
+The profile elements only include these four elements because they concern themselves with the build system as a whole (which is the role of the 'settings.xml' file), not about individual project object model settings.
 
-If a profile is active from settings, its values will override any
-equivalent profiles which matching identifiers in a POM or
-'profiles.xml' file.
+If a profile is active from settings, its values will override any equivalent profiles which matching identifiers in a POM or 'profiles.xml' file.
 
 [[appendix-settings-sect-activation]]
 ==== Activation
 
-Activations are the key of a profile. Like the POM's profiles, the
-power of a profile comes from its ability to modify some values only
-under certain circumstances; those circumstances are specified via an
-activation element.
+Activations are the key of a profile.
+Like the POM's profiles, the power of a profile comes from its ability to modify some values only under certain circumstances; those circumstances are specified via an activation element.
 
 .Defining Activation Parameters in settings.xml
 ----
@@ -305,8 +290,7 @@ activation element.
 </settings>
 ----
 
-Activation occurs when all specified criteria have been met, though
-not all are required at once.
+Activation occurs when all specified criteria have been met, though not all are required at once.
 
 jdk::
 
@@ -331,10 +315,11 @@ file::
    Finally, a given filename may activate the profile by the existence
    of a file, or if it is missing.
 
-The +activation+ element is not the only way that a profile may be activated. The 'settings.xml' file's +activeProfile+ element may contain the profile's id. They may also be activated explicitly through the command line via a comma separated list after the P flag (e.g. +-P+ test).
+The +activation+ element is not the only way that a profile may be activated.
+The 'settings.xml' file's +activeProfile+ element may contain the profile's id.
+They may also be activated explicitly through the command line via a comma separated list after the P flag (e.g. +-P+ test).
 
-To see which profile will activate in a certain build, use the
-maven-help-plugin.
+To see which profile will activate in a certain build, use the maven-help-plugin.
 
 ----
 mvn help:active-profiles
@@ -343,10 +328,9 @@ mvn help:active-profiles
 [[appendix-settings-sect-properties]]
 ==== Properties
 
-Maven properties are value placeholder, like properties in Ant. Their
-values are accessible anywhere within a POM by using the notation
-'+++${X}+++', where X is the property. They come in five different
-styles, all accessible from the settings.xml file:
+Maven properties are value placeholder, like properties in Ant.
+Their values are accessible anywhere within a POM by using the notation '+++${X}+++', where X is the property.
+They come in five different styles, all accessible from the settings.xml file:
 
 +env.+X::
 
@@ -394,18 +378,14 @@ x::
 </settings>
 ----
 
-The property '+++${user.install}+++' is accessible from a POM if this
-profile is active.
+The property '+++${user.install}+++' is accessible from a POM if this profile is active.
 
 [[appendix-settings-sect-settings-repository]]
 ==== Repositories
 
-Repositories are remote collections of projects from which Maven uses
-to populate the local repository of the build system. It is from this
-local repository that Maven calls it plugins and
-dependencies. Different remote repositories may contain different
-projects, and under the active profile they may be searched for a
-matching release or snapshot artifact.
+Repositories are remote collections of projects from which Maven uses to populate the local repository of the build system.
+It is from this local repository that Maven calls it plugins and dependencies.
+Different remote repositories may contain different projects, and under the active profile they may be searched for a matching release or snapshot artifact.
 
 .Repository Configuration in settings.xml
 ----
@@ -484,9 +464,8 @@ layout::
 [[appendix-settings-sect-plugin-repositories]]
 ==== Plugin Repositories
 
-The structure of the +pluginRepositories+ element block is similar to
-the +repositories+ element. The +pluginRepository+ elements each
-specify a remote location of where Maven can find plugins artifacts.
+The structure of the +pluginRepositories+ element block is similar to the +repositories+ element.
+The +pluginRepository+ elements each specify a remote location of where Maven can find plugins artifacts.
 
 .Plugin Repositories in settings.xml
 ----
@@ -542,66 +521,45 @@ specify a remote location of where Maven can find plugins artifacts.
 </settings>
 ----
 
-The final piece of the 'settings.xml' puzzle is the +activeProfiles+
-element. This contains a set of +activeProfile+ elements, which each
-have a value of a profile id. Any profile id defined as an
-+activeProfile+ will be active, regardless of any environment
-settings. If no matching profile is found nothing will happen. For
-example, if +env-test+ is an +activeProfile+, a +profile+ in a
-'pom.xml' (or 'profile.xml' with a corresponding id it will be
-active. If no such profile is found then execution will continue as
-normal.
+The final piece of the 'settings.xml' puzzle is the +activeProfiles+ element.
+This contains a set of +activeProfile+ elements, which each have a value of a profile id.
+Any profile id defined as an +activeProfile+ will be active, regardless of any environment settings.
+If no matching profile is found nothing will happen.
+For example, if +env-test+ is an +activeProfile+, a +profile+ in a 'pom.xml' (or 'profile.xml' with a corresponding id it will be active.
+If no such profile is found then execution will continue as normal.
 
 [[appendix-settings-sect-encrypting-passwords]]
 ==== Encrypting Passwords in Maven Settings
 
-Once you start to use Maven to deploy software to remote repositories
-and to interact with source control systems directly, you will start
-to collect a number of passwords in your Maven Settings and without a
-mechanism for encrypting these passwords, a developer's
-'~/.m2/settings.xml' will quickly become a security risk as it will
-contain plain-text passwords to source control and repository
-managers. Maven 2.1 introduced a facility to encrypt passwords in a
-user's Maven Settings ('~/.m2/settings.xml'). To do this, you must
-first create a master password and store this master password in a
-'security-settings.xml' file in '~/.m2/settings-security.xml'. You can
-then use this master password to encrypt passwords stored in Maven
-Settings ('~/.m2/settings.xml').
+Once you start to use Maven to deploy software to remote repositories and to interact with source control systems directly, you will start to collect a number of passwords in your Maven Settings and without a mechanism for encrypting these passwords, a developer's '~/.m2/settings.xml' will quickly become a security risk as it will contain plain-text passwords to source control and repository managers.
+Maven 2.1 introduced a facility to encrypt passwords in a user's Maven Settings ('~/.m2/settings.xml').
+To do this, you must first create a master password and store this master password in a 'security-settings.xml' file in '~/.m2/settings-security.xml'.
+You can then use this master password to encrypt passwords stored in Maven Settings ('~/.m2/settings.xml').
 
-To illustrate this feature, consider the process Maven uses to
-retrieve an unencrypted server password for a user's Maven Settings as
-shown in <<fig-settings-unencrypted>>. A user will reference a named
-server using an identifier in a project's POM, Maven looks for a
-matching server in Maven Settings. When it finds a matching server
-element in Maven Settings, Maven will then use the password associated
-with that server element and send this password along to the
-server. The password is stored as plain-text in '~/.m2/settings.xml'
-and it is readily available to anyone who has read access to this
-file.
+To illustrate this feature, consider the process Maven uses to retrieve an unencrypted server password for a user's Maven Settings as shown in <<fig-settings-unencrypted>>.
+A user will reference a named server using an identifier in a project's POM, Maven looks for a matching server in Maven Settings.
+When it finds a matching server element in Maven Settings, Maven will then use the password associated with that server element and send this password along to the server.
+The password is stored as plain-text in '~/.m2/settings.xml' and it is readily available to anyone who has read access to this file.
 
 [[fig-settings-unencrypted]]
 .Storing Unencrypted Passwords in Maven Settings
 image::figs/web/settings_password-no-encryption.png[]
 
-Next, consider the process Maven uses to support encrypted passwords
-as shown in <<fig-settings-encrypted>>.
+Next, consider the process Maven uses to support encrypted passwords as shown in <<fig-settings-encrypted>>.
 
 [[fig-settings-encrypted]]
 .Storing Encrypted Passwords in Maven Settings
 image::figs/web/settings_password-encryption.png[]
 
-To configure encrypted passwords, create a master password by running
-+mvn -emp+ or +mvn --encrypt-master-password+ followed by your master
-password.
+To configure encrypted passwords, create a master password by running +mvn -emp+ or +mvn --encrypt-master-password+ followed by your master password.
 
 ----
 $ mvn -emp mypassword
 {rsB56BJcqoEHZqEZ0R1VR4TIspmODx1Ln8/PVvsgaGw=}
 ----
 
-Maven prints out an encrypted copy of the password to standard
-out. Copy this encrypted password and paste it into a
-'~/.m2/settings-security.xml' file as shown in
+Maven prints out an encrypted copy of the password to standard out.
+Copy this encrypted password and paste it into a '~/.m2/settings-security.xml' file as shown in
 
 [[ex-settings-master-password]]
 .settings-security.xml with Master Password
@@ -611,20 +569,17 @@ out. Copy this encrypted password and paste it into a
 </settingsSecurity>
 ----
 
-After you have created a master password, you can then encrypt
-passwords for use in your Maven Settings. To encrypt a password with
-the master password, run +mvn -ep+ or +mvn --encrypt-password+. Assume
-that you have a repository manager and you need to send a username of
-"deployment" and a password of "qualityFIRST". To encrypt this
-particular password, you would run the following command:
+After you have created a master password, you can then encrypt passwords for use in your Maven Settings.
+To encrypt a password with the master password, run +mvn -ep+ or +mvn --encrypt-password+.
+Assume that you have a repository manager and you need to send a username of "deployment" and a password of "qualityFIRST".
+To encrypt this particular password, you would run the following command:
 
 ----
 $ mvn -ep qualityFIRST
 {uMrbEOEf/VQHnc0W2X49Qab75j9LSTwiM3mg2LCrOzI=}
 ----
 
-At this point, copy the encrypted password printed from the output of
-+mvn -ep+ and paste it into your Maven Settings.
+At this point, copy the encrypted password printed from the output of +mvn -ep+ and paste it into your Maven Settings.
 
 .Storing an Encrypted Password in Maven Settings (~/.m2/settings.xml)
 ----
@@ -640,28 +595,17 @@ At this point, copy the encrypted password printed from the output of
 </settings>
 ----
 
-When you run a Maven build that needs to interact with the repository
-manager, Maven will retrieve the Master password from the
-'~/.m2/settings-security.xml' file and use this master password to
-decrypt the password stored in your '~/.m2/settings.xml' file. Maven
-will then send the decrypted password to the server.
+When you run a Maven build that needs to interact with the repository manager, Maven will retrieve the Master password from the '~/.m2/settings-security.xml' file and use this master password to decrypt the password stored in your '~/.m2/settings.xml' file.
+Maven will then send the decrypted password to the server.
 
-What does this buy you? It allows you to avoid storing your passwords
-in '~/.m2/settings.xml' as plain-text passwords providing you with the
-peace of mind that your critical passwords are not being stored,
-unprotected in a Maven Settings file. Note that this feature does not
-provide for encryption of the password while it is being sent to the
-remote server. An enterprising attacker could still capture the
-password using a network analysis tool.
+What does this buy you?
+It allows you to avoid storing your passwords in '~/.m2/settings.xml' as plain-text passwords providing you with the peace of mind that your critical passwords are not being stored, unprotected in a Maven Settings file.
+Note that this feature does not provide for encryption of the password while it is being sent to the remote server.
+An enterprising attacker could still capture the password using a network analysis tool.
 
-For an extra level of security, you can encourage your developers to
-store the encrypted master password on a removable storage device like
-a USB hard drive. Using this method, a developer would plug a
-removable drive into a workstation when she wanted to perform a
-deployment or interact with a remote server. To support this, your
-'~/.m2/settings-security.xml' file would contain a reference to the
-location of the 'settings-security.xml' file using the relocation
-element.
+For an extra level of security, you can encourage your developers to store the encrypted master password on a removable storage device like a USB hard drive.
+Using this method, a developer would plug a removable drive into a workstation when she wanted to perform a deployment or interact with a remote server.
+To support this, your '~/.m2/settings-security.xml' file would contain a reference to the location of the 'settings-security.xml' file using the relocation element.
 
 .Configuring Relocation of the Master Password
 ----
@@ -670,6 +614,4 @@ element.
 </settingsSecurity>
 ----
 
-The developer would then store the 'settings-security.xml' file at
-'/Volumes/usb-key/settings-security.xml' which would only be available
-if the developer were sitting at the workstation.
+The developer would then store the 'settings-security.xml' file at '/Volumes/usb-key/settings-security.xml' which would only be available if the developer were sitting at the workstation.
