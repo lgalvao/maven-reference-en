@@ -36,7 +36,7 @@ Similarly, there is nothing stopping you from defining a POM for a technical boo
 In fact, the source for this book and this book`s examples is captured in a multi-module Maven project, which uses one of the many Maven Docbook plugins to apply the standard Docbook XSL to a series of chapter XML files.
 Other developers (in another era) have created Maven plugins to build Adobe Flex code into SWCs and SWFs; yet others have used Maven to build projects written in C.
 
-We`ve established that the POM describes and declares, it is unlike Ant or `make` in that it doesn`t provide explicit instructions, and we`ve noted that POM concepts are not specific to Java.
+We`ve established that the POM describes and declares, it is unlike Ant or `make` in that it doesn't provide explicit instructions, and we`ve noted that POM concepts are not specific to Java.
 Diving into more specifics, take a look at <<fig-pom>> for a survey of the contents of a POM.
 
 [[fig-pom]]
@@ -87,7 +87,7 @@ TIP: An analogy to how the Super POM is the parent for all Maven POM files would
 
   <repositories>
     <repository>
-      <id>central</id> <1>
+      <id>central</id> <!--1-->
       <name>Central Repository</name>
       <url>https://repo.maven.apache.org/maven2</url>
       <layout>default</layout>
@@ -99,7 +99,7 @@ TIP: An analogy to how the Super POM is the parent for all Maven POM files would
 
   <pluginRepositories>
     <pluginRepository>
-      <id>central</id> <2>
+      <id>central</id> <!--2-->
       <name>Central Repository</name>
       <url>https://repo.maven.apache.org/maven2</url>
       <layout>default</layout>
@@ -133,7 +133,7 @@ TIP: An analogy to how the Super POM is the parent for all Maven POM files would
       </testResource>
     </testResources>
 
-    <pluginManagement> <4>
+    <pluginManagement> <!--3-->
       <plugins>
         <plugin>
           <artifactId>maven-antrun-plugin</artifactId>
@@ -169,7 +169,7 @@ TIP: An analogy to how the Super POM is the parent for all Maven POM files would
         </property>
       </activation>
 
-      <build> <3>
+      <build> <!--4-->
         <plugins>
           <plugin>
             <inherited>true</inherited>
@@ -518,7 +518,7 @@ You can accomplish this by using optional dependencies as shown in <<ex-optional
 </project>
 ----
 
-Since you`ve declared these dependencies as optional in `my-project`, if you`ve defined a project that depends on `my-project` which needs those dependencies, you'll have to include them explicitly in the project that depends on `my-project`.
+Since you've declared these dependencies as optional in `my-project`, if you've defined a project that depends on `my-project` which needs those dependencies, you'll have to include them explicitly in the project that depends on `my-project`.
 For example, if you were writing an application which depended on `my-project` and wanted to use the EHCache implementation, you would need to add the following `dependency` element to your project.
 
 [source,xml]
@@ -555,17 +555,16 @@ Instead of a specific version for each dependency, you can alternatively specify
 For example, you can specify that your project depends on version 3.8 or greater of JUnit, or anything between versions 4.5 and 4.10 of JUnit.
 You do this by surrounding one or more version numbers with the following characters:
 
-( , )::
++++( , )+++::
 Exclusive quantifiers
 
-[,]
-::
++++[ , ]+++::
 Inclusive quantifiers
 
-For example, if you wished to access any `JUnit` version greater than or equal to 3.8 but less than 4.0, your dependency would be as shown in <<ex-dep-range>>.
+For example, if you wished to access any JUnit version greater than or equal to 3.8 but less than 4.0, your dependency would be as shown in <<ex-dep-range>>.
 
 [[ex-dep-range]]
-.Specifying a Dependency Range: JUnit 3.8 - JUnit 4.0
+.Specifying a Dependency Range: JUnit between 3.8 and 4.0
 [source,xml]
 <dependency>
     <groupId>junit</groupId>
@@ -578,7 +577,7 @@ If you want to depend on any version of JUnit no higher than 3.8.1, you would sp
 <<ex-dep-range-2>>.
 
 [[ex-dep-range-2]]
-.Specifying a Dependency Range: JUnit <= 3.8.1
+.Specifying a Dependency Range: JUnit not later than 3.8.1
 [source,xml]
 <dependency>
     <groupId>junit</groupId>
@@ -587,10 +586,10 @@ If you want to depend on any version of JUnit no higher than 3.8.1, you would sp
     <scope>test</scope>
 </dependency>
 
-A version before or after the comma is not required, and means "infinity".
+A version before or after the comma is not required and means "infinity".
 For example, "[4.0,)" means any version greater than or equal to 4.0. "(,2.0)" is any version less than 2.0. "[1.2]" means only version 1.2, and nothing else.
 
-IMPORTANT: When declaring a "normal" version such as 3.8.2 for Junit, internally this is represented as "allow anything, but prefer 3.8.2." This means that when a conflict is detected, Maven is allowed to use the conflict algorithms to choose the best version.
+NOTE: When declaring a "normal" version such as 3.8.2 for Junit, internally this is represented as "allow anything, but prefer 3.8.2." This means that when a conflict is detected, Maven is allowed to use the conflict algorithms to choose the best version.
 If you specify `[3.8.2]`, it means that only 3.8.2 will be used and nothing else.
 If somewhere else there is a dependency that specifies [3.8.1], you would get a build failure telling you of the conflict.
 We point this out to make you aware of the option, but use it sparingly and only when really needed.
@@ -834,7 +833,7 @@ When you ask Maven to print out a list of dependencies with the Maven Dependency
 [[pom-relationships-sect-project-inheritance]]
 ==== Project Inheritance
 
-There are going to be times when you want a project to inherit values from a parent POM. You might be building a large system, and you don`t want to have to repeat the same dependency elements over and over again.
+There are going to be times when you want a project to inherit values from a parent POM. You might be building a large system, and you don't want to have to repeat the same dependency elements over and over again.
 You can avoid repeating yourself if your projects make use of inheritance via the parent element.
 When a project specifies a parent, it inherits the information in the parent project's POM. It can then override and add to the values specified in this parent POM.
 
@@ -958,7 +957,7 @@ You could create a project called `persistence-deps` (short for Persistence Depe
 If you create this project in a directory named `persistence-deps`, all you need to do is create this `pom.xml` and run `mvn install`.
 Since the packaging type is `pom`, this POM is installed in your local repository.
 You can now add this project as a dependency and all of its dependencies will be added as transitive dependencies to your project.
-When you declare a dependency on this persistence-deps project, don`t forget to specify the dependency type as pom.
+When you declare a dependency on this persistence-deps project, don't forget to specify the dependency type as pom.
 
 .Declaring a Dependency on a POM
 [source,xml]
@@ -979,6 +978,8 @@ When you declare a dependency on this persistence-deps project, don`t forget to 
 If you later decide to switch to a different JDBC driver (for example, JTDS), just replace the dependencies in the `persistence-deps` project to use `net.sourceforge.jtds:jtds` instead of `mysql:mysql-java-connector` and update the version number.
 All projects depending on `persistence-deps` will use JTDS if they decide to update to the newer version.
 Consolidating related dependencies is a good way to cut down on the length of `pom.xml` files that start having to depend on a large number of dependencies.
+
+
 If you need to share a large number of dependencies between projects, you could also just establish parent-child relationships between projects and refactor all common dependencies to the parent project, but the disadvantage of the parent-child approach is that a project can have only one parent.
 Sometimes it makes more sense to group similar dependencies together and reference a `pom` dependency.
 This way, your project can reference as many of these consolidated dependency POMs as it needs.
@@ -995,12 +996,14 @@ A parent project is one that passes its values to its children.
 A multi-module project simply manages a group of other sub-projects or modules.
 The multi-module relationship is defined from the topmost level downwards.
 When setting up a multi-module project, you are simply telling a project that its build should include the specified modules.
+
+
 Multi-module builds are to be used to group modules together in a single build.
 The parent-child relationship is defined from the leaf node upwards.
 The parent-child relationship deals more with the definition of a particular project.
 When you associate a child with its parent, you are telling Maven that a project’s POM is derived from another.
 
-To illustrate the decision process that goes into choosing a design that uses inheritance vs. multi-module or both approaches consider the following two examples: the Maven project used to generate this book and a hypothetical project that contains a number of logically grouped modules.
+To illustrate the decision process that goes into choosing a design that uses inheritance vs. multi-module or both approaches, consider the following two examples: the Maven project used to generate this book and a hypothetical project that contains a number of logically grouped modules.
 
 [[pom-relationships-sect-simple-project]]
 ===== Simple Project
@@ -1063,6 +1066,8 @@ All of the projects below `big-system` are related to one another as submodules,
 Everything is a submodule for reasons of convenience.
 To build the entire system just go to the `big-system` project directory and run `mvn package`.
 Look more closely at the figure and you`ll see that there is no parent/child relationship between `server-side` and `big-system`.
+
+
 Why is this?
 POM inheritance is very powerful, but it can be overused.
 When it makes sense to share dependencies and build configuration, a parent/child relationship should be used.
@@ -1073,6 +1078,8 @@ Even though `client-side` and `server-side` might both depend on Log4J, they als
 
 There's a certain point defined more by style and experience where you decide that minimal duplication of configuration is a small price to pay for allowing projects like `client-side` and `server-side` to remain completely independent.
 Designing a huge set of thirty-plus projects which all inherit five levels of POM configuration isn't always the best idea.
+
+
 In such a setup, you might not have to duplicate your Log4J dependency more than once, but you'll also end up having to wade through five levels of POMs just to figure out how Maven calculated your effective POM -- all of this complexity to avoid duplicating five lines of dependency declaration.
 In Maven, there is a "Maven Way", but there are also many ways to accomplish the same thing.
 It all boils down to preference and style.

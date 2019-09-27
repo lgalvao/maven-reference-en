@@ -1,4 +1,5 @@
 = Maven: The Complete Reference
+:toc:
 :data-uri:
 :icons:
 :docinfo:
@@ -7,6 +8,10 @@
 :lang: en
 :source-highlighter: rouge
 :pdf-page-size: A4
+:sectnums:
+:listing-caption: Listing
+:xrefstyle: short
+:icons: font
 
 :quotes.~:
 include::preface.asciidoc[]
