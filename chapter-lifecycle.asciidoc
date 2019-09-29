@@ -5,19 +5,20 @@
 === Introduction
 
 A way of seeing Maven projects is that Maven models projects as "nouns" described by a POM.
-The POM captures the identity of a project: what its contains, what type of packaging it needs, whether the project has a parent, which dependencies?
+The POM captures the identity of a project: what it contains, what type of packaging it needs, whether the project has a parent, and which dependencies are needed.
+
 We've explored the idea of describing a project in the previous chapters, but we haven't introduced the mechanism that allows Maven to act upon these objects.
 
 The "verbs" in Maven are goals packaged in Maven plugins, which are tied to a phases in a build lifecycle.
 A Maven lifecycle consists of a sequence of named phases: `prepare-resources`, `compile`, `package`, and `install`, among others.
 There is a phase that captures compilation and a phase that captures packaging.
-There are pre- and post- phases which can be used to register goals which must run prior to compilation, or tasks which must be run after a particular phase.
+There are pre- and post- phases which can be used to register goals which must run prior to compilation or tasks which must be run after a particular phase.
 When you tell Maven to build a project, you are telling Maven to step through a defined sequence of phases and execute any goals which may have been registered with each phase.
 
 A build lifecycle is an organized sequence of phases that give order to a set of goals.
 Those goals are chosen and bound by the packaging type of the project being acted upon.
 There are three standard lifecycles in Maven: `clean`, `default` (sometimes called `build`) and `site`.
-In this chapter, you are going to learn how Maven ties goals to lifecycle phases and how the lifecycle can be customized.
+In this chapter, you're going to learn how Maven ties goals to lifecycle phases and how the lifecycle can be customized.
 You will also learn about the default lifecycle phases.
 
 [[lifecycle-sect-clean]]
@@ -26,16 +27,15 @@ You will also learn about the default lifecycle phases.
 The first lifecycle you'll be interested in is the simplest lifecycle in Maven.
 Running `mvn clean` invokes the `clean` lifecycle, which consists of three phases:
 
-* `pre-clean`
-* `clean`
-* `post-clean`
+. `pre-clean`
+. `clean`
+. `post-clean`
 
 The interesting phase in the clean lifecycle is the `clean` phase.
 The Clean plugin's `clean` goal (`clean:clean`) is bound to the `clean` phase in the `clean` lifecycle.
 The `clean:clean` goal deletes the output of a build by deleting the build directory.
-If you haven't customized the location of the build directory it will be the '+++${basedir}/target+++' directory as defined by the Super POM.
-When you execute the `clean:clean` goal, you don't do so by executing the goal directly with `mvn clean:clean`.
-You execute the `clean` phase of the clean lifecycle.
+If you haven't customized the location of the build directory it will be the `+++${basedir}/target+++` directory, as defined by the Super POM.
+When you execute the `clean:clean` goal, you don't do so by executing the goal directly with `mvn clean:clean`; you do so by executing the `clean` phase of the clean lifecycle.
 Executing the `clean` phase gives Maven an opportunity to execute any other goals which may be bound to the `pre-clean` phase.
 
 For example, suppose you wanted to trigger an `antrun:run` goal task to echo a notification on `pre-clean`; or to make an archive of a project's build directory before it is deleted.
