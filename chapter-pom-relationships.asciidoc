@@ -246,12 +246,14 @@ This POM defines a `groupId`, `artifactId`, and `version`: the three required co
 [[ex-simplest-pom]]
 .The Simplest POM
 [source,xml]
+----
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.sonatype.mavenbook.ch01</groupId>
     <artifactId>simplest-project</artifactId>
     <version>1</version>
 </project>
+----
 
 Such a simple POM would be more than adequate for a simple project -- e.g., a Java library that produces a JAR file.
 It isn’t related to any other projects, it has no dependencies, and it lacks basic information such as a name and a URL.
@@ -808,14 +810,12 @@ When you refer to a project, you are going to refer to it using the `artifactId`
 The `artifactId`, `groupId` combination must be unique.
 In other words, you can't have two separate projects with the same `artifactId` and `groupId`; the `artifactId` is unique within a particular `groupId`.
 
-CAUTION: While dots (`.`) are commonly used in `groupId` tags, you should try to avoid using them in `artifactId` tags.
-This can cause issues when trying to parse a fully qualified name down into its subcomponents.
+CAUTION: While dots (`.`) are commonly used in `groupId` element, you should try to avoid using them in `artifactId` elements, as this can cause issues when trying to parse a fully qualified name down into subcomponents.
 
 version::
-When an artifact is released, it is released with a version number.
-This version number is a numeric identifier such as "1.0", "1.1.1", or "1.1.2-alpha-01".
-You can also use what is known as a snapshot version.
-A snapshot version is a version for a component which is under development, snapshot version numbers always end in SNAPSHOT; for example, "1.0-SNAPSHOT", "1.1.1-SNAPSHOT", and "1-SNAPSHOT". <<pom-relationships-sect-version-build-numbers>> introduces versions and version ranges.
+When an artifact is released, it is released with a version number, a numeric identifier such as "1.0", "1.1.1", or "1.1.2-alpha-01".
+You can also use what is known as a *snapshot* version, for components under active development.
+Snapshot version numbers always end in SNAPSHOT; for example, "1.0-SNAPSHOT", "1.1.1-SNAPSHOT", and "1-SNAPSHOT". <<pom-relationships-sect-version-build-numbers>> introduces versions and version ranges.
 
 There is a fourth, less-used qualifier:
 
@@ -842,6 +842,7 @@ All Maven POMs inherit values from a parent POM. If a POM does not specify a dir
 [[ex-inheritance]]
 .Project Inheritance
 [source,xml]
+----
 <project>
     <parent>
         <groupId>com.training.killerapp</groupId>
@@ -851,19 +852,22 @@ All Maven POMs inherit values from a parent POM. If a POM does not specify a dir
     <artifactId>project-a</artifactId>
     ...
 </project>
+----
 
 Running `mvn help:effective-pom` in `project-a` would show a POM that is the result of merging the Super POM with the POM defined by `a-parent` and the POM defined in `project-a`.
 The implicit and explicit inheritance relationships for `project-a` are shown in
 <<fig-inheritance>>.
 
 [[fig-inheritance]]
-.Project Inheritance for a-parent and project-a
+.Project Inheritance for projects a-parent and project-a
 image::figs/web/pom_inheritance.png[]
 
 When a project specifies a parent project, Maven uses that parent POM as a starting point before it reads the current project's POM. It inherits everything, including the `groupId` and `version` number.
 You'll notice that `project-a` does not specify either -- both `groupId` and `version` are inherited from `a-parent`.
 With a parent element, all a POM really needs to define is an `artifactId`.
-This isn't mandatory, `project-a` could have a different `groupId` and `version`, but by not providing values, Maven will use the values specified in the parent POM. If you start using Maven to manage and build large multi-module projects, you will often be creating many projects which share a common `groupId` and `version`.
+This isn't mandatory: `project-a` could have a different `groupId` and `version`.
+But by not providing values, Maven will use the values specified in the parent POM.
+If you start using Maven to manage and build large multi-module projects, you will often be creating many projects which share a common `groupId` and `version`.
 
 When you inherit a POM, you can choose to live with the inherited POM information or to selectively override it.
 The following is a list of items a Maven POM inherits from its parent POM:
@@ -887,6 +891,7 @@ It might be in a sibling directory to the project.
 If your child project were in a directory `./project-a` and the parent project were in a directory named `./a-parent`, you could specify the relative location of the POM of `parent-a`, with the following configuration:
 
 [source,xml]
+----
 <project>
     <parent>
         <groupId>org.sonatype.mavenbook</groupId>
@@ -896,6 +901,7 @@ If your child project were in a directory `./project-a` and the parent project w
     </parent>
     <artifactId>project-a</artifactId>
 </project>
+----
 
 [[pom-relationships-sect-pom-best-practice]]
 === POM Best Practices
@@ -979,7 +985,6 @@ If you later decide to switch to a different JDBC driver (for example, JTDS), ju
 All projects depending on `persistence-deps` will use JTDS if they decide to update to the newer version.
 Consolidating related dependencies is a good way to cut down on the length of `pom.xml` files that start having to depend on a large number of dependencies.
 
-
 If you need to share a large number of dependencies between projects, you could also just establish parent-child relationships between projects and refactor all common dependencies to the parent project, but the disadvantage of the parent-child approach is that a project can have only one parent.
 Sometimes it makes more sense to group similar dependencies together and reference a `pom` dependency.
 This way, your project can reference as many of these consolidated dependency POMs as it needs.
@@ -996,7 +1001,6 @@ A parent project is one that passes its values to its children.
 A multi-module project simply manages a group of other sub-projects or modules.
 The multi-module relationship is defined from the topmost level downwards.
 When setting up a multi-module project, you are simply telling a project that its build should include the specified modules.
-
 
 Multi-module builds are to be used to group modules together in a single build.
 The parent-child relationship is defined from the leaf node upwards.
@@ -1067,7 +1071,6 @@ Everything is a submodule for reasons of convenience.
 To build the entire system just go to the `big-system` project directory and run `mvn package`.
 Look more closely at the figure and you`ll see that there is no parent/child relationship between `server-side` and `big-system`.
 
-
 Why is this?
 POM inheritance is very powerful, but it can be overused.
 When it makes sense to share dependencies and build configuration, a parent/child relationship should be used.
@@ -1078,7 +1081,6 @@ Even though `client-side` and `server-side` might both depend on Log4J, they als
 
 There's a certain point defined more by style and experience where you decide that minimal duplication of configuration is a small price to pay for allowing projects like `client-side` and `server-side` to remain completely independent.
 Designing a huge set of thirty-plus projects which all inherit five levels of POM configuration isn't always the best idea.
-
 
 In such a setup, you might not have to duplicate your Log4J dependency more than once, but you'll also end up having to wade through five levels of POMs just to figure out how Maven calculated your effective POM -- all of this complexity to avoid duplicating five lines of dependency declaration.
 In Maven, there is a "Maven Way", but there are also many ways to accomplish the same thing.

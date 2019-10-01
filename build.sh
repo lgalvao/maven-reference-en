@@ -4,7 +4,7 @@ mkdir -p target/images
 mkdir -p target/figs
 
 # Build the Single HTML Page Version
-asciidoc -o target/book-mvnref.html book-mvnref.asciidoc 
+asciidoctor -o target/book-mvnref.html book-mvnref.asciidoc
 
 # Build the PDF
 rm -rf target/images

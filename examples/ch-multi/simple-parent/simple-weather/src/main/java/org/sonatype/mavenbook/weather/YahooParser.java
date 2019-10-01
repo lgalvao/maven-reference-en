@@ -3,15 +3,14 @@ package org.sonatype.mavenbook.weather;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
-import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentFactory;
 import org.dom4j.io.SAXReader;
 
 public class YahooParser {
-
-	private static Logger log = Logger.getLogger(YahooParser.class);
+	private static Logger log = Logger.getLogger(YahooRetriever.class.getName());
 
 	public Weather parse(InputStream inputStream) throws Exception {
 		Weather weather = new Weather();

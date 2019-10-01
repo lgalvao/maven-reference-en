@@ -8,6 +8,11 @@
   <artifactId>parent</artifactId>
   <version>0.8-SNAPSHOT</version>
   <packaging>pom</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <name>Multi-Spring Chapter Parent Project</name>
   <modules>
     <module>simple-parent</module>

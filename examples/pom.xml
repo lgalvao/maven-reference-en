@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.sonatype.mvnrefbook</groupId>
   <artifactId>mvnref-examples</artifactId>
@@ -7,10 +11,14 @@
   <packaging>pom</packaging>
   <name>Maven: The Complete Reference Example Code</name>
   <description>Example Code for Maven: The Complete Reference</description>
-  
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <url>http://sonatype.com/book</url>
 
-<!--  <modules>
+  <modules>
     <module>ch-simple</module>
     <module>ch-custom</module>
     <module>ch-simple-web</module>
@@ -25,8 +33,8 @@
     <module>ch-sitegen</module>
     <module>ch-writing-plugins</module>
     <module>ch-alternate-plugins</module>
-  </modules> -->
-  
+  </modules>
+
   <build>
     <finalName>mvnref-book-examples-${project.version}</finalName>
     <plugins>
@@ -50,53 +58,57 @@
       </plugin>
     </plugins>
   </build>
+
   <profiles>
-      <profile>
-        <id>publish</id>
-        <distributionManagement>
+    <profile>
+      <id>publish</id>
+      <distributionManagement>
         <site>
           <id>sonatype-site</id>
           <name>Sonatype Book Examples</name>
           <url>scp://site@172.16.0.1/home/site/books/mvnref-book/book-examples/</url>
         </site>
-        </distributionManagement>
-        <properties>
-           <sonatype.site>scp://site@172.16.0.1/home/site/books/</sonatype.site>
-        </properties>
-      </profile>
-      <profile>
-        <id>stage</id>
-        <distributionManagement>
+      </distributionManagement>
+      <properties>
+        <sonatype.site>scp://site@172.16.0.1/home/site/books/</sonatype.site>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>stage</id>
+      <distributionManagement>
         <site>
           <id>sonatype-site</id>
           <name>Sonatype Book Examples</name>
           <url>scp://site@172.16.0.1/home/site/books/mvnref-book-stage/book-examples/</url>
         </site>
-        </distributionManagement>
-      </profile>
-      <profile>
-        <id>publish-external</id>
-        <distributionManagement>
+      </distributionManagement>
+    </profile>
+
+    <profile>
+      <id>publish-external</id>
+      <distributionManagement>
         <site>
           <id>sonatype-site</id>
           <name>Sonatype Book Examples</name>
           <url>scp://site@svn.sonatype.com/home/site/books/mvnref-book/book-examples/</url>
         </site>
-        </distributionManagement>
-        <properties>
-           <sonatype.site>scp://site@svn.sonatype.com/home/site/books/</sonatype.site>
-        </properties>
-      </profile>
-      <profile>
-        <id>stage-external</id>
-        <distributionManagement>
+      </distributionManagement>
+      <properties>
+        <sonatype.site>scp://site@svn.sonatype.com/home/site/books/</sonatype.site>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>stage-external</id>
+      <distributionManagement>
         <site>
           <id>sonatype-site</id>
           <name>Sonatype Book Examples</name>
           <url>scp://site@svn.sonatype.com/home/site/books/mvnref-book-stage/book-examples/</url>
         </site>
-        </distributionManagement>
-      </profile>
+      </distributionManagement>
+    </profile>
   </profiles>
 
   <reporting>
@@ -104,7 +116,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.0.1</version>
+        <version>3.0.0</version>
       </plugin>
     </plugins>
   </reporting>

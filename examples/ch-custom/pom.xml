@@ -10,7 +10,13 @@
   <packaging>pom</packaging>
   <name>Customizing Chapter Parent Project</name>
   <url>http://sonatype.com/book</url>
+
   <modules>
     <module>simple-weather</module>
   </modules>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
 </project>

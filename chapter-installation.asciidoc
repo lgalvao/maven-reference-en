@@ -16,13 +16,17 @@ The latest version of Maven currently requires the usage of Java 7 or higher.
 While older Maven versions can run on older Java versions, this book assumes that you are running at least Java 7. Go with the most recent stable Java Development Kit (JDK) available for your operating system.
 
 [source,shell script]
+----
 % java -version
-openjdk version "11.0.2" 2019-01-15
-OpenJDK Runtime Environment 18.9 (build 11.0.2`9)
-OpenJDK 64-Bit Server VM 18.9 (build 11.0.2`9, mixed mode)
+
+openjdk version "13" 2019-09-17
+OpenJDK Runtime Environment (build 13+33)
+OpenJDK 64-Bit Server VM (build 13+33, mixed mode, sharing)
+----
 
 TIP: More details about the Java version required for different Maven releases can be found http://maven.apache.org/docs/history.html[on the Maven site].
 
+//TODO Update this to include OpenJDK?
 Maven works with all certified Java^TM^ compatible development kits, and a few non-certified implementations of Java.
 The examples in this book were written and tested against the official Java Development Kit releases downloaded from the Oracle web site.
 
@@ -30,12 +34,10 @@ The examples in this book were written and tested against the official Java Deve
 === Downloading Maven
 
 You can download Maven from the http://maven.apache.org/download.html[Maven project website].
-When downloading Maven, you can download the latest available version in various branches.
-The latest version of Maven 3 when this book was last updated was Maven 3.6.2. If you are not familiar with the Apache Software License, you should familiarize yourself with the terms of the license before you start using the product.
-More information on the Apache Software License can be found in <<installation-sect-license>>.
+The latest version of Maven 3 when this book was last updated was Maven 3.6.2. If you are not familiar with the Apache Software License (used by Maven), you should familiarize yourself with the terms of the license before you start using the product.
+More information on this License can be found in <<installation-sect-license>>.
 
-To download Maven, go to http://maven.apache.org/download.html[http://maven.apache.org/download.html]
-and select the appropriate binary archive format for your platform.
+To download Maven, go to http://maven.apache.org/download.html[http://maven.apache.org/download.html] and select the appropriate binary archive format for your platform.
 The contents of the `zip` or `tar.gz` are the same.
 
 [[installation-sect-maven-install]]
@@ -54,14 +56,16 @@ Pick an appropriate place for it to live, and expand the archive there.
 If you expanded the archive into the directory `/opt/apache-maven-3.6.2`, you may want to create a symbolic link to make it easier to work with and to avoid the need to change any environment configuration when you upgrade to a newer version:
 
 [source,shell script]
+----
 $ cd /opt
 $ ln -s apache-maven-3.6.2 maven
 $ export PATH=/opt/maven/bin:${PATH}
+----
 
 Once Maven is installed, you need to do a couple of things to make it work correctly.
 You need to add its `bin` directory in the distribution (in this example, `/opt/maven/bin`) to your command path.
 
-You`ll need to add `PATH` to a script that will run every time you login.
+You'll need to add `PATH` to a script that will run every time you login.
 To do this, add the following lines to `.bash_login` or `.profile`
 
 [source,shell script]
@@ -74,16 +78,16 @@ NOTE: These installation instructions assume that you are running bash.
 [[installation-sect-windows]]
 ==== Installing Maven on Microsoft Windows
 
-Installing Maven on Windows is very similar to installing Maven on Mac OSX, the main differences being the installation location and the setting of an environment variable.
-This book assumes a Maven installation directory of `c:\Program Files\apache-maven-3.2.5`, but it won't make a difference if you install Maven in another directory as long as you configure the proper environment variables.
+Installing Maven on Windows is very similar to installing it on Mac OSX, the main differences being the installation location and the setting of an environment variable.
+This book assumes a Maven installation directory of `c:\apache-maven-3.6.2`, but it won't make a difference if you install Maven in another directory as long as you configure the proper environment variables.
 Once you've unpacked Maven to the installation directory, you will need to set the `PATH` environment variable.
 You can use the following commands:
 
 [source,shell script]
-$ set PATH=%PATH%;"c:\Program Files\apache-maven-3.6.2\bin"
+$ set PATH=%PATH%;"c:\apache-maven-3.6.2\bin"
 
-Setting these environment variables on the command-line will allow you to run Maven in your current session, but unless you add them to the System environment variables through the control panel, you'll have to execute these two lines every time you log into your system.
-You should modify both of these variables through the Control Panel (or the console/shell) in Microsoft Windows.
+Setting these environment variables on the command-line will allow you to run Maven in your current session, but unless you add them to the system environment variables through the control panel, you'll have to execute these two lines every time you log into your system.
+You should modify both of these variables through the Control Panel (or the console) in  Windows.
 
 [[installation-sect-test-install]]
 === Testing a Maven Installation
@@ -113,6 +117,7 @@ When you start using Maven, it will start to download plugins to a local reposit
 In case you are curious, let's take a quick look at what is in Maven's installation directory.
 
 [source,shell script]
+----
 $ ls /opt/maven -p1
 LICENSE
 NOTICE
@@ -121,6 +126,7 @@ bin/
 boot/
 conf/
 lib/
+----
 
 The `LICENSE` file contains the software license for Apache Maven.
 This license is described in some detail later in the section <<installation-sect-license>>.
@@ -149,8 +155,8 @@ When you download a dependency from a remote Maven repository, Maven stores a co
 NOTE: In Unix (and OSX), your home directory will be referred to using a tilde (i.e. `~/bin` refers to `/home/<username>/bin`).
 
 In Windows, we will also be using `~` to refer to your home directory.
-In Windows XP, your home directory is `C:\Documents and Settings\<username>`, and in Windows Vista and Windows 7`, your home directory is `C:\Users\<username>`.
-From this point forward, you should translate paths such as `~/m2` to your operating system`s equivalent.
+In Windows XP, your home directory is `C:\Documents and Settings\<username>`, and in Windows Vista and Windows 7, your home directory is `C:\Users\<username>`.
+From this point forward, you should translate paths such as `~/m2` to your operating system's equivalent.
 
 [[installation-sect-upgrade]]
 ==== Upgrading a Maven Installation

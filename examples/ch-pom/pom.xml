@@ -10,4 +10,9 @@
   <packaging>pom</packaging>
   <name>POM Chapter Parent Project</name>
   <url>http://sonatype.com/book</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
 </project>

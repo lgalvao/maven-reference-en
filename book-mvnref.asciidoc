@@ -6,10 +6,11 @@
 :doctype: book
 :encoding: utf-8
 :lang: en
-:source-highlighter: rouge
+:source-highlighter: highlight.js
 :pdf-page-size: A4
 :sectnums:
 :listing-caption: Listing
+:figure-caption: Figure
 :xrefstyle: short
 :icons: font
 

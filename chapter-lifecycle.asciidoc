@@ -4,15 +4,14 @@
 [[lifecycle-sect-structure]]
 === Introduction
 
-A way of seeing Maven projects is that Maven models projects as "nouns" described by a POM.
+As we've seen, Maven models projects as "nouns" described by a POM.
 The POM captures the identity of a project: what it contains, what type of packaging it needs, whether the project has a parent, and which dependencies are needed.
+The "verbs" in Maven are goals packaged in Maven plugins, which are tied to a phases in a build lifecycle.
 
 We've explored the idea of describing a project in the previous chapters, but we haven't introduced the mechanism that allows Maven to act upon these objects.
-
-The "verbs" in Maven are goals packaged in Maven plugins, which are tied to a phases in a build lifecycle.
 A Maven lifecycle consists of a sequence of named phases: `prepare-resources`, `compile`, `package`, and `install`, among others.
 There is a phase that captures compilation and a phase that captures packaging.
-There are pre- and post- phases which can be used to register goals which must run prior to compilation or tasks which must be run after a particular phase.
+There are `pre-` and `post-` phases which can be used to register goals which must run prior to compilation or tasks which must be run after a particular phase.
 When you tell Maven to build a project, you are telling Maven to step through a defined sequence of phases and execute any goals which may have been registered with each phase.
 
 A build lifecycle is an organized sequence of phases that give order to a set of goals.
@@ -34,15 +33,17 @@ Running `mvn clean` invokes the `clean` lifecycle, which consists of three phase
 The interesting phase in the clean lifecycle is the `clean` phase.
 The Clean plugin's `clean` goal (`clean:clean`) is bound to the `clean` phase in the `clean` lifecycle.
 The `clean:clean` goal deletes the output of a build by deleting the build directory.
-If you haven't customized the location of the build directory it will be the `+++${basedir}/target+++` directory, as defined by the Super POM.
+
+TIP: If you haven't customized the location of the build directory it will be the `+++${basedir}/target+++` directory, as defined by the Super POM.
+
 When you execute the `clean:clean` goal, you don't do so by executing the goal directly with `mvn clean:clean`; you do so by executing the `clean` phase of the clean lifecycle.
 Executing the `clean` phase gives Maven an opportunity to execute any other goals which may be bound to the `pre-clean` phase.
 
+//TODO Is there a difference between phase and lifecycle phase? The text below is a litte confusing re: this
 For example, suppose you wanted to trigger an `antrun:run` goal task to echo a notification on `pre-clean`; or to make an archive of a project's build directory before it is deleted.
 Simply running `clean:clean` goal will not execute the lifecycle at all, but specifying the `clean` phase will use the `clean` lifecycle and advance through the three lifecycle phases until it reaches the `clean` phase.
 <<ex-trigger-pre-clean>> shows an example of build configuration which binds the `antrun:run` goal to the `pre-clean` phase, to echo an alert that the project artifact is about to be deleted.
-In this example, the `antrun:run` goal is being used to execute some arbitrary Ant commands to check for an existing project artifact.
-If the project's artifact is about to be deleted it will print this to the screen.
+In this example, the `antrun:run` goal is being used to execute some arbitrary Ant commands to check for an existing project artifact and indicate to the user if a project's artifact is about to be deleted.
 
 [[ex-trigger-pre-clean]]
 .Triggering a Goal on pre-clean
@@ -578,8 +579,8 @@ The Compiler plugin calls out to 'javac' and uses default source and target sett
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>13</source>
+                    <target>13</target>
                 </configuration>
             </plugin>
         </plugins>

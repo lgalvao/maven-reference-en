@@ -9,4 +9,10 @@
   <version>0.8-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Site Generation Chapter Parent Project</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
 </project>
+

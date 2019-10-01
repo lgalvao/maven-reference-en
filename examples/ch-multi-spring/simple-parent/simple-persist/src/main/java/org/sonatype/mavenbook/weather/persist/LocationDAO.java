@@ -5,28 +5,17 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import org.hibernate.SessionFactory;
 import org.sonatype.mavenbook.weather.model.Location;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
-public class LocationDAO extends HibernateDaoSupport {
+import javax.persistence.TypedQuery;
 
-    public LocationDAO() {}
+public interface LocationDAO {
+    Location findByZip(String zip);
 
-    public Location findByZip(final String zip) {
-    	return (Location) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) {
-				Query query = getSession().getNamedQuery("Location.uniqueByZip");
-				query.setString("zip", zip);
-				return (Location) query.uniqueResult();
-			}
-		});
-    }
-    
-    @SuppressWarnings("unchecked")
-	public List<Location> all() {
-    	return new ArrayList<Location>( getHibernateTemplate().loadAll(Location.class) );
-    }
-
+    List<Location> all();
 }
+

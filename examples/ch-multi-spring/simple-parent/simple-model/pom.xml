@@ -16,14 +16,15 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-annotations</artifactId>
-      <version>3.3.0.ga</version>
+      <groupId>org.hibernate.common</groupId>
+      <artifactId>hibernate-commons-annotations</artifactId>
+      <version>5.1.0.Final</version>
     </dependency>
+
     <dependency>
       <groupId>org.hibernate</groupId>
-      <artifactId>hibernate</artifactId>
-      <version>3.2.5.ga</version>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.4.5.Final</version>
       <exclusions>
         <exclusion>
           <groupId>javax.transaction</groupId>

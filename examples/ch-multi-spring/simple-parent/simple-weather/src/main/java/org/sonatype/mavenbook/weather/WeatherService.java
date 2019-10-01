@@ -5,37 +5,33 @@ import java.io.InputStream;
 import org.sonatype.mavenbook.weather.model.Weather;
 
 public class WeatherService {
+    private YahooRetriever yahooRetriever;
+    private YahooParser yahooParser;
 
-	private YahooRetriever yahooRetriever;
-	private YahooParser yahooParser;
+    public Weather retrieveForecast(String zip) throws Exception {
+        // Retrieve Data
+        InputStream dataIn = yahooRetriever.retrieve(zip);
 
-	public WeatherService() {
-	}
+        // Parse Data
+        Weather weather = yahooParser.parse(zip, dataIn);
 
-	public Weather retrieveForecast(String zip) throws Exception {
-		// Retrieve Data
-		InputStream dataIn = yahooRetriever.retrieve(zip);
+        return weather;
+    }
 
-		// Parse DataS
-		Weather weather = yahooParser.parse(zip, dataIn);
+    public YahooRetriever getYahooRetriever() {
+        return yahooRetriever;
+    }
 
-		return weather;
-	}
+    public void setYahooRetriever(YahooRetriever yahooRetriever) {
+        this.yahooRetriever = yahooRetriever;
+    }
 
-	public YahooRetriever getYahooRetriever() {
-		return yahooRetriever;
-	}
+    public YahooParser getYahooParser() {
+        return yahooParser;
+    }
 
-	public void setYahooRetriever(YahooRetriever yahooRetriever) {
-		this.yahooRetriever = yahooRetriever;
-	}
-
-	public YahooParser getYahooParser() {
-		return yahooParser;
-	}
-
-	public void setYahooParser(YahooParser yahooParser) {
-		this.yahooParser = yahooParser;
-	}
+    public void setYahooParser(YahooParser yahooParser) {
+        this.yahooParser = yahooParser;
+    }
 
 }

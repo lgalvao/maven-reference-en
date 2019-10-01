@@ -4,15 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
       <groupId>org.sonatype.mavenbook.profile</groupId>
       <artifactId>parent</artifactId>
       <version>0.8-SNAPSHOT</version>
   </parent>
+
   <artifactId>simple-script</artifactId>
   <packaging>jar</packaging>
   <name>Profile Chapter simple-script</name>
   <url>http://maven.apache.org</url>
+
   <build>
     <plugins>
       <plugin>
@@ -27,7 +30,7 @@
             <configuration>
               <rules>
                 <requireJavaVersion>
-                  <version>1.6</version>
+                  <version>1.8</version>
                 </requireJavaVersion>
               </rules>
             </configuration>
@@ -36,11 +39,12 @@
       </plugin>
     </plugins>
   </build>
+
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.5.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

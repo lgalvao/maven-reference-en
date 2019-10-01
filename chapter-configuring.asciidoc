@@ -17,6 +17,7 @@ To describe a particular plugin, use the +help:describe+ goal from the command l
 [source,shell script]
 ----
 $ mvn help:describe -Dcmd=compiler:compile
+
 [INFO] [help:describe {execution: default-cli}]
 [INFO] 'compiler:compile' is a plugin goal (aka mojo).
 Mojo: 'compiler:compile'
@@ -234,8 +235,8 @@ Unless this configuration is overridden by a more specific plugin parameter conf
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-compiler-plugin</artifactId>
     <configuration>
-        <source>1.5</source>
-        <target>1.5</target>
+        <source>13</source>
+        <target>13</target>
     </configuration>
 </plugin>
 ----

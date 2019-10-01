@@ -1,4 +1,5 @@
 [[introduction]]
+
 == Introducing Apache Maven
 
 Although there are a number of references for Maven online, there is no single, well-written narrative for introducing Maven that can serve as both an authoritative reference and an introduction.
@@ -227,12 +228,14 @@ The example Maven `pom.xml` that achieves the same results as the simple Ant fil
 [[ex-maven-sample]]
 .A Sample Maven pom.xml
 [source,xml]
+----
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.sonatype.mavenbook</groupId>
     <artifactId>my-project</artifactId>
     <version>1.0</version>
 </project>
+----
 
 That's all you need in your 'pom.xml'.
 Running `mvn install` from the command line will process resources, compile source, execute unit tests, create a JAR, and install the JAR in a local repository for reuse in other projects.
@@ -248,7 +251,7 @@ Where Ant had to be explicit about the process, there was something "built-in" t
 
 The differences between Ant and Maven in this example are:
 
-* Apache Ant
+* *Apache Ant*
 
 ** Ant doesn't have formal conventions like a common project directory structure or default behavior.
 You have to tell Ant _exactly_ where to find the source and where to put the output.
@@ -262,7 +265,7 @@ You have to tell it to compile, then copy, then compress.
 You have to define goals and goal dependencies.
 You have to attach a sequence of tasks to each goal manually.
 
-* Apache Maven
+* *Apache Maven*
 
 ** Maven has conventions.
 It knows where your source code is because you followed the convention.
