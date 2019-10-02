@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>properties-antrun</artifactId>
+  <packaging>jar</packaging>
+  <name>Properties Chapter properties-antrun</name>
+
   <parent>
     <groupId>org.sonatype.mavenbook.properties</groupId>
     <artifactId>parent</artifactId>
     <version>0.8-SNAPSHOT</version>
   </parent>
-  <artifactId>properties-antrun</artifactId>
-  <packaging>jar</packaging>
-  <name>Properties Chapter properties-antrun</name>
 
   <build>
     <resources>
@@ -20,6 +22,7 @@
         <filtering>true</filtering>
       </resource>
     </resources>
+
     <plugins>
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
@@ -31,7 +34,7 @@
             </goals>
             <configuration>
               <tasks>
-                <echo>${PATH}=${env.PATH}</echo>
+                <echo>PATH=${env.PATH}</echo>
                 <echo>User's Home Directory: ${user.home}</echo>
                 <echo>Project's Base Director: ${basedir}</echo>
               </tasks>

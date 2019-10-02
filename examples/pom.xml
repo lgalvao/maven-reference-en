@@ -40,6 +40,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.1.1</version>
         <configuration>
           <descriptorRefs>
             <descriptorRef>project</descriptorRef>
@@ -51,7 +52,7 @@
             <id>examples</id>
             <phase>package</phase>
             <goals>
-              <goal>attached</goal>
+              <goal>single</goal>
             </goals>
           </execution>
         </executions>

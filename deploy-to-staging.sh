@@ -11,8 +11,8 @@ function rsyncToDest() {
   options=$3
   connection=deployer@marketing02.int.sonatype.com
   echo "Uploading $1 to $2 on $connection"
-  ssh $connection mkdir -pv $target
-  rsync -e ssh $options -av target/$source $connection:$target
+  ssh ${connection} mkdir -pv ${target}
+  rsync -e ssh ${options} -av target/${source} ${connection}:${target}
 }
 
 rsyncToDest site/ mvnref-book/ --delete

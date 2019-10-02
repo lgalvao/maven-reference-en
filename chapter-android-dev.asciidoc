@@ -436,8 +436,9 @@ They can typically be passed into the execution as plugin configuration, as prop
 ----
 <properties>
     <android.emulator.avd>21</android.emulator.avd>
-<properties>
+</properties>
 ----
+
 
 .Configuration on command line invocation
 [source,bash]

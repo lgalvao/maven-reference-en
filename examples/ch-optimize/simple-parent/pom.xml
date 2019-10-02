@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-  	<groupId>org.sonatype.mavenbook.optimize</groupId>
-  	<artifactId>parent</artifactId>
-  	<version>0.8-SNAPSHOT</version>
-  </parent>
   <artifactId>simple-parent</artifactId>
   <packaging>pom</packaging>
   <name>Optimization Chapter Simple Parent Project</name>
- 
+
+  <parent>
+    <groupId>org.sonatype.mavenbook.optimize</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.8-SNAPSHOT</version>
+  </parent>
+
   <modules>
     <module>simple-command</module>
     <module>simple-model</module>
@@ -20,21 +21,25 @@
     <module>simple-persist</module>
     <module>simple-webapp</module>
   </modules>
+
   <build>
     <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
           <configuration>
             <source>13</source>
             <target>13</target>
           </configuration>
         </plugin>
+
+        <!--TODO Obsolete! -->
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>hibernate3-maven-plugin</artifactId>
-          <version>2.1</version>
+          <version>3.0</version>
           <configuration>
             <components>
               <component>
@@ -43,43 +48,40 @@
               </component>
             </components>
           </configuration>
+
           <dependencies>
             <dependency>
-              <groupId>hsqldb</groupId>
+              <groupId>org.hsqldb</groupId>
               <artifactId>hsqldb</artifactId>
               <version>${hsqldb.version}</version>
             </dependency>
           </dependencies>
         </plugin>
       </plugins>
-   </pluginManagement> 
+    </pluginManagement>
   </build>
 
   <properties>
-    <hibernate.annotations.version>3.3.0.ga</hibernate.annotations.version>
-    <hsqldb.version>1.8.0.7</hsqldb.version>
+    <hibernate.annotations.version>5.1.0.Final</hibernate.annotations.version>
+    <hsqldb.version>2.5.0</hsqldb.version>
   </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>org.springframework</groupId>
-        <artifactId>spring</artifactId>
-        <version>2.0.7</version>
+        <artifactId>spring-core</artifactId>
+        <version>5.2.0.RELEASE</version>
       </dependency>
       <dependency>
         <groupId>org.apache.velocity</groupId>
-        <artifactId>velocity</artifactId>
-        <version>1.5</version>
-      </dependency>  
-      <dependency>
-        <groupId>javax.persistence</groupId>
-        <artifactId>persistence-api</artifactId>
-        <version>1.0</version>
+        <artifactId>velocity-engine-core</artifactId>
+        <version>2.1</version>
       </dependency>
       <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate-annotations</artifactId>
-        <version>${hibernate.annotations.version}</version>
+        <groupId>javax.persistence</groupId>
+        <artifactId>javax.persistence-api</artifactId>
+        <version>2.2</version>
       </dependency>
       <dependency>
         <groupId>org.hibernate</groupId>
@@ -88,8 +90,8 @@
       </dependency>
       <dependency>
         <groupId>org.hibernate</groupId>
-        <artifactId>hibernate</artifactId>
-        <version>3.2.5.ga</version>
+        <artifactId>hibernate-core</artifactId>
+        <version>5.4.5.Final</version>
         <exclusions>
           <exclusion>
             <groupId>javax.transaction</groupId>
@@ -99,12 +101,12 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
+
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.5.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

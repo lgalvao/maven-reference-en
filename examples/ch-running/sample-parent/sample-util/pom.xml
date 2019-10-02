@@ -12,6 +12,7 @@
 
   <artifactId>sample-util</artifactId>
   <name>sample-util</name>
+
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>

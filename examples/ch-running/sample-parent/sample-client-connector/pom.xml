@@ -4,14 +4,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
 
+  <artifactId>sample-client-connector</artifactId>
+  <name>sample-client-connector</name>
+
   <parent>
     <groupId>org.sonatype.mavenbook.running</groupId>
     <artifactId>sample-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>sample-client-connector</artifactId>
-  <name>sample-client-connector</name>
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>

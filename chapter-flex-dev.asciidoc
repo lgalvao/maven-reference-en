@@ -821,7 +821,6 @@ Note that the +artifactId+ in this POM differs from the name of the module direc
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.sonatype.test</groupId>
     <artifactId>swc</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>swc</packaging>
@@ -927,7 +926,6 @@ Note that the following POM defines an +artifactId+ that differs from the direct
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.sonatype.test</groupId>
     <artifactId>swf</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>swf</packaging>
@@ -1041,7 +1039,6 @@ Next, take a look at the simple POM in the war module.
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.sonatype.test</groupId>
     <artifactId>war</artifactId>
     <version>1.0-SNAPSHOT</version>
 

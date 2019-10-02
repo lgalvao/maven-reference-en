@@ -1,4 +1,5 @@
 [[site-generation]]
+
 == Site Generation
 
 [[site-generation-sect-intro]]
@@ -659,11 +660,11 @@ and replace it with this:
         }
     </script>
     #if ( $decoration.body.head )
-    #foreach( $item in $decoration.body.head.getChildren() )
+      #foreach( $item in $decoration.body.head.getChildren() )
     #if ( $item.name == "script" )
-    $item.toUnescapedString()
+      $item.toUnescapedString()
     #else
-    $item.toString()
+      $item.toString()
     #end
     #end
     #end
@@ -958,24 +959,19 @@ This will position the version (in the case of the sample-project project, it wi
 Valid positions for the project version are:
 
 left::
-
-   Left side of the bar just below the site logo  
+Left side of the bar just below the site logo
 
 right::
-
-   Right side of the bar just below the site logo  
+Right side of the bar just below the site logo
 
 navigation-top::
-
-   Top of the menu  
+Top of the menu
 
 navigation-bottom::
-
-   Bottom of the menu  
+Bottom of the menu
 
 none::
-
-   Suppress the version entirely
+Suppress the version entirely
 
 [[site-generation-sect-mod-pubdate]]
 ==== Modify the Publication Date Format and Location
@@ -984,24 +980,19 @@ In some cases, you may wish to reformat or reposition the "Last Published" date 
 Just like the project version tip above, you can specify the position of the publication date by using one of the following:
 
 left::
-
-   Left side of the bar just below the site logo  
+Left side of the bar just below the site logo
 
 right::
-
-   Right side of the bar just below the site logo  
+Right side of the bar just below the site logo
 
 navigation-top::
-
-   Top of the menu  
+Top of the menu
 
 navigation-bottom::
-
-   Bottom of the menu  
+Bottom of the menu
 
 none::
-
-   Suppress the publication entirely   
+Suppress the publication entirely
 
 .Positioning the Publish Date
 [source,xml]

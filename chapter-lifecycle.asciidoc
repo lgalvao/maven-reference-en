@@ -542,7 +542,7 @@ In a second `resource` element, we've configured the default resources path to b
 <<ex-filter-script>> shows you how to declare two resource directories and supply them with different filtering and target directory preferences.
 The project from <<ex-filter-script>> would contain a `run.bat` file in `src/main/command` with the following content:
 
-[source,bash]
+[source,shell script]
 ----
 @echo off
 java -jar ${project.build.finalName}.jar %*
@@ -550,7 +550,7 @@ java -jar ${project.build.finalName}.jar %*
 
 After running `mvn process-resources`, a file named 'run.bat' would appear in '+++${basedir}+++' with the following content:
 
-[source,bash]
+[source,shell script]
 ----
 @echo off
 java -jar simple-cmd-2.3.1.jar %*

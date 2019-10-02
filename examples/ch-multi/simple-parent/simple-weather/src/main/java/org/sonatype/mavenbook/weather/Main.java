@@ -9,7 +9,7 @@ public class Main {
         try {
             zipcode = args[0];
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
 
         // Start the program

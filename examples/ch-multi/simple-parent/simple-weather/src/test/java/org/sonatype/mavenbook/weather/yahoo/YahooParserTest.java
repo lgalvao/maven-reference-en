@@ -25,6 +25,6 @@ public class YahooParserTest {
     }
 
     private void assertEquals(String new_york, String city) {
-    	assertTrue(true);
+        assertTrue(true);
     }
 }

@@ -8,7 +8,6 @@ import org.codehaus.mojo.groovy.GroovyMojo
  * @goal echo
  */
 class EchoMojo extends GroovyMojo {
-
     /**
      * Message to print
      *
@@ -18,6 +17,6 @@ class EchoMojo extends GroovyMojo {
     String message
 
     void execute() {
-      log.info( message )
+        log.info(message)
     }
 }
