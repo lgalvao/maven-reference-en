@@ -4,15 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>simple-model</artifactId>
+  <packaging>jar</packaging>
+  <name>Optimization Chapter Simple Object Model</name>
+
   <parent>
     <groupId>org.sonatype.mavenbook.optimize</groupId>
     <artifactId>simple-parent</artifactId>
     <version>0.8-SNAPSHOT</version>
   </parent>
-  <artifactId>simple-model</artifactId>
-  <packaging>jar</packaging>
-
-  <name>Optimization Chapter Simple Object Model</name>
 
   <dependencies>
     <dependency>

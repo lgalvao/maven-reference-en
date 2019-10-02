@@ -4,14 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>simple-parent</artifactId>
+  <packaging>pom</packaging>
+  <name>Multi Chapter Simple Parent Project</name>
+
   <parent>
     <groupId>org.sonatype.mavenbook.multi</groupId>
     <artifactId>parent</artifactId>
     <version>0.8-SNAPSHOT</version>
   </parent>
-  <artifactId>simple-parent</artifactId>
-  <packaging>pom</packaging>
-  <name>Multi Chapter Simple Parent Project</name>
 
   <modules>
     <module>simple-weather</module>
@@ -24,6 +26,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
           <configuration>
             <source>13</source>
             <target>13</target>

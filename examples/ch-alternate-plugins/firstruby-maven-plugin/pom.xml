@@ -5,15 +5,15 @@
                              http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <artifactId>firstruby-maven-plugin</artifactId>
+  <name>Example Ruby Mojo - firstruby-maven-plugin</name>
+  <packaging>maven-plugin</packaging>
+
   <parent>
     <groupId>org.sonatype.mavenbook.alternateplugins</groupId>
     <artifactId>parent</artifactId>
     <version>0.8-SNAPSHOT</version>
   </parent>
-
-  <artifactId>firstruby-maven-plugin</artifactId>
-  <name>Example Ruby Mojo - firstruby-maven-plugin</name>
-  <packaging>maven-plugin</packaging>
 
   <dependencies>
     <dependency>
@@ -23,7 +23,6 @@
       <scope>runtime</scope>
     </dependency>
   </dependencies>
-
 
   <build>
     <plugins>

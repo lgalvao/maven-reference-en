@@ -11,10 +11,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.sonatype.mavenbook.weather.model.Location;
 
 public class LocationDAO extends HibernateDaoSupport {
-
-    public LocationDAO() {
-    }
-
     public Location findByZip(final String zip) {
         return (Location) getHibernateTemplate().execute(new HibernateCallback() {
             public Object doInHibernate(Session session) {
