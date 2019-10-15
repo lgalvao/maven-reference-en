@@ -6,7 +6,7 @@
 :doctype: book
 :encoding: utf-8
 :lang: en
-:source-highlighter: highlight.js
+:source-highlighter: rouge
 :pdf-page-size: A4
 :sectnums:
 :listing-caption: Listing
