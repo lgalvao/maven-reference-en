@@ -1,8 +1,7 @@
 Maven: The Complete Reference
 
 Hello there.  Maven: The Complete Reference in an asciidoc format.  To
-edit asciidoc, use Emacs, use vi, use TextMate, use Notepad.  There's
-really just a single file you need to worry about:
+edit asciidoc, you can use any text editor. There's really just a single file you need to worry about:
 
 * book-mvnref.asciidoc
 
@@ -15,7 +14,7 @@ contain content.
 
 Q: Right, so how do you build the book?
 
-A: I knew you'd ask that, and here's the simple answer:
+A: Here's the simple answer:
 
 . On an OSX/Ubuntu machine:
 
@@ -31,20 +30,9 @@ A: I knew you'd ask that, and here's the simple answer:
 
 .. Don't bother.
 
-. On a Solaris machine:
-
-.. What's Solaris?  Is that an operating system?
-
-Q: That's an answer?
-
-A: Yes.  Ideally someone will show up and tell us how to use
-https://github.com/schacon/git-scribe
-
 Q: All this seems a bit creaky at the moment.  What happened?
 
 A: I came to the realization that we needed a more nimble approach to
 all of our documentation.  From books to training to blogging, it was
 a pretty quick transition, but from this point forward - it's asciidoc
 or bust.
-
-
