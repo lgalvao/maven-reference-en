@@ -447,7 +447,7 @@ But sometimes this is far more information than necessary.
 To get information about a single goal, set the `mojo` parameter as well as the `plugin` parameter.
 The following command lists all of the information about the Compiler plugin's `compile` goal.
 
-----
 [source,shell script]
+----
 $ mvn help:describe -Dplugin=compiler -Dmojo=compile -Ddetail
 ----

@@ -2,25 +2,23 @@
 == Build Profiles
 // TODO need something here!
 [[profiles-sect-what]]
-=== What Are They For?
 
-Profiles allow for the ability to customize a particular build for a particular environment; they enable portability between different build environments.
+Profiles allow for the ability to customize a particular build for a particular environment. They enable portability between different build environments.
 
-Two example build environments might be "production" and "development".
-When you are working in a development environment, your system might be configured to read from a development database instance running on your local machine; while in production, your system is configured to read from the production database.
-Maven allows you to define any number of build environments (build profiles), which can override any of the settings in the POM.
+Two typical build environments would be "production" and "development".
+When you are working in a development environment, your system would probably be configured to use a development database instance, while in production, your system is configured to read from the production database.
+Maven allows you to define any number of build environments using *build profiles*, by means of which you can override any of the settings in the POM.
 
-You could configure your application to read from your local development instance of a database in your "development" profile, and you can configure it to read from the production database in the "production" profile.
-Profiles can also be activated according to the environment and platform.
+Profiles can be activated according to the environment and platform, among other variables.
 You can customize a build to run differently depending, for example, on the operating system or the installed JDK version.
 Before we talk about using and configuring Maven profiles, we need to define the concept of Build Portability.
 
 [[profiles-sect-portability]]
-==== What is Build Portability
+==== Build Portability
 
 A build's portability is a measure of how easy it is to take a particular project and build it in different environments.
-A build which works without any custom configuration or customization of properties files is more portable than a build which requires a great deal of work to build from scratch.
-The most portable projects tend to be widely used open-source projects like Apache Commons or Google Guava, which ship with Maven builds requiring little or no customization.
+A build which works without any custom configuration or customization is more portable than a build which requires a great deal of work to build from scratch.
+The most portable projects tend to be widely used open-source projects like Apache Commons or Spring Framework, which ship with Maven builds requiring little or no customization.
 
 Put simply, the most portable project builds tend to just work out of the box, and the least portable builds require you to jump through hoops and configure platform specific paths to locate build tools.
 Before we show you how to achieve build portability, let's survey the different kinds of portability we are talking about.
@@ -28,10 +26,10 @@ Before we show you how to achieve build portability, let's survey the different 
 [[profiles-sect-non-portable]]
 ===== Non-Portable Builds
 
-Lack of portability is exactly what all build tools are made to prevent – however, any tool can be configured to be non-portable (even Maven).
+Lack of portability is exactly what all build tools are made to prevent. However, any tool can be configured to be non-portable (even Maven).
 A non-portable project is buildable only under a specific set of circumstances and criteria (e.g., your local machine).
 Unless you are working by yourself and have no plans of ever deploying your application to another machine, it is best to avoid non-portability entirely.
-A non-portable build only runs on a single machine; it is a "one-off".
+A non-portable build only runs on a single machine. It is a "one-off".
 
 Maven is designed to discourage non-portable builds by offering the ability to customize builds using profiles.
 
