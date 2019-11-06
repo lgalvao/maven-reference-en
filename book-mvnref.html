@@ -489,13 +489,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#profiles">5. Build Profiles</a>
-<ul class="sectlevel2">
-<li><a href="#profiles-sect-what">5.1. What Are They For?</a></li>
-<li><a href="#profiles-sect-maven-profiles">5.2. Portability through Maven Profiles</a></li>
-<li><a href="#profiles-sect-activation">5.3. Profile Activation</a></li>
-<li><a href="#profiles-sect-listing-active-profiles">5.4. Listing Active Profiles</a></li>
-<li><a href="#profiles-sect-tips-tricks">5.5. Tips and Tricks</a></li>
-<li><a href="#profiles-sect-summary">5.6. Summary</a></li>
+<ul class="sectlevel3">
+<li><a href="#profiles-sect-portability">5.1. Build Portability</a></li>
+<li><a href="#profiles-sect-select-level">5.2. Selecting an Appropriate Level of Portability</a></li>
+<li><a href="#profiles-sect-maven-profiles">5.3. Portability through Maven Profiles</a></li>
+<li><a href="#profiles-sect-activation">5.4. Profile Activation</a></li>
+<li><a href="#profiles-sect-listing-active-profiles">5.5. Listing Active Profiles</a></li>
+<li><a href="#profiles-sect-tips-tricks">5.6. Tips and Tricks</a></li>
+<li><a href="#profiles-sect-summary">5.7. Summary</a></li>
 </ul>
 </li>
 <li><a href="#running">6. Running Maven</a>
@@ -507,7 +508,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#configuring">7. Maven Configuration</a>
 <ul class="sectlevel2">
-<li><a href="#_configuring_maven_plugins">7.1. Configuring Maven Plugins</a></li>
+<li><a href="#_plugin_configuration_parameters">7.1. Plugin Configuration Parameters</a></li>
+<li><a href="#_adding_plugin_dependencies">7.2. Adding Plugin Dependencies</a></li>
+<li><a href="#_setting_global_plugin_parameters">7.3. Setting Global Plugin Parameters</a></li>
+<li><a href="#configuring-sect-exec-param">7.4. Setting Execution Specific Parameters</a></li>
+<li><a href="#_setting_parameters_for_goals_bound_to_default_lifecycle">7.5. Setting Parameters for Goals Bound to Default Lifecycle</a></li>
 </ul>
 </li>
 <li><a href="#assemblies">8. Maven Assemblies</a>
@@ -3774,28 +3779,25 @@ For now, all you need to know is that the <code>deploy:deploy</code> goal is bou
 <div class="sect1">
 <h2 id="profiles">5. Build Profiles</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="profiles-sect-what">5.1. What Are They For?</h3>
-<div class="paragraph">
-<p>Profiles allow for the ability to customize a particular build for a particular environment; they enable portability between different build environments.</p>
+<div id="profiles-sect-what" class="paragraph">
+<p>Profiles allow for the ability to customize a particular build for a particular environment. They enable portability between different build environments.</p>
 </div>
 <div class="paragraph">
-<p>Two example build environments might be "production" and "development".
-When you are working in a development environment, your system might be configured to read from a development database instance running on your local machine; while in production, your system is configured to read from the production database.
-Maven allows you to define any number of build environments (build profiles), which can override any of the settings in the POM.</p>
+<p>Two typical build environments would be "production" and "development".
+When you are working in a development environment, your system would probably be configured to use a development database instance, while in production, your system is configured to read from the production database.
+Maven allows you to define any number of build environments using <strong>build profiles</strong>, by means of which you can override any of the settings in the POM.</p>
 </div>
 <div class="paragraph">
-<p>You could configure your application to read from your local development instance of a database in your "development" profile, and you can configure it to read from the production database in the "production" profile.
-Profiles can also be activated according to the environment and platform.
+<p>Profiles can be activated according to the environment and platform, among other variables.
 You can customize a build to run differently depending, for example, on the operating system or the installed JDK version.
 Before we talk about using and configuring Maven profiles, we need to define the concept of Build Portability.</p>
 </div>
 <div class="sect3">
-<h4 id="profiles-sect-portability">5.1.1. What is Build Portability</h4>
+<h4 id="profiles-sect-portability">5.1. Build Portability</h4>
 <div class="paragraph">
 <p>A build&#8217;s portability is a measure of how easy it is to take a particular project and build it in different environments.
-A build which works without any custom configuration or customization of properties files is more portable than a build which requires a great deal of work to build from scratch.
-The most portable projects tend to be widely used open-source projects like Apache Commons or Google Guava, which ship with Maven builds requiring little or no customization.</p>
+A build which works without any custom configuration or customization is more portable than a build which requires a great deal of work to build from scratch.
+The most portable projects tend to be widely used open-source projects like Apache Commons or Spring Framework, which ship with Maven builds requiring little or no customization.</p>
 </div>
 <div class="paragraph">
 <p>Put simply, the most portable project builds tend to just work out of the box, and the least portable builds require you to jump through hoops and configure platform specific paths to locate build tools.
@@ -3804,10 +3806,10 @@ Before we show you how to achieve build portability, let&#8217;s survey the diff
 <div class="sect4">
 <h5 id="profiles-sect-non-portable">Non-Portable Builds</h5>
 <div class="paragraph">
-<p>Lack of portability is exactly what all build tools are made to prevent – however, any tool can be configured to be non-portable (even Maven).
+<p>Lack of portability is exactly what all build tools are made to prevent. However, any tool can be configured to be non-portable (even Maven).
 A non-portable project is buildable only under a specific set of circumstances and criteria (e.g., your local machine).
 Unless you are working by yourself and have no plans of ever deploying your application to another machine, it is best to avoid non-portability entirely.
-A non-portable build only runs on a single machine; it is a "one-off".</p>
+A non-portable build only runs on a single machine. It is a "one-off".</p>
 </div>
 <div class="paragraph">
 <p>Maven is designed to discourage non-portable builds by offering the ability to customize builds using profiles.</p>
@@ -3851,7 +3853,7 @@ This level of portability is especially important for open-source projects, whic
 </div>
 </div>
 <div class="sect3">
-<h4 id="profiles-sect-select-level">5.1.2. Selecting an Appropriate Level of Portability</h4>
+<h4 id="profiles-sect-select-level">5.2. Selecting an Appropriate Level of Portability</h4>
 <div class="paragraph">
 <p>Clearly, you&#8217;ll want to avoid creating the worst-case scenario: the non-portable build.
 You may have had the misfortune to work at an organization that had critical applications with non-portable builds.
@@ -3889,9 +3891,8 @@ This can make the difference between a project&#8217;s success and its failure.
 One side effect of Maven&#8217;s adoption across a wide group of open-source projects is that it has made it easier for developers to contribute code.</p>
 </div>
 </div>
-</div>
 <div class="sect2">
-<h3 id="profiles-sect-maven-profiles">5.2. Portability through Maven Profiles</h3>
+<h3 id="profiles-sect-maven-profiles">5.3. Portability through Maven Profiles</h3>
 <div class="paragraph">
 <p>A profile in Maven is an alternative set of configuration values which set or override default values.
 Using a profile, you can customize a build for different environments.
@@ -4002,7 +4003,7 @@ To verify that the <code>production</code> profile overrides the default Compile
 As shown in the output, <code>debug</code> is set to false and <code>optimize</code> is set to true.</p>
 </div>
 <div class="sect3">
-<h4 id="profiles-sect-overriding-pom">5.2.1. Overriding a Project Object Model</h4>
+<h4 id="profiles-sect-overriding-pom">5.3.1. Overriding a Project Object Model</h4>
 <div class="paragraph">
 <p>While the previous example showed you how to override the default configuration properties of a single Maven plugin, you still don&#8217;t know exactly what a Maven profile is allowed to override.
 The short answer is that a profile can override almost everything that you could have in a POM.
@@ -4044,7 +4045,7 @@ For example, if you need to publish an artifact to a staging server, you would c
 </div>
 </div>
 <div class="sect2">
-<h3 id="profiles-sect-activation">5.3. Profile Activation</h3>
+<h3 id="profiles-sect-activation">5.4. Profile Activation</h3>
 <div class="paragraph">
 <p>We&#8217;ve shown how to create a profile that overrides default behavior for a specific target environment, where the default build was designed for development and the <code>production</code> profile provides configuration for a production environment.
 What happens when you need to provide customizations based on variables like operating systems or JDK version?
@@ -4110,7 +4111,7 @@ Let&#8217;s explore this activation configuration in more detail:</p>
 In this example, we&#8217;ve specified that this profile will be activated by Java versions that begin with "1.6".
 This would include "1.6.0_03", "1.6.0_02", or any other string that began with "1.6".
 Activation parameters are not limited to the Java version; for a full list of activation parameters see
-<a href="#profiles-sect-activation-config">Section 5.3.1</a>.</td>
+<a href="#profiles-sect-activation-config">Section 5.4.1</a>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -4120,7 +4121,7 @@ Adding this module will cause Maven to look in the <code>simple-script/</code> s
 </table>
 </div>
 <div class="sect3">
-<h4 id="profiles-sect-activation-config">5.3.1. Activation Configuration</h4>
+<h4 id="profiles-sect-activation-config">5.4.1. Activation Configuration</h4>
 <div class="paragraph">
 <p>Activations can contain one or more selectors, including JDK versions, operating system parameters, files, and properties.
 A profile is activated when all activation criteria have been satisfied.
@@ -4186,7 +4187,7 @@ In this example, the profile will be activated if a file named <code>file2.prope
 </div>
 </div>
 <div class="sect3">
-<h4 id="profiles-sect-activation-by-absence">5.3.2. Property-based Activation</h4>
+<h4 id="profiles-sect-activation-by-absence">5.4.2. Property-based Activation</h4>
 <div class="paragraph">
 <p>You can also activate a profile based on the value of a property like <code>environment.type</code>.
 For example, you can activate a <code>development</code> profile if <code>environment.type</code> equals <code>development</code>, or a production profile if <code>environment.type</code> equals <code>production</code>.
@@ -4219,7 +4220,7 @@ This profile is activated when no <code>${environment.type}</code> property is s
 </div>
 </div>
 <div class="sect2">
-<h3 id="profiles-sect-listing-active-profiles">5.4. Listing Active Profiles</h3>
+<h3 id="profiles-sect-listing-active-profiles">5.5. Listing Active Profiles</h3>
 <div class="paragraph">
 <p>Maven profiles can be defined in either the POM itself, in a <code>profiles.xml</code> file, in <code>~/.m2/settings.xml</code>, or in <code>${M2_HOME}/conf/settings.xml</code>.
 With these four "levels", there&#8217;s no good way of keeping track of profiles available to a particular project without remembering which profiles are defined in these files.
@@ -4240,14 +4241,14 @@ The following profiles are active:
 </div>
 </div>
 <div class="sect2">
-<h3 id="profiles-sect-tips-tricks">5.5. Tips and Tricks</h3>
+<h3 id="profiles-sect-tips-tricks">5.6. Tips and Tricks</h3>
 <div class="paragraph">
 <p>If your build needs subtle customizations to work on different platforms, or if you need your build to produce different results for different target platforms, project profiles increase build portability.
 Settings profiles generally decrease build portability by adding extra-project information that must be communicated from developer to developer.
 The following sections provide some guidelines and some ideas for applying Maven profiles to your project.</p>
 </div>
 <div class="sect3">
-<h4 id="profiles-sect-common-envs">5.5.1. Common Environments</h4>
+<h4 id="profiles-sect-common-envs">5.6.1. Common Environments</h4>
 <div class="paragraph">
 <p>One of the core motivations for Maven project profiles is to provide for environment-specific configuration settings.
 You can define profiles activated by environment properties and use these common environment properties across all your projects.</p>
@@ -4348,7 +4349,7 @@ If you wanted to be sure the development profile would be active for a given bui
 </div>
 </div>
 <div class="sect3">
-<h4 id="profiles-sect-protecting-secrets">5.5.2. Protecting Secrets</h4>
+<h4 id="profiles-sect-protecting-secrets">5.6.2. Protecting Secrets</h4>
 <div class="paragraph">
 <p>In <a href="#ex-profile-envtype-pom">Listing 32</a> above, the production profile doesn&#8217;t contain the <code>database.password</code> property.
 We&#8217;ve done this on purpose, to illustrate the concept of putting secrets in you user-specific <code>settings.xml</code>.
@@ -4381,7 +4382,7 @@ This way, you can put all of the production-specific configuration into a projec
 </div>
 </div>
 <div class="sect3">
-<h4 id="profiles-sect-platform-classifier">5.5.3. Platform Classifiers</h4>
+<h4 id="profiles-sect-platform-classifier">5.6.3. Platform Classifiers</h4>
 <div class="paragraph">
 <p>Let&#8217;s assume you have a library or project that produces platform-specific customizations.
 Even though Java is platform-neutral, there are times when you might need to write code that invokes platform-specific native libraries or tools.
@@ -4509,7 +4510,7 @@ The JAR artifact will be named <code>${finalName}-${envClassifier}.jar</code> an
 </div>
 </div>
 <div class="sect2">
-<h3 id="profiles-sect-summary">5.6. Summary</h3>
+<h3 id="profiles-sect-summary">5.7. Summary</h3>
 <div class="paragraph">
 <p>When used judiciously, profiles can make it easy to customize a build for different platforms.
 If something in your build needs to define a platform-specific path for something like an application server, you can put these configuration points in a profile which is activated by an operating system parameter.</p>
@@ -5124,8 +5125,7 @@ The following command lists all of the information about the Compiler plugin&#82
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>[source,shell script]
-$ mvn help:describe -Dplugin=compiler -Dmojo=compile -Ddetail</pre>
+<pre class="rouge highlight"><code data-lang="shell script">$ mvn help:describe -Dplugin=compiler -Dmojo=compile -Ddetail</code></pre>
 </div>
 </div>
 </div>
@@ -5135,183 +5135,42 @@ $ mvn help:describe -Dplugin=compiler -Dmojo=compile -Ddetail</pre>
 <div class="sect1">
 <h2 id="configuring">7. Maven Configuration</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_configuring_maven_plugins">7.1. Configuring Maven Plugins</h3>
 <div class="paragraph">
 <p>To customize the behavior of a Maven Plugin, you will need to configure the plugin in a project&#8217;s POM. The following sections outline the various methods available for customizing a Maven plugin&#8217;s configuration.</p>
 </div>
-<div class="sect3">
-<h4 id="_plugin_configuration_parameters">7.1.1. Plugin Configuration Parameters</h4>
+<div class="sect2">
+<h3 id="_plugin_configuration_parameters">7.1. Plugin Configuration Parameters</h3>
 <div class="paragraph">
-<p>Maven plugins are configured using properties that are defined by goals within a plugin.
-If you look at a goal like the compile goal in the Maven Compiler Plugin you will see a list of configuration parameters like source, target, compilerArgument, fork, optimize, and many others.
-If you look at the testCompile goal you will see a different list of configuration parameters for the testCompile goal.
-If you are looking for details on the available plugin goal configuration parameters, you can use the Maven Help Plugin to describe a particular plugin or a particular plugin goal.</p>
-</div>
-<div class="paragraph">
-<p>To describe a particular plugin, use the help:describe goal from the command line as follows:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="shell script">$ mvn help:describe -Dcmd=compiler:compile
-
-[INFO] [help:describe {execution: default-cli}]
-[INFO] 'compiler:compile' is a plugin goal (aka mojo).
-Mojo: 'compiler:compile'
-compiler:compile
-Description: Compiles application sources
-Deprecated. No reason given</code></pre>
-</div>
+<p>Maven plugins are configured using properties that are defined by goals within a plugin. If you look at a goal like the <code>compile</code> goal in the Maven Compiler Plugin you will see a list of configuration parameters like <code>source</code>, <code>target</code>, <code>compilerArgument</code>, <code>fork</code>, <code>optimize</code>, and many others.
+If you look at the <code>testCompile</code> goal you will see a different list of configuration parameters.
+If you are looking for details on the available plugin configuration parameters, you can use the Maven Help Plugin to describe a particular plugin or a particular plugin goal.</p>
 </div>
 <div class="paragraph">
-<p>For more information about the available configuration parameters, run the same command with the -Ddetail argument:</p>
+<p>To describe a particular plugin, use the <code>help:describe</code> goal from the command line. For more information about the available configuration parameters, run the same command with the <code>-Ddetail</code> argument:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell script">$ mvn help:describe -Dcmd=compiler:compile -Ddetail
+
 [INFO] [help:describe {execution: default-cli}]
 [INFO] 'compiler:compile' is a plugin goal (aka mojo).
 Mojo: 'compiler:compile'
 compiler:compile
 Description: Compiles application sources
-Deprecated. No reason given
-Implementation: org.apache.maven.plugin.CompilerMojo
-Language: java
-Bound to phase: compile
-
-Available parameters:
-
-compilerArgument
-Sets the unformatted argument string to be passed to the compiler if fork
-is set to true.
-
-This is because the list of valid arguments passed to a Java compiler
-varies based on the compiler version.
-Deprecated. No reason given
-
-compilerArguments
-Sets the arguments to be passed to the compiler (prepending a dash) if
-fork is set to true.
-
-This is because the list of valid arguments passed to a Java compiler
-varies based on the compiler version.
-Deprecated. No reason given
-
-compilerId (Default: javac)
-The compiler id of the compiler to use. See this guide for more
-information.
-Deprecated. No reason given
-
-compilerVersion
-Version of the compiler to use, ex. '1.3', '1.5', if fork is set to true.
-Deprecated. No reason given
-
-debug (Default: true)
-Set to true to include debugging information in the compiled class files.
-Deprecated. No reason given
-
-encoding
-The -encoding argument for the Java compiler.
-Deprecated. No reason given
-
-excludes
-A list of exclusion filters for the compiler.
-Deprecated. No reason given
-
-executable
-Sets the executable of the compiler to use when fork is true.
-Deprecated. No reason given
-
-failOnError (Default: true)
-Indicates whether the build will continue even if there are compilation
-errors; defaults to true.
-Deprecated. No reason given
-
-fork (Default: false)
-Allows running the compiler in a separate process. If 'false' it uses the
-built in compiler, while if 'true' it will use an executable.
-Deprecated. No reason given
-
-includes
-A list of inclusion filters for the compiler.
-Deprecated. No reason given
-
-maxmem
-Sets the maximum size, in megabytes, of the memory allocation pool, ex.
-'128', '128m' if fork is set to true.
-Deprecated. No reason given
-
-meminitial
-Initial size, in megabytes, of the memory allocation pool, ex. '64',
-'64m' if fork is set to true.
-Deprecated. No reason given
-
-optimize (Default: false)
-Set to true to optimize the compiled code using the compiler's
-optimization methods.
-Deprecated. No reason given
-
-outputFileName
-Sets the name of the output file when compiling a set of sources to a
-single file.
-Deprecated. No reason given
-
-showDeprecation (Default: false)
-Sets whether to show source locations where deprecated APIs are used.
-Deprecated. No reason given
-
-showWarnings (Default: false)
-Set to true to show compilation warnings.
-Deprecated. No reason given
-
-source
-The -source argument for the Java compiler.
-Deprecated. No reason given
-
-staleMillis (Default: 0)
-Sets the granularity in milliseconds of the last modification date for
-testing whether a source needs recompilation.
-Deprecated. No reason given
-
-target
-The -target argument for the Java compiler.
-Deprecated. No reason given
-
-verbose (Default: false)
-Set to true to show messages about what the compiler is doing.
-Deprecated. No reason given</code></pre>
+....</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>If you need to get a list of plugin goals which are contained in a plugin, you can run the help:describe goal and pass in the plugin parameter.
-The plugin parameter accepts a plugin prefix or a groupId and an artifactId for a plugin as shown in the following examples:</p>
+The plugin parameter accepts a plugin prefix or a <code>groupId</code> and an <code>artifactId</code> for a plugin as shown in the following examples:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell script">$ mvn help:describe -Dplugin=compiler
-[INFO] [help:describe {execution: default-cli}]
-[INFO] org.apache.maven.plugins:maven-compiler-plugin:2.0.2
-
-Name: Maven Compiler Plugin
-Description: Maven Plugins
-Group Id: org.apache.maven.plugins
-Artifact Id: maven-compiler-plugin
-Version: 2.0.2
-Goal Prefix: compiler
-
-This plugin has 2 goals:
-
-compiler:compile
-Description: Compiles application sources
-Deprecated. No reason given
-
-compiler:testCompile
-Description: Compiles application test sources
-Deprecated. No reason given</code></pre>
+<pre class="rouge highlight"><code data-lang="shell script">$ mvn help:describe -Dplugin=compiler</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can use the groupId and the artifactId of the plugin and get the same list of plugin goals.</p>
+<p>You can use the <code>groupId</code> and the <code>artifactId</code> of the plugin and get the same list of plugin goals.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5319,14 +5178,14 @@ Deprecated. No reason given</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Passing the -Ddetail argument to the help:describe goal with the plugin parameter will cause Maven to print out all of the goals and all of the goal parameters for the entire plugin.</p>
+<p>Passing the <code>-Ddetail</code> argument to the <code>help:describe</code> goal with the plugin parameter will cause Maven to print out all of the goals and all of the goal parameters for the entire plugin.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_adding_plugin_dependencies">7.1.2. Adding Plugin Dependencies</h4>
+<div class="sect2">
+<h3 id="_adding_plugin_dependencies">7.2. Adding Plugin Dependencies</h3>
 <div class="paragraph">
-<p>If you need to configure a plugin to use specific versions of dependencies, you can define these dependencies under a dependencies element under plugin.
-When the plugin executes, it will execute with a classpath that contains these dependencies. <a href="#ex-plugin-dependencies">Listing 39</a>
+<p>If you need to configure a plugin to use specific versions of dependencies, you can define these under a dependencies element, under the plugin element.
+Thus, when the plugin executes, it will do so with a classpath that contains these dependencies. <a href="#ex-plugin-dependencies">Listing 39</a>
 is an example of a plugin configuration that overrides default dependency versions and adds new dependencies to facilitate goal execution.</p>
 </div>
 <div id="ex-plugin-dependencies" class="listingblock">
@@ -5364,12 +5223,12 @@ is an example of a plugin configuration that overrides default dependency versio
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_setting_global_plugin_parameters">7.1.3. Setting Global Plugin Parameters</h4>
+<div class="sect2">
+<h3 id="_setting_global_plugin_parameters">7.3. Setting Global Plugin Parameters</h3>
 <div class="paragraph">
-<p>To set a value for a plugin configuration parameter in a particular project, use the XML shown in
+<p>To set a value for a plugin configuration parameter in a particular project, use XML like that shown in
 <a href="#ex-config-global-plugin-param">Listing 40</a>.
-Unless this configuration is overridden by a more specific plugin parameter configuration, Maven will use the values defined directly under the plugin element for all goals which are executed in this plugin.</p>
+Unless this configuration is overridden by a more specific plugin parameter configuration, Maven will use the values defined directly under the <code>plugin</code> element for all goals which are executed in this plugin.</p>
 </div>
 <div id="ex-config-global-plugin-param" class="listingblock">
 <div class="title">Listing 40. Configuring a Maven Plugin</div>
@@ -5385,11 +5244,11 @@ Unless this configuration is overridden by a more specific plugin parameter conf
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="configuring-sect-exec-param">7.1.4. Setting Execution Specific Parameters</h4>
+<div class="sect2">
+<h3 id="configuring-sect-exec-param">7.4. Setting Execution Specific Parameters</h3>
 <div class="paragraph">
-<p>You can configure plugin parameters for specific executions of a plugin goal. <a href="#ex-config-plugin-exec-params">Listing 41</a> shows an example of configuration parameters being passed to the execution of the run goal of the AntRun plugin during the validate phase.
-This specific execution will inherit the configuration parameters from the plugin&#8217;s configuration element and merge them with the values defined for this particular execution.</p>
+<p>You can configure plugin parameters for specific executions of a plugin goal. <a href="#ex-config-plugin-exec-params">Listing 41</a> shows an example of configuration parameters being passed to the execution of the <code>run</code> goal of the AntRun plugin during the <code>validate</code> phase.
+This specific execution will inherit the configuration parameters from the plugin&#8217;s configuration element, and merge them with the values defined for this particular execution.</p>
 </div>
 <div id="ex-config-plugin-exec-params" class="listingblock">
 <div class="title">Listing 41. Setting Configuration Parameters in an Execution</div>
@@ -5414,14 +5273,13 @@ This specific execution will inherit the configuration parameters from the plugi
 <span class="nt">&lt;/plugin&gt;</span></code></pre>
 </div>
 </div>
-</div>
 <div class="sect3">
-<h4 id="_setting_default_command_line_execution_parameters">7.1.5. Setting Default Command Line Execution Parameters</h4>
+<h4 id="_setting_default_command_line_execution_parameters">7.4.1. Setting Default Command Line Execution Parameters</h4>
 <div class="paragraph">
-<p>Starting with Maven 2.2.0, you can now supply configuration parameters for goals which are executed from the command-line.
-To do this, use the special execution id value of "default-cli". <a href="#ex-configure-plugin-default-cli">Listing 42</a> shows an example that binds the single goal to the package phase of the lifecycle which produces a binary distribution.
-This example also configures the default-cli execution for the assembly plugin to use the jar-with-dependencies assembly descriptor.
-The 'bin.xml' descriptor will be used during the lifecycle, and jar-with-dependencies will be used when you execute mvn assembly:assembly from the command line.</p>
+<p>You can also supply configuration parameters for goals which are executed from the command-line.
+To do this, use the special execution id value of "default-cli". The example below (<a href="#ex-configure-plugin-default-cli">Listing 42</a>)   binds the single goal to the package phase of the lifecycle which produces a binary distribution.
+It also configures the <code>default-cli</code> execution for the assembly plugin to use the <code>jar-with-dependencies</code> assembly descriptor.
+In this case, the <code>bin.xml</code> descriptor will be used during the lifecycle, and <code>jar-with-dependencies</code> will be used when you execute <code>mvn assembly:assembly</code> from the command line.</p>
 </div>
 <div id="ex-configure-plugin-default-cli" class="listingblock">
 <div class="title">Listing 42. Configuring Plugin Parameters for Command Line Execution</div>
@@ -5457,12 +5315,12 @@ The 'bin.xml' descriptor will be used during the lifecycle, and jar-with-depende
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_setting_parameters_for_goals_bound_to_default_lifecycle">7.1.6. Setting Parameters for Goals Bound to Default Lifecycle</h4>
+</div>
+<div class="sect2">
+<h3 id="_setting_parameters_for_goals_bound_to_default_lifecycle">7.5. Setting Parameters for Goals Bound to Default Lifecycle</h3>
 <div class="paragraph">
-<p>Starting with Maven 2.2.0, if you need to customize the behavior of a goal which is already bound to the default lifecycle, you can use the execution id "default-&lt;goal&gt;".
-You can customize the behavior of the Jar plugin&#8217;s jar goal which is bound to the package phase in the default lifecycle, and you can customize the configuration parameters of a separate goal execution if you follow the example shown in
-<a href="#ex-configure-default-param">Listing 43</a>.</p>
+<p>If you need to customize the behavior of a goal which is already bound to the default lifecycle, you can use the execution id "default-&lt;goal&gt;".
+You can also customize the behavior of the <code>Jar</code> plugin&#8217;s <code>jar</code> goal, which is bound to the package phase in the default lifecycle, and customize the configuration parameters of a separate goal execution if you follow the example below.</p>
 </div>
 <div id="ex-configure-default-param" class="listingblock">
 <div class="title">Listing 43. Setting a Parameter for a Default Goal Execution</div>
@@ -5496,11 +5354,11 @@ You can customize the behavior of the Jar plugin&#8217;s jar goal which is bound
 </div>
 </div>
 <div class="paragraph">
-<p>In this example, the default jar goal is customized to exclude contents in a specific package.
-Another jar goal is bound to the package phase to create a JAR file which contains only the contents of a particular package in a classified JAR file.</p>
+<p>In this example, the default <code>jar</code> goal is customized to exclude contents in a specific package.
+Another <code>jar</code> goal is bound to the package phase to create a JAR file containing only the contents of a particular package in a classified JAR file.</p>
 </div>
 <div class="paragraph">
-<p>Configuring the default goal execution parameters can also come in handy if you need to configure two goals bound to the default lifecycle with separate settings for the same configuration parameter. <a href="#ex-configure-two-default-param">Listing 44</a> shows an example that configures the default resources:resources goal to exclude empty directories while configuring the default resources:testResources goal to include empty directories.</p>
+<p>Configuring the default goal execution parameters can also come in handy if you need to configure two goals bound to the default lifecycle with separate settings for the same configuration parameter. The example <a href="#ex-configure-two-default-param">Listing 44</a> configures the default <code>resources:resources</code> goal to exclude empty directories, while configuring the default <code>resources:testResources</code> goal to include empty directories.</p>
 </div>
 <div id="ex-configure-two-default-param" class="listingblock">
 <div class="title">Listing 44. Setting Two Default Goal Plugin Configuration Parameters</div>
@@ -5527,7 +5385,6 @@ Another jar goal is bound to the package phase to create a JAR file which contai
 </div>
 </div>
 </div>
-</div>
 <div class="sect1">
 <h2 id="assemblies">8. Maven Assemblies</h2>
 <div class="sectionbody">
@@ -5548,7 +5405,7 @@ Essentially, these are archives that provide a convenient way for users to insta
 In some cases, this may mean bundling a web application with an application server like Wildfly.
 In others, it could mean bundling API documentation alongside source and compiled binaries like jar files.
 Assemblies usually come in handy when you are building the final distribution of a product.
-For example, products like Nexus introduced in <a href="http://books.sonatype.com/nexus-book/reference/">Repository Management with Nexus</a>, are the product of large multi-module Maven products. The final archive you download from Sonatype was created using a Maven Assembly.</p>
+For example, products like Nexus introduced in the book <a href="http://books.sonatype.com/nexus-book/reference/">Repository Management with Nexus</a>, are the product of large multimodule Maven products. The final archive you download from Sonatype was created using a Maven Assembly.</p>
 </div>
 <div class="paragraph">
 <p>In most cases, the Assembly plugin is ideally suited to the process of building project distributions.
@@ -5556,7 +5413,7 @@ However, assemblies don’t have to be distribution archives.
 They are intended to provide Maven users with the flexibility needed to produce customized archives of all kinds.
 Essentially, assemblies are intended to fill the gaps between the standard archive formats provided by project package types.
 Of course, you could write an entire Maven plugin simply to generate your own custom archive format, along with a new lifecycle mapping and artifact-handling configuration to tell Maven how to deploy it.
-But the Assembly plugin makes this unnecessary in most cases, by providing generalized support for creating your own archive recipe without spending so much time writing Maven code.</p>
+But the Assembly plugin makes this unnecessary in most cases&#8201;&#8212;&#8201;by providing generalized support for creating your own archive recipe without spending so much time writing Maven code.</p>
 </div>
 </div>
 <div class="sect2">
@@ -5568,17 +5425,17 @@ The <code>assembly:assembly</code> goal is designed to be invoked directly from 
 In contrast, the <code>single</code> mojo is designed to be a part of your everyday build, and should be bound to a phase in your project’s build lifecycle.</p>
 </div>
 <div class="paragraph">
-<p>The main reason for this difference is that the <code>assembly:assembly</code> goal is what Maven terms an aggregator mojo; that is, a mojo which is designed to run at most once in a build, regardless of how many projects are being built.
+<p>The main reason for this difference is that the <code>assembly:assembly</code> goal is what Maven terms an <strong>aggregator mojo</strong>; that is, a mojo which is designed to run at most once in a build, regardless of how many projects are being built.
 It draws its configuration from the root project&#8201;&#8212;&#8201;usually the top-level POM or the command line.
 When bound to a lifecycle, an aggregator mojo can have some nasty side-effects.
-It can force the execution of the <code>package</code> lifecycle phase to execute ahead of time, and can result in builds which end up executing the <code>package</code> phase twice.</p>
+It can force the <code>package</code> lifecycle phase to be executed ahead of time, which can result in builds which end up executing the <code>package</code> phase twice.</p>
 </div>
 <div class="paragraph">
-<p>Because the <code>assembly:assembly</code> goal is an aggregator mojo, it raises some issues in multi-module Maven builds, and it should only be called as a stand-alone mojo from the command-line.
-Never bind an <code>assembly:assembly</code> execution to a lifecycle phase. <code>assembly:assembly</code> was the original goal in the Assembly plugin, and was never designed to be part of the standard build process for a project.
+<p>Because the <code>assembly:assembly</code> goal is an aggregator mojo, it raises some issues in multimodule Maven builds, and it should only be called as a standalone mojo from the command line.
+Never bind an <code>assembly:assembly</code> execution to a lifecycle phase. <code>assembly:assembly</code> was the original goal in the Assembly plugin, and it was never designed to be part of the standard build process for a project.
 As it became clear that assembly archives were a legitimate requirement for projects to produce, the <code>single</code> mojo was developed.
-This mojo assumes that it has been bound to the correct part of the build process, so that it will have access to the project files and artifacts it needs to execute within the lifecycle of a large multi-module Maven project.
-In a multi-module environment, it will execute as many times as it is bound to the different module POMs.
+This mojo assumes that it has been bound to the correct part of the build process, so that it will have access to the project files and artifacts it needs to execute within the lifecycle of a large multimodule Maven project.
+In a multimodule environment, it will execute as many times as it is bound to the different module POMs.
 Unlike <code>assembly:assembly</code>, <code>single</code> will never force the execution of another lifecycle phase ahead of itself.</p>
 </div>
 <div class="paragraph">
@@ -5590,7 +5447,7 @@ Whenever possible, you should definitely stick to using <code>assembly:assembly<
 <h4 id="assemblies-sect-predefined">8.2.1. Predefined Assembly Descriptors</h4>
 <div class="paragraph">
 <p>While many people opt to create their own archive recipes&#8201;&#8212;&#8201;called assembly descriptors&#8201;&#8212;&#8201;this isn’t strictly necessary.
-The Assembly plugin provides built-in descriptors for several common archive types that you can use immediately without writing a line of configuration.
+The Assembly plugin provides built-in descriptors for several common archive types that you can use immediately, without writing a line of configuration.
 The following assembly descriptors are predefined in the Maven Assembly plugin:</p>
 </div>
 <div class="dlist">
@@ -5601,7 +5458,7 @@ The following assembly descriptors are predefined in the Maven Assembly plugin:<
 </dd>
 <dt class="hdlist1"><code>jar-with-dependencies</code></dt>
 <dd>
-<p>The <code>jar-with-dependencies</code> descriptor builds a JAR archive with the contents of the main project jar, along with the unpacked contents of all the project’s runtime dependencies.
+<p>The <code>jar-with-dependencies</code> descriptor builds a jar archive with the contents of the main project jar, along with the unpacked contents of all the project’s runtime dependencies.
 Coupled with an appropriate <code>Main-Class</code> Manifest entry (discussed in “Plugin Configuration” below), this descriptor can produce a self-contained, executable jar for your project, even if the project has dependencies.</p>
 </dd>
 <dt class="hdlist1"><code>project</code></dt>
@@ -5620,13 +5477,13 @@ This precursor to the project descriptor produces an archive that can be built b
 <div class="sect3">
 <h4 id="assemblies-sect-building">8.2.2. Building an Assembly</h4>
 <div class="paragraph">
-<p>The Assembly plugin can be executed in two ways: you can invoke it directly from the command line; or you can configure it as part of your standard build process by binding it to a phase of your project’s build lifecycle.
+<p>As mentioned, the Assembly plugin can be executed in two ways: you can invoke it directly from the command line; or you can configure it as part of your standard build process by binding it to a phase of your project’s build lifecycle.
 Direct invocation has its uses, particularly for one-off assemblies that are not considered part of your project’s core deliverables.
 In most cases, you’ll probably want to generate the assemblies for your project as part of its standard build process.
 Doing this has the effect of including your custom assemblies whenever the project is installed or deployed into Maven’s repositories, so they are always available to your users.</p>
 </div>
 <div class="paragraph">
-<p>As an example of the direct invocation of the Assembly plugin, imagine that you wanted to ship off a copy of your project which people could build from source.
+<p>As an example of the direct invocation of the Assembly plugin, imagine you wanted to ship off a copy of your project which people could build from source.
 Instead of just deploying the end-product of the build, you wanted to include the source as well.
 You won’t need to do this often, so it doesn’t make sense to add the configuration to your POM.
 Instead, you can use the following command:</p>
@@ -5646,15 +5503,15 @@ target/direct-invocation-1.0-SNAPSHOT-project.zip
 </div>
 </div>
 <div class="paragraph">
-<p>Imagine you want to produce an executable JAR from your project.
-If your project is totally self-contained with no dependencies, this can be achieved with the main project artifact using the archive configuration of the JAR plugin.
-However, most projects have dependencies, and those dependencies must be incorporated in any executable JAR. In this case, you want to make sure that every time the main project JAR is installed or deployed, your executable JAR goes along with it.</p>
+<p>Imagine you want to produce an executable jar from your project.
+If your project is totally self-contained with no dependencies, this can be achieved with the main project artifact using the archive configuration of the jar plugin.
+However, most projects have dependencies, and those dependencies must be incorporated in any executable jar. In this case, you want to make sure that every time the main project jar is installed or deployed, your executable jar goes along with it.</p>
 </div>
 <div class="paragraph">
-<p>Assuming the main class for the project is <code>org.sonatype.mavenbook.App</code>, the following POM configuration will create an executable JAR:</p>
+<p>Assuming the main class for the project is <code>org.sonatype.mavenbook.App</code>, the following POM configuration will create an executable jar:</p>
 </div>
 <div class="listingblock">
-<div class="title">Listing 45. Assembly Descriptor for Executable JAR</div>
+<div class="title">Listing 45. Assembly Descriptor for Executable jar</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span>
          <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
@@ -5716,34 +5573,34 @@ Second, the <code>archive</code> element under <code>configuration</code> sets t
 <div class="paragraph">
 <p>Now, you can produce the executable JAR simply by executing <code>mvn package</code>.
 Afterward, we’ll also get a directory listing for the target directory, just to verify that the executable JAR was generated.
-Finally, just to prove that we actually do have an executable JAR, we’ll try executing it:</p>
+Finally, just to prove that we actually do have an executable jar, we’ll try executing it:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell script">$ mvn package
-... (output omitted) ...
+...
 [INFO] [jar:jar]
-[INFO] Building jar: ~/mvn-examples-1.0/assemblies/executable-jar/target/\
-executable-jar-1.0-SNAPSHOT.jar
+[INFO] Building jar: ~/mvn-examples-1.0/assemblies/executable-jar/target/executable-jar-1.0-SNAPSHOT.jar
 [INFO] [assembly:single {execution: create-executable-jar}]
 [INFO] Processing DependencySet (output=)
-[INFO] Building jar: ~/mvn-examples-1.0/assemblies/executable-jar/target/\
-executable-jar-1.0-SNAPSHOT-jar-with-dependencies.jar
-... (output omitted) ...
+[INFO] Building jar: ~/mvn-examples-1.0/assemblies/executable-jar/target/executable-jar-1.0-SNAPSHOT-jar-with-dependencies.jar
+...
+
 $ ls -1 target
-... (output omitted) ...
+...
 executable-jar-1.0-SNAPSHOT-jar-with-dependencies.jar
 executable-jar-1.0-SNAPSHOT.jar
-... (output omitted) ...
+...
+
 $ java -jar \
 target/executable-jar-1.0-SNAPSHOT-jar-with-dependencies.jar
 Hello, World!</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>From the output shown above, you can see that the normal project build now produces a new artifact in addition to the main JAR file.
+<p>From the output shown above, you can see that the normal project build now produces a new artifact in addition to the main jar file.
 The new one has a classifier of <code>jar-with-dependencies</code>.
-Finally, we verified that the new JAR actually is executable, and that executing the JAR produced the desired output of “Hello, World!”</p>
+Finally, we verified that the new jar actually is executable, and that executing it produced the desired output of “Hello, World!”</p>
 </div>
 </div>
 <div class="sect3">
@@ -5753,7 +5610,7 @@ Finally, we verified that the new JAR actually is executable, and that executing
 This means they will be installed and deployed alongside the main artifact, and are then resolvable in much the same way.
 Each assembly artifact is given the same basic coordinates (<code>groupId</code>, <code>artifactId</code>, and <code>version</code>) as the main project.
 However, these artifacts are attachments, which in Maven means they are derivative works based on some aspect of the main project build.
-To provide a couple of examples, <code>source</code> assemblies contain the raw inputs for the project build, and <code>jar-with-dependencies</code> assemblies contain the project’s classes plus its dependencies.
+For example, <code>source</code> assemblies contain the raw inputs for the project build, and <code>jar-with-dependencies</code> assemblies contain the project’s classes plus its dependencies.
 Attached artifacts are allowed to circumvent the Maven requirement of one project, one artifact precisely because of this derivative quality.</p>
 </div>
 <div class="paragraph">
@@ -5766,9 +5623,20 @@ When using the built-in assembly descriptors, as above, the assembly descriptor�
 The answer is fairly straightforward.
 Projects depend on other projects using a combination of four basic elements, referred to as a project’s coordinates: <code>groupId</code>, <code>artifactId</code>, <code>version</code>, and <code>packaging</code>.
 In
-<a href="#profiles-sect-platform-classifier">Section 5.5.3</a>, multiple platform-specific variants of a project’s artifact are available, and the project specifies a <code>classifier</code> element with a value of either <code>win</code> or <code>linux</code> to select the appropriate dependency artifact for the target platform.
-Assembly artifacts can be used as dependencies using the required coordinates of a project plus the classifier under which the assembly was installed or deployed.
-If the assembly is not a JAR archive, we also need to declare its type.</p>
+<a href="#profiles-sect-platform-classifier">Section 5.6.3</a>, multiple platform-specific variants of a project’s artifact are available, and the project specifies a <code>classifier</code> element with a value of either <code>win</code> or <code>linux</code> to select the appropriate dependency artifact for the target platform.
+Assembly artifacts can be used as dependencies using the required coordinates of a project, plus the classifier under which the assembly was installed or deployed.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the assembly is not a jar archive, we also need to declare its type.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -5835,11 +5703,13 @@ second-project/target/second-project-1.0-SNAPSHOT-project.tar.gz to
 ~/.m2/repository/org/sonatype/mavenbook/assemblies/second-project/1.0-SNAPSHOT/\
 second-project-1.0-SNAPSHOT-project.tar.gz
 ...
+
 Installing ~/mvn-examples-1.0/assemblies/as-dependencies/project-parent/\
 second-project/target/second-project-1.0-SNAPSHOT-project.tar.bz2 to
 ~/.m2/repository/org/sonatype/mavenbook/assemblies/second-project/1.0-SNAPSHOT/\
 second-project-1.0-SNAPSHOT-project.tar.bz2
 ...
+
 Installing ~/mvn-examples-1.0/assemblies/as-dependencies/project-parent/\
 second-project/target/second-project-1.0-SNAPSHOT-project.zip to
 ~/.m2/repository/org/sonatype/mavenbook/assemblies/second-project/1.0-SNAPSHOT/\\
@@ -6304,8 +6174,7 @@ It will also copy the current project’s main artifact into the root of the ass
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Wait?
-I thought <code>dependencySet</code> was about including my project&#8217;s dependencies, not my project&#8217;s main archive?
+Wait, I thought <code>dependencySet</code> was about including my project&#8217;s dependencies, not my project&#8217;s main archive?
 This counterintuitive side-effect was a widely-used bug in the 2.1 version of the Assembly plugin, and, because Maven puts an emphasis on backward compatibility, this counterintuitive and incorrect behavior needed to be preserved between a 2.1 and 2.2 release.
 You can control this behavior by changing the <code>useProjectArtifact</code> flag to <code>false</code>.
 </td>

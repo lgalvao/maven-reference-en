@@ -14,7 +14,7 @@ You can customize a build to run differently depending, for example, on the oper
 Before we talk about using and configuring Maven profiles, we need to define the concept of Build Portability.
 
 [[profiles-sect-portability]]
-==== Build Portability
+=== Build Portability
 
 A build's portability is a measure of how easy it is to take a particular project and build it in different environments.
 A build which works without any custom configuration or customization is more portable than a build which requires a great deal of work to build from scratch.
@@ -47,7 +47,7 @@ Hence it is only portable between defined environments.
 When a new developer gets the source for an portable project, they will have to run the build within a defined environment, or have to create a custom environment to successfully build the project.
 
 [[profiles-sect-org-portability]]
-===== Organizational (In-House) Portability
+==== Organizational (In-House) Portability
 
 The center of this level of portability is a project's requirement that only a select few may access internal resources such as source control or an internally-maintained Maven repository.
 A project at a large corporation may depend on a database available only to in-house developers, or an open-source project might require a specific level of credentials to publish a web site and deploy the products of a build to a public repository.
@@ -57,7 +57,7 @@ It may fail because certain required custom plugins are unavailable; or because 
 Such a project is portable only across environments in a single organization.
 
 [[profiles-sect-wide-portability]]
-===== Wide (Universal) Portability
+==== Wide (Universal) Portability
 
 In a universally portable build, anyone can download the project's source, compile and install it without customizing a build for a specific environment.
 This is the highest level of portability; anything less requires extra work for those who wish to build your project.

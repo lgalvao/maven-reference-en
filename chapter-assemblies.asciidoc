@@ -17,14 +17,14 @@ Essentially, these are archives that provide a convenient way for users to insta
 In some cases, this may mean bundling a web application with an application server like Wildfly.
 In others, it could mean bundling API documentation alongside source and compiled binaries like jar files.
 Assemblies usually come in handy when you are building the final distribution of a product.
-For example, products like Nexus introduced in http://books.sonatype.com/nexus-book/reference/[Repository Management with Nexus], are the product of large multi-module Maven products. The final archive you download from Sonatype was created using a Maven Assembly.
+For example, products like Nexus introduced in the book http://books.sonatype.com/nexus-book/reference/[Repository Management with Nexus], are the product of large multimodule Maven products. The final archive you download from Sonatype was created using a Maven Assembly.
 
 In most cases, the Assembly plugin is ideally suited to the process of building project distributions.
 However, assemblies don’t have to be distribution archives. 
 They are intended to provide Maven users with the flexibility needed to produce customized archives of all kinds.
 Essentially, assemblies are intended to fill the gaps between the standard archive formats provided by project package types.
 Of course, you could write an entire Maven plugin simply to generate your own custom archive format, along with a new lifecycle mapping and artifact-handling configuration to tell Maven how to deploy it.
-But the Assembly plugin makes this unnecessary in most cases, by providing generalized support for creating your own archive recipe without spending so much time writing Maven code.
+But the Assembly plugin makes this unnecessary in most cases -- by providing generalized support for creating your own archive recipe without spending so much time writing Maven code.
 
 [[assemblies-sect-basics]]
 === Assembly Basics
@@ -34,16 +34,16 @@ We list these two goals in different ways because it reflects the difference in 
 The `assembly:assembly` goal is designed to be invoked directly from the command line, and should never be bound to a build lifecycle phase.
 In contrast, the `single` mojo is designed to be a part of your everyday build, and should be bound to a phase in your project’s build lifecycle.
 
-The main reason for this difference is that the `assembly:assembly` goal is what Maven terms an aggregator mojo; that is, a mojo which is designed to run at most once in a build, regardless of how many projects are being built.
+The main reason for this difference is that the `assembly:assembly` goal is what Maven terms an *aggregator mojo*; that is, a mojo which is designed to run at most once in a build, regardless of how many projects are being built.
 It draws its configuration from the root project -- usually the top-level POM or the command line.
 When bound to a lifecycle, an aggregator mojo can have some nasty side-effects.
-It can force the execution of the `package` lifecycle phase to execute ahead of time, and can result in builds which end up executing the `package` phase twice.
+It can force the `package` lifecycle phase to be executed ahead of time, which can result in builds which end up executing the `package` phase twice.
 
-Because the `assembly:assembly` goal is an aggregator mojo, it raises some issues in multi-module Maven builds, and it should only be called as a stand-alone mojo from the command-line.
-Never bind an `assembly:assembly` execution to a lifecycle phase. `assembly:assembly` was the original goal in the Assembly plugin, and was never designed to be part of the standard build process for a project.
+Because the `assembly:assembly` goal is an aggregator mojo, it raises some issues in multimodule Maven builds, and it should only be called as a standalone mojo from the command line.
+Never bind an `assembly:assembly` execution to a lifecycle phase. `assembly:assembly` was the original goal in the Assembly plugin, and it was never designed to be part of the standard build process for a project.
 As it became clear that assembly archives were a legitimate requirement for projects to produce, the `single` mojo was developed.
-This mojo assumes that it has been bound to the correct part of the build process, so that it will have access to the project files and artifacts it needs to execute within the lifecycle of a large multi-module Maven project.
-In a multi-module environment, it will execute as many times as it is bound to the different module POMs.
+This mojo assumes that it has been bound to the correct part of the build process, so that it will have access to the project files and artifacts it needs to execute within the lifecycle of a large multimodule Maven project.
+In a multimodule environment, it will execute as many times as it is bound to the different module POMs.
 Unlike `assembly:assembly`, `single` will never force the execution of another lifecycle phase ahead of itself.
 
 The Assembly plugin provides several other goals in addition to these two.
@@ -54,14 +54,14 @@ Whenever possible, you should definitely stick to using `assembly:assembly` for 
 ==== Predefined Assembly Descriptors
 
 While many people opt to create their own archive recipes -- called assembly descriptors -- this isn’t strictly necessary.
-The Assembly plugin provides built-in descriptors for several common archive types that you can use immediately without writing a line of configuration.
+The Assembly plugin provides built-in descriptors for several common archive types that you can use immediately, without writing a line of configuration.
 The following assembly descriptors are predefined in the Maven Assembly plugin:
 
 `bin`::
 The `bin` descriptor is used to bundle project `LICENSE`, `README`, and `NOTICE` files with the project’s main artifact, assuming this project builds a jar as its main artifact. Think of this as the smallest possible binary distribution for completely self-contained projects.
 
 `jar-with-dependencies`::
-The `jar-with-dependencies` descriptor builds a JAR archive with the contents of the main project jar, along with the unpacked contents of all the project’s runtime dependencies.
+The `jar-with-dependencies` descriptor builds a jar archive with the contents of the main project jar, along with the unpacked contents of all the project’s runtime dependencies.
 Coupled with an appropriate `Main-Class` Manifest entry (discussed in “Plugin Configuration” below), this descriptor can produce a self-contained, executable jar for your project, even if the project has dependencies.
 
 `project`::
@@ -75,12 +75,12 @@ This precursor to the project descriptor produces an archive that can be built b
 [[assemblies-sect-building]]
 ==== Building an Assembly
 
-The Assembly plugin can be executed in two ways: you can invoke it directly from the command line; or you can configure it as part of your standard build process by binding it to a phase of your project’s build lifecycle.
+As mentioned, the Assembly plugin can be executed in two ways: you can invoke it directly from the command line; or you can configure it as part of your standard build process by binding it to a phase of your project’s build lifecycle.
 Direct invocation has its uses, particularly for one-off assemblies that are not considered part of your project’s core deliverables.
 In most cases, you’ll probably want to generate the assemblies for your project as part of its standard build process.
 Doing this has the effect of including your custom assemblies whenever the project is installed or deployed into Maven’s repositories, so they are always available to your users.
 
-As an example of the direct invocation of the Assembly plugin, imagine that you wanted to ship off a copy of your project which people could build from source.
+As an example of the direct invocation of the Assembly plugin, imagine you wanted to ship off a copy of your project which people could build from source.
 Instead of just deploying the end-product of the build, you wanted to include the source as well.
 You won’t need to do this often, so it doesn’t make sense to add the configuration to your POM.
 Instead, you can use the following command:
@@ -99,13 +99,13 @@ target/direct-invocation-1.0-SNAPSHOT-project.zip
 ...
 ----
 
-Imagine you want to produce an executable JAR from your project.
-If your project is totally self-contained with no dependencies, this can be achieved with the main project artifact using the archive configuration of the JAR plugin.
-However, most projects have dependencies, and those dependencies must be incorporated in any executable JAR. In this case, you want to make sure that every time the main project JAR is installed or deployed, your executable JAR goes along with it.
+Imagine you want to produce an executable jar from your project.
+If your project is totally self-contained with no dependencies, this can be achieved with the main project artifact using the archive configuration of the jar plugin.
+However, most projects have dependencies, and those dependencies must be incorporated in any executable jar. In this case, you want to make sure that every time the main project jar is installed or deployed, your executable jar goes along with it.
 
-Assuming the main class for the project is `org.sonatype.mavenbook.App`, the following POM configuration will create an executable JAR:
+Assuming the main class for the project is `org.sonatype.mavenbook.App`, the following POM configuration will create an executable jar:
 
-.Assembly Descriptor for Executable JAR
+.Assembly Descriptor for Executable jar
 [source,xml]
 ----
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
@@ -166,31 +166,35 @@ Second, the `archive` element under `configuration` sets the `Main-Class` manife
 
 Now, you can produce the executable JAR simply by executing `mvn package`.
 Afterward, we’ll also get a directory listing for the target directory, just to verify that the executable JAR was generated.
-Finally, just to prove that we actually do have an executable JAR, we’ll try executing it:
+Finally, just to prove that we actually do have an executable jar, we’ll try executing it:
+
+//TODO the paths don't coincide with the mvref-examples included in the repo
 
 [source,shell script]
+----
 $ mvn package
-... (output omitted) ...
+...
 [INFO] [jar:jar]
-[INFO] Building jar: ~/mvn-examples-1.0/assemblies/executable-jar/target/\
-executable-jar-1.0-SNAPSHOT.jar
+[INFO] Building jar: ~/mvn-examples-1.0/assemblies/executable-jar/target/executable-jar-1.0-SNAPSHOT.jar
 [INFO] [assembly:single {execution: create-executable-jar}]
 [INFO] Processing DependencySet (output=)
-[INFO] Building jar: ~/mvn-examples-1.0/assemblies/executable-jar/target/\
-executable-jar-1.0-SNAPSHOT-jar-with-dependencies.jar
-... (output omitted) ...
+[INFO] Building jar: ~/mvn-examples-1.0/assemblies/executable-jar/target/executable-jar-1.0-SNAPSHOT-jar-with-dependencies.jar
+...
+
 $ ls -1 target
-... (output omitted) ...
+...
 executable-jar-1.0-SNAPSHOT-jar-with-dependencies.jar
 executable-jar-1.0-SNAPSHOT.jar
-... (output omitted) ...
+...
+
 $ java -jar \
 target/executable-jar-1.0-SNAPSHOT-jar-with-dependencies.jar
 Hello, World!
+----
 
-From the output shown above, you can see that the normal project build now produces a new artifact in addition to the main JAR file.
+From the output shown above, you can see that the normal project build now produces a new artifact in addition to the main jar file.
 The new one has a classifier of `jar-with-dependencies`.
-Finally, we verified that the new JAR actually is executable, and that executing the JAR produced the desired output of “Hello, World!”
+Finally, we verified that the new jar actually is executable, and that executing it produced the desired output of “Hello, World!”
 
 [[assemblies-sect-as-depend]]
 ==== Assemblies as Dependencies
@@ -199,7 +203,7 @@ When you generate assemblies as part of your normal build process, those assembl
 This means they will be installed and deployed alongside the main artifact, and are then resolvable in much the same way.
 Each assembly artifact is given the same basic coordinates (`groupId`, `artifactId`, and `version`) as the main project.
 However, these artifacts are attachments, which in Maven means they are derivative works based on some aspect of the main project build.
-To provide a couple of examples, `source` assemblies contain the raw inputs for the project build, and `jar-with-dependencies` assemblies contain the project’s classes plus its dependencies.
+For example, `source` assemblies contain the raw inputs for the project build, and `jar-with-dependencies` assemblies contain the project’s classes plus its dependencies.
 Attached artifacts are allowed to circumvent the Maven requirement of one project, one artifact precisely because of this derivative quality.
 
 Since assemblies are (normally) attached artifacts, each must have a classifier to distinguish it from the main artifact, in addition to the normal artifact coordinates.
@@ -211,8 +215,9 @@ The answer is fairly straightforward.
 Projects depend on other projects using a combination of four basic elements, referred to as a project’s coordinates: `groupId`, `artifactId`, `version`, and `packaging`.
 In
 <<profiles-sect-platform-classifier>>, multiple platform-specific variants of a project’s artifact are available, and the project specifies a `classifier` element with a value of either `win` or `linux` to select the appropriate dependency artifact for the target platform.
-Assembly artifacts can be used as dependencies using the required coordinates of a project plus the classifier under which the assembly was installed or deployed.
-If the assembly is not a JAR archive, we also need to declare its type.
+Assembly artifacts can be used as dependencies using the required coordinates of a project, plus the classifier under which the assembly was installed or deployed.
+
+NOTE: If the assembly is not a jar archive, we also need to declare its type.
 
 [[assemblies-sect-assembling-via-depend]]
 ==== Assembling Assemblies via Assembly Dependencies
@@ -278,11 +283,13 @@ second-project/target/second-project-1.0-SNAPSHOT-project.tar.gz to
 ~/.m2/repository/org/sonatype/mavenbook/assemblies/second-project/1.0-SNAPSHOT/\
 second-project-1.0-SNAPSHOT-project.tar.gz
 ...
+
 Installing ~/mvn-examples-1.0/assemblies/as-dependencies/project-parent/\
 second-project/target/second-project-1.0-SNAPSHOT-project.tar.bz2 to 
 ~/.m2/repository/org/sonatype/mavenbook/assemblies/second-project/1.0-SNAPSHOT/\
 second-project-1.0-SNAPSHOT-project.tar.bz2
 ...
+
 Installing ~/mvn-examples-1.0/assemblies/as-dependencies/project-parent/\
 second-project/target/second-project-1.0-SNAPSHOT-project.zip to 
 ~/.m2/repository/org/sonatype/mavenbook/assemblies/second-project/1.0-SNAPSHOT/\\
@@ -692,8 +699,9 @@ The simplest `dependencySet` is an empty element:
 The `dependencySet` above will match all runtime dependencies of your project (runtime scope includes the compile scope implicitly), and it will add these dependencies to the root directory of your assembly archive.
 It will also copy the current project’s main artifact into the root of the assembly archive, if it exists.
 
-NOTE: Wait?
-I thought `dependencySet` was about including my project's dependencies, not my project's main archive?
+//TODO check if this note still applies
+
+NOTE: Wait, I thought `dependencySet` was about including my project's dependencies, not my project's main archive?
 This counterintuitive side-effect was a widely-used bug in the 2.1 version of the Assembly plugin, and, because Maven puts an emphasis on backward compatibility, this counterintuitive and incorrect behavior needed to be preserved between a 2.1 and 2.2 release.
 You can control this behavior by changing the `useProjectArtifact` flag to `false`.
 
